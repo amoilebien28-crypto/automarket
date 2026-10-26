@@ -104,6 +104,62 @@
         <p>&copy; 2026 AutoMarket. Propulsé par GitHub & Firebase.</p>
     </footer>
 
+    <!-- Modal d'Authentification (Connexion / Inscription) -->
+    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 relative">
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+            <h3 id="authModalTitle" class="text-xl font-bold text-gray-900 mb-4">Connexion</h3>
+            <form id="authForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de téléphone</label>
+                    <input type="tel" id="phoneNumber" placeholder="+216 XX XXX XXX" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+                    <input type="password" id="authPassword" placeholder="••••••••" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition">Valider</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal pour Vendre une Voiture -->
+    <div id="sellModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeSellModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">🚗 Vendre une voiture</h3>
+            <form id="sellForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Marque et Modèle</label>
+                    <input type="text" id="carTitle" placeholder="Ex: Volkswagen Golf 7" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Année</label>
+                        <input type="number" id="carYear" placeholder="2018" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Kilométrage (km)</label>
+                        <input type="number" id="carMileage" placeholder="120000" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Prix (DT)</label>
+                    <input type="number" id="carPrice" placeholder="55000" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Lien de la photo</label>
+                    <input type="url" id="carImage" placeholder="https://exemple.com/photo.jpg" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <textarea id="carDescription" rows="3" placeholder="Décrivez l'état de votre voiture..." class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-emerald-600 text-white py-2.5 rounded-xl font-semibold hover:bg-emerald-700 transition">Publier l'annonce</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Ton fichier JavaScript externe -->
     <script type="module" src="app.js"></script>
 </body>
