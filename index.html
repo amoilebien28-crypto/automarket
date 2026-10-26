@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoMarket - Vendez et Achetez votre voiture en toute simplicité</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Ton fichier CSS personnalisé -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header / Barre de Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl font-extrabold text-blue-600">🚗 AutoMarket</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button onclick="openAuthModal('login')" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition">Se connecter</button>
+                <button onclick="openAuthModal('register')" class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-700 transition">S'inscrire</button>
+                <button onclick="openSellModal()" class="hidden md:block px-4 py-2 text-sm font-medium bg-emerald-600 text-white rounded-xl shadow-md hover:bg-emerald-700 transition">+ Vendre une voiture</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section Héro (Accroche Visuelle) -->
+    <section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16 px-4 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-3xl md:text-5xl font-bold mb-4">Trouvez la voiture de vos rêves ou vendez la vôtre</h1>
+            <p class="text-blue-100 text-lg mb-8">Simple, rapide et 100% sécurisé.</p>
+            
+            <!-- Barre de Recherche & Filtres Rapides -->
+            <div class="bg-white p-4 rounded-2xl shadow-xl flex flex-col md:flex-row gap-3">
+                <input type="text" placeholder="Rechercher par modèle, keyword..." class="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800">
+                <select class="px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 bg-white">
+                    <option value="">Toutes les marques</option>
+                    <option value="Renault">Renault</option>
+                    <option value="Peugeot">Peugeot</option>
+                    <option value="Volkswagen">Volkswagen</option>
+                    <option value="BMW">BMW</option>
+                    <option value="Mercedes">Mercedes</option>
+                </select>
+                <button class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">Rechercher</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section : Choisir par Marque -->
+    <main class="max-w-7xl mx-auto px-4 py-12">
+        <h2 class="text-2xl font-bold mb-6 text-gray-900">Explorez par marque</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mb-12">
+            <button onclick="filterByBrand('Renault')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group">
+                <div class="text-3xl mb-2">🚗</div>
+                <span class="font-semibold text-gray-700 group-hover:text-blue-600">Renault</span>
+            </button>
+            <button onclick="filterByBrand('Peugeot')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group">
+                <div class="text-3xl mb-2">🚙</div>
+                <span class="font-semibold text-gray-700 group-hover:text-blue-600">Peugeot</span>
+            </button>
+            <button onclick="filterByBrand('Volkswagen')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group">
+                <div class="text-3xl mb-2">🏎️</div>
+                <span class="font-semibold text-gray-700 group-hover:text-blue-600">Volkswagen</span>
+            </button>
+            <button onclick="filterByBrand('BMW')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group">
+                <div class="text-3xl mb-2">🚘</div>
+                <span class="font-semibold text-gray-700 group-hover:text-blue-600">BMW</span>
+            </button>
+            <button onclick="filterByBrand('Mercedes')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group">
+                <div class="text-3xl mb-2">🚙</div>
+                <span class="font-semibold text-gray-700 group-hover:text-blue-600">Mercedes</span>
+            </button>
+            <button onclick="filterByBrand('Autres')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group">
+                <div class="text-3xl mb-2">➕</div>
+                <span class="font-semibold text-gray-700 group-hover:text-blue-600">Autres</span>
+            </button>
+        </div>
+
+        <!-- Section : Annonces Récentes -->
+        <h2 class="text-2xl font-bold mb-6 text-gray-900">Annonces récentes</h2>
+        <div id="cars-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
+                <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400">Photo de la voiture</div>
+                <div class="p-5">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-lg text-gray-900">Volkswagen Golf 7</h3>
+                        <span class="bg-blue-50 text-blue-600 text-xs font-semibold px-2.5 py-1 rounded-lg">2018</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mb-4">120,000 km • Diesel • Boîte Manuelle</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xl font-extrabold text-emerald-600">55,000 DT</span>
+                        <button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-xl hover:bg-blue-600 hover:text-white transition">Voir détails</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 mt-20 py-8 text-center text-gray-500 text-sm">
+        <p>&copy; 2026 AutoMarket. Propulsé par GitHub & Firebase.</p>
+    </footer>
+
+    <!-- Ton fichier JavaScript externe -->
+    <script src="app.js"></script>
+</body>
+</html>
