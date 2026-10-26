@@ -8,9 +8,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Manifest PWA -->
+    <link rel="manifest" href="manifest.json">
     <!-- Ton fichier CSS personnalisé -->
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
 </head>
 <body class="bg-gray-50 text-gray-800">
 
@@ -20,23 +21,33 @@
             <div class="flex items-center space-x-2">
                 <span class="text-2xl font-extrabold text-blue-600">🚗 AutoMarket</span>
             </div>
-            <div class="flex items-center space-x-3">
+            <!-- Zone d'authentification dynamique (changera selon si l'utilisateur est connecté) -->
+            <div id="auth-nav-container" class="flex items-center space-x-3">
                 <button onclick="openAuthModal('login')" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition">Se connecter</button>
                 <button onclick="openAuthModal('register')" class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-700 transition">S'inscrire</button>
-                <button onclick="openSellModal()" class="hidden md:block px-4 py-2 text-sm font-medium bg-emerald-600 text-white rounded-xl shadow-md hover:bg-emerald-700 transition">+ Vendre une voiture</button>
             </div>
         </div>
     </header>
 
-    <!-- Section Héro (Accroche Visuelle) -->
+    <!-- Section Héro (Accroche Visuelle & Deux Gros Boutons d'Action) -->
     <section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16 px-4 text-center">
         <div class="max-w-3xl mx-auto">
             <h1 class="text-3xl md:text-5xl font-bold mb-4">Trouvez la voiture de vos rêves ou vendez la vôtre</h1>
             <p class="text-blue-100 text-lg mb-8">Simple, rapide et 100% sécurisé.</p>
             
+            <!-- Deux Gros Boutons Principaux : Vendre / Acheter -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
+                <button onclick="openSellModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white text-lg font-bold px-8 py-4 rounded-2xl shadow-xl transition transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                    <span>🚗</span> Vendre une voiture
+                </button>
+                <button onclick="scrollToSearch()" class="bg-white text-blue-600 hover:bg-blue-50 text-lg font-bold px-8 py-4 rounded-2xl shadow-xl transition transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                    <span>🔍</span> Acheter une voiture
+                </button>
+            </div>
+
             <!-- Barre de Recherche & Filtres Rapides -->
-            <div class="bg-white p-4 rounded-2xl shadow-xl flex flex-col md:flex-row gap-3">
-                <input type="text" placeholder="Rechercher par modèle, keyword..." class="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800">
+            <div id="search-section" class="bg-white p-4 rounded-2xl shadow-xl flex flex-col md:flex-row gap-3">
+                <input type="text" id="searchInput" placeholder="Rechercher par modèle, keyword..." class="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800">
                 <select id="brandSelect" class="px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 bg-white">
                     <option value="">Toutes les marques</option>
                     <option value="Renault">Renault</option>
@@ -51,12 +62,12 @@
                     <option value="Kia">Kia</option>
                     <option value="Toyota">Toyota</option>
                 </select>
-                <button class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">Rechercher</button>
+                <button onclick="performSearch()" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">Rechercher</button>
             </div>
         </div>
     </section>
 
-    <!-- Section : Choisir par Marque (Avec de vrais logos officiels) -->
+    <!-- Section : Choisir par Marque -->
     <main class="max-w-7xl mx-auto px-4 py-12">
         <h2 class="text-2xl font-bold mb-6 text-gray-900">Explorez par marque</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mb-12">
@@ -79,9 +90,9 @@
                 <span class="font-semibold text-gray-700 group-hover:text-blue-600 text-sm">Volkswagen</span>
             </button>
 
-            <!-- BMW -->
+            <!-- BMW (Logo corrigé et sécurisé) -->
             <button onclick="filterByBrand('BMW')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group flex flex-col items-center justify-center">
-                <img src="https://www.carlogos.org/car-logos/bmw-logo-2020.png" alt="BMW" class="h-10 object-contain mb-2 group-hover:scale-110 transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg" alt="BMW" class="h-10 w-10 object-contain mb-2 group-hover:scale-110 transition">
                 <span class="font-semibold text-gray-700 group-hover:text-blue-600 text-sm">BMW</span>
             </button>
 
@@ -167,8 +178,8 @@
             <h3 id="authModalTitle" class="text-xl font-bold text-gray-900 mb-4">Connexion</h3>
             <form id="authForm" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de téléphone</label>
-                    <input type="tel" id="phoneNumber" placeholder="+216 XX XXX XXX" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de téléphone ou Email</label>
+                    <input type="text" id="authEmail" placeholder="Entrez votre email ou téléphone" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
@@ -200,7 +211,7 @@
                     </div>
                 </div>
                 <div>
-                    <label class="path block text-sm font-medium text-gray-700 mb-1">Prix (DT)</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Prix (DT)</label>
                     <input type="number" id="carPrice" placeholder="55000" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
                 <div>
