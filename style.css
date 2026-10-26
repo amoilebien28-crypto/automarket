@@ -1,0 +1,10 @@
+/* Styles personnalisés pour AutoMarket */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8fafc;
+}
+
+/* Effets de transition doux */
+button, input, select {
+    transition: all 0.2s ease-in-out;
+}
