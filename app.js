@@ -3,7 +3,7 @@ import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, si
 import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDWCnu5-8DA5fvTQCwIs4m-6R70PypJuGw",
+  apiKey: "AIzaSyDWCnu5-8DA5fvTQCwTs4m-6R70PypJuGw",
   authDomain: "automarket-app-852e4.firebaseapp.com",
   projectId: "automarket-app-852e4",
   storageBucket: "automarket-app-852e4.firebasestorage.app",
@@ -21,6 +21,7 @@ let currentAuthMode = 'login';
 // Gestion de l'affichage de l'en-tête selon l'état de connexion
 onAuthStateChanged(auth, (user) => {
     const navContainer = document.getElementById('auth-nav-container');
+    if (!navContainer) return;
     if (user) {
         navContainer.innerHTML = `
             <span class="text-sm font-semibold text-gray-700 bg-gray-100 px-3 py-2 rounded-xl">👤 ${user.email}</span>
@@ -39,12 +40,13 @@ window.openAuthModal = function(mode) {
     currentAuthMode = mode;
     const modal = document.getElementById('authModal');
     const title = document.getElementById('authModalTitle');
-    title.textContent = mode === 'login' ? 'Connexion' : 'Inscription';
-    modal.classList.remove('hidden');
+    if (title) title.textContent = mode === 'login' ? 'Connexion' : 'Inscription';
+    if (modal) modal.classList.remove('hidden');
 };
 
 window.closeAuthModal = function() {
-    document.getElementById('authModal').classList.add('hidden');
+    const modal = document.getElementById('authModal');
+    if (modal) modal.classList.add('hidden');
 };
 
 window.openSellModal = function() {
@@ -54,19 +56,23 @@ window.openSellModal = function() {
         openAuthModal('login');
         return;
     }
-    document.getElementById('sellModal').classList.remove('hidden');
+    const sellModal = document.getElementById('sellModal');
+    if (sellModal) sellModal.classList.remove('hidden');
 };
 
 window.closeSellModal = function() {
-    document.getElementById('sellModal').classList.add('hidden');
+    const sellModal = document.getElementById('sellModal');
+    if (sellModal) sellModal.classList.add('hidden');
 };
 
 window.scrollToSearch = function() {
-    document.getElementById('search-section').scrollIntoView({ behavior: 'smooth' });
+    const searchSection = document.getElementById('search-section');
+    if (searchSection) searchSection.scrollIntoView({ behavior: 'smooth' });
 };
 
 window.filterByCategory = function(category) {
-    document.getElementById('categorySelect').value = category;
+    const categorySelect = document.getElementById('categorySelect');
+    if (categorySelect) categorySelect.value = category;
     scrollToSearch();
     loadItems(category);
 };
@@ -80,53 +86,60 @@ window.logoutUser = function() {
 };
 
 // Gestion de la soumission du formulaire d'authentification
-document.getElementById('authForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('authEmail').value;
-    const password = document.getElementById('authPassword').value;
+const authForm = document.getElementById('authForm');
+if (authForm) {
+    authForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('authEmail').value;
+        const password = document.getElementById('authPassword').value;
 
-    try {
-        if (currentAuthMode === 'login') {
-            await signInWithEmailAndPassword(auth, email, password);
-            alert("Connexion réussie ! Bienvenue.");
-        } else {
-            await createUserWithEmailAndPassword(auth, email, password);
-            alert("Compte créé avec succès ! Vous êtes connecté.");
+        try {
+            if (currentAuthMode === 'login') {
+                await signInWithEmailAndPassword(auth, email, password);
+                alert("Connexion réussie ! Bienvenue.");
+            } else {
+                await createUserWithEmailAndPassword(auth, email, password);
+                alert("Compte créé avec succès ! Vous êtes connecté.");
+            }
+            closeAuthModal();
+        } catch (error) {
+            alert("Erreur : " + error.message);
         }
-        closeAuthModal();
-    } catch (error) {
-        alert("Erreur : " + error.message);
-    }
-});
+    });
+}
 
 // Gestion de l'ajout d'un objet (Brocante)
-document.getElementById('sellForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const title = document.getElementById('itemTitle').value;
-    const category = document.getElementById('itemCategory').value;
-    const condition = document.getElementById('itemCondition').value;
-    const price = document.getElementById('itemPrice').value;
-    const image = document.getElementById('itemImage').value;
-    const description = document.getElementById('itemDescription').value;
+const sellForm = document.getElementById('sellForm');
+if (sellForm) {
+    sellForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const title = document.getElementById('itemTitle').value;
+        const category = document.getElementById('itemCategory').value;
+        const condition = document.getElementById('itemCondition').value;
+        const price = document.getElementById('itemPrice').value;
+        const image = document.getElementById('itemImage').value;
+        const description = document.getElementById('itemDescription').value;
 
-    try {
-        await addDoc(collection(db, "items"), {
-            title, category, condition, price, image, description,
-            seller: auth.currentUser.email,
-            createdAt: new Date()
-        });
-        alert("Annonce publiée avec succès !");
-        closeSellModal();
-        document.getElementById('sellForm').reset();
-        loadItems();
-    } catch (error) {
-        alert("Erreur lors de l'ajout de l'annonce : " + error.message);
-    }
-});
+        try {
+            await addDoc(collection(db, "items"), {
+                title, category, condition, price, image, description,
+                seller: auth.currentUser.email,
+                createdAt: new Date()
+            });
+            alert("Annonce publiée avec succès !");
+            closeSellModal();
+            sellForm.reset();
+            loadItems();
+        } catch (error) {
+            alert("Erreur lors de l'ajout de l'annonce : " + error.message);
+        }
+    });
+}
 
 // Fonction pour charger et afficher les annonces depuis Firestore
 async function loadItems(selectedCategory = "") {
     const grid = document.getElementById('items-grid');
+    if (!grid) return;
     grid.innerHTML = '<p class="text-gray-500 col-span-3 text-center py-8">Chargement des annonces...</p>';
 
     try {
@@ -162,7 +175,7 @@ async function loadItems(selectedCategory = "") {
                 </div>
                 <div class="p-5 pt-0 flex justify-between items-center">
                     <span class="text-xl font-extrabold text-amber-600">${item.price} DT</span>
-                    <span class="text-xs text-gray-400">Par ${item.seller.split('@')[0]}</span>
+                    <span class="text-xs text-gray-400">Par ${item.seller ? item.seller.split('@')[0] : 'Inconnu'}</span>
                 </div>
             `;
             grid.appendChild(card);
@@ -174,7 +187,6 @@ async function loadItems(selectedCategory = "") {
 }
 
 window.performSearch = function() {
-    const keyword = document.getElementById('searchInput').value.toLowerCase();
     const category = document.getElementById('categorySelect').value;
     loadItems(category);
 };
