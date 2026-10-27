@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoMarket - Vendez et Achetez votre voiture en toute simplicité</title>
+    <title>BrocanteMarket - Vendez et achetez tout ce dont vous n'avez plus besoin</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Manifest PWA -->
     <link rel="manifest" href="manifest.json">
-    <!-- Ton fichier CSS personnalisé -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -19,147 +18,106 @@
     <header class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-2">
-                <span class="text-2xl font-extrabold text-blue-600">🚗 AutoMarket</span>
+                <span class="text-2xl font-extrabold text-amber-600">🛍️ BrocanteMarket</span>
             </div>
-            <!-- Zone d'authentification dynamique (changera selon si l'utilisateur est connecté) -->
+            <!-- Zone d'authentification dynamique -->
             <div id="auth-nav-container" class="flex items-center space-x-3">
-                <button onclick="openAuthModal('login')" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition">Se connecter</button>
-                <button onclick="openAuthModal('register')" class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-xl shadow-md hover:bg-blue-700 transition">S'inscrire</button>
+                <button onclick="openAuthModal('login')" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-amber-600 transition">Se connecter</button>
+                <button onclick="openAuthModal('register')" class="px-4 py-2 text-sm font-medium bg-amber-600 text-white rounded-xl shadow-md hover:bg-amber-700 transition">S'inscrire</button>
             </div>
         </div>
     </header>
 
-    <!-- Section Héro (Accroche Visuelle & Deux Gros Boutons d'Action) -->
-    <section class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16 px-4 text-center">
+    <!-- Section Héro (Accroche & Deux Gros Boutons) -->
+    <section class="bg-gradient-to-r from-amber-600 to-orange-600 text-white py-16 px-4 text-center">
         <div class="max-w-3xl mx-auto">
-            <h1 class="text-3xl md:text-5xl font-bold mb-4">Trouvez la voiture de vos rêves ou vendez la vôtre</h1>
-            <p class="text-blue-100 text-lg mb-8">Simple, rapide et 100% sécurisé.</p>
+            <h1 class="text-3xl md:text-5xl font-bold mb-4">Donnez une seconde vie à vos objets ou faites de bonnes affaires</h1>
+            <p class="text-amber-100 text-lg mb-8">Vendez ce dont vous ne vous servez plus, achetez près de chez vous.</p>
             
-            <!-- Deux Gros Boutons Principaux : Vendre / Acheter -->
+            <!-- Deux Gros Boutons Principaux -->
             <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
-                <button onclick="openSellModal()" class="bg-emerald-500 hover:bg-emerald-600 text-white text-lg font-bold px-8 py-4 rounded-2xl shadow-xl transition transform hover:-translate-y-1 flex items-center justify-center gap-3">
-                    <span>🚗</span> Vendre une voiture
+                <button onclick="openSellModal()" class="bg-white text-amber-700 hover:bg-amber-50 text-lg font-bold px-8 py-4 rounded-2xl shadow-xl transition transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                    <span>📦</span> Vendre un objet
                 </button>
-                <button onclick="scrollToSearch()" class="bg-white text-blue-600 hover:bg-blue-50 text-lg font-bold px-8 py-4 rounded-2xl shadow-xl transition transform hover:-translate-y-1 flex items-center justify-center gap-3">
-                    <span>🔍</span> Acheter une voiture
+                <button onclick="scrollToSearch()" class="bg-amber-800 text-white hover:bg-amber-900 text-lg font-bold px-8 py-4 rounded-2xl shadow-xl transition transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                    <span>🔍</span> Explorer les annonces
                 </button>
             </div>
 
-            <!-- Barre de Recherche & Filtres Rapides -->
+            <!-- Barre de Recherche & Filtres par Catégorie -->
             <div id="search-section" class="bg-white p-4 rounded-2xl shadow-xl flex flex-col md:flex-row gap-3">
-                <input type="text" id="searchInput" placeholder="Rechercher par modèle, keyword..." class="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800">
-                <select id="brandSelect" class="px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 bg-white">
-                    <option value="">Toutes les marques</option>
-                    <option value="Renault">Renault</option>
-                    <option value="Peugeot">Peugeot</option>
-                    <option value="Volkswagen">Volkswagen</option>
-                    <option value="BMW">BMW</option>
-                    <option value="Mercedes">Mercedes</option>
-                    <option value="Audi">Audi</option>
-                    <option value="Fiat">Fiat</option>
-                    <option value="Ford">Ford</option>
-                    <option value="Hyundai">Hyundai</option>
-                    <option value="Kia">Kia</option>
-                    <option value="Toyota">Toyota</option>
+                <input type="text" id="searchInput" placeholder="Que recherchez-vous ? (ex: iPhone, Vélo, Canapé...)" class="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500 text-gray-800">
+                <select id="categorySelect" class="px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500 text-gray-800 bg-white">
+                    <option value="">Toutes les catégories</option>
+                    <option value="electronique">📱 Électronique & Téléphones</option>
+                    <option value="informatique">💻 Informatique & Tablettes</option>
+                    <option value="maison">🛋️ Maison & Meubles</option>
+                    <option value="vetements">👕 Vêtements & Mode</option>
+                    <option value="vehicules">🚗 Véhicules & Pièces</option>
+                    <option value="loisirs">⚽ Loisirs & Sports</option>
+                    <option value="autres">📦 Autres</option>
                 </select>
-                <button onclick="performSearch()" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition">Rechercher</button>
+                <button onclick="performSearch()" class="bg-amber-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-amber-700 transition">Rechercher</button>
             </div>
         </div>
     </section>
 
-    <!-- Section : Choisir par Marque -->
+    <!-- Section : Explorer par Catégorie -->
     <main class="max-w-7xl mx-auto px-4 py-12">
-        <h2 class="text-2xl font-bold mb-6 text-gray-900">Explorez par marque</h2>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mb-12">
+        <h2 class="text-2xl font-bold mb-6 text-gray-900">Explorer par catégorie</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-12">
             
-            <!-- Renault -->
-            <button onclick="filterByBrand('Renault')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group flex flex-col items-center justify-center">
-                <img src="https://www.carlogos.org/car-logos/renault-logo-2015.png" alt="Renault" class="h-10 object-contain mb-2 group-hover:scale-110 transition">
-                <span class="font-semibold text-gray-700 group-hover:text-blue-600 text-sm">Renault</span>
+            <button onclick="filterByCategory('electronique')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500 transition text-center group flex flex-col items-center justify-center">
+                <div class="text-3xl mb-2">📱</div>
+                <span class="font-semibold text-gray-700 group-hover:text-amber-600 text-xs">Électronique</span>
             </button>
 
-            <!-- Peugeot -->
-            <button onclick="filterByBrand('Peugeot')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group flex flex-col items-center justify-center">
-                <img src="https://www.carlogos.org/car-logos/peugeot-logo-2021.png" alt="Peugeot" class="h-10 object-contain mb-2 group-hover:scale-110 transition">
-                <span class="font-semibold text-gray-700 group-hover:text-blue-600 text-sm">Peugeot</span>
+            <button onclick="filterByCategory('informatique')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500 transition text-center group flex flex-col items-center justify-center">
+                <div class="text-3xl mb-2">💻</div>
+                <span class="font-semibold text-gray-700 group-hover:text-amber-600 text-xs">Informatique</span>
             </button>
 
-            <!-- Volkswagen -->
-            <button onclick="filterByBrand('Volkswagen')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group flex flex-col items-center justify-center">
-                <img src="https://www.carlogos.org/car-logos/volkswagen-logo-2019.png" alt="Volkswagen" class="h-10 object-contain mb-2 group-hover:scale-110 transition">
-                <span class="font-semibold text-gray-700 group-hover:text-blue-600 text-sm">Volkswagen</span>
+            <button onclick="filterByCategory('maison')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500 transition text-center group flex flex-col items-center justify-center">
+                <div class="text-3xl mb-2">🛋️</div>
+                <span class="font-semibold text-gray-700 group-hover:text-amber-600 text-xs">Maison</span>
             </button>
 
-            <!-- BMW (Logo corrigé et sécurisé) -->
-            <button onclick="filterByBrand('BMW')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group flex flex-col items-center justify-center">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/BMW.svg" alt="BMW" class="h-10 w-10 object-contain mb-2 group-hover:scale-110 transition">
-                <span class="font-semibold text-gray-700 group-hover:text-blue-600 text-sm">BMW</span>
+            <button onclick="filterByCategory('vetements')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500 transition text-center group flex flex-col items-center justify-center">
+                <div class="text-3xl mb-2">👕</div>
+                <span class="font-semibold text-gray-700 group-hover:text-amber-600 text-xs">Vêtements</span>
             </button>
 
-            <!-- Mercedes -->
-            <button onclick="filterByBrand('Mercedes')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group flex flex-col items-center justify-center">
-                <img src="https://www.carlogos.org/car-logos/mercedes-benz-logo-2011.png" alt="Mercedes" class="h-10 object-contain mb-2 group-hover:scale-110 transition">
-                <span class="font-semibold text-gray-700 group-hover:text-blue-600 text-sm">Mercedes</span>
+            <button onclick="filterByCategory('vehicules')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500 transition text-center group flex flex-col items-center justify-center">
+                <div class="text-3xl mb-2">🚗</div>
+                <span class="font-semibold text-gray-700 group-hover:text-amber-600 text-xs">Véhicules</span>
             </button>
 
-            <!-- Audi -->
-            <button onclick="filterByBrand('Audi')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group flex flex-col items-center justify-center">
-                <img src="https://www.carlogos.org/car-logos/audi-logo-2016.png" alt="Audi" class="h-10 object-contain mb-2 group-hover:scale-110 transition">
-                <span class="font-semibold text-gray-700 group-hover:text-blue-600 text-sm">Audi</span>
+            <button onclick="filterByCategory('loisirs')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500 transition text-center group flex flex-col items-center justify-center">
+                <div class="text-3xl mb-2">⚽</div>
+                <span class="font-semibold text-gray-700 group-hover:text-amber-600 text-xs">Loisirs</span>
             </button>
 
-            <!-- Fiat -->
-            <button onclick="filterByBrand('Fiat')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group flex flex-col items-center justify-center">
-                <img src="https://www.carlogos.org/car-logos/fiat-logo-2020.png" alt="Fiat" class="h-10 object-contain mb-2 group-hover:scale-110 transition">
-                <span class="font-semibold text-gray-700 group-hover:text-blue-600 text-sm">Fiat</span>
-            </button>
-
-            <!-- Ford -->
-            <button onclick="filterByBrand('Ford')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group flex flex-col items-center justify-center">
-                <img src="https://www.carlogos.org/car-logos/ford-logo-2017.png" alt="Ford" class="h-10 object-contain mb-2 group-hover:scale-110 transition">
-                <span class="font-semibold text-gray-700 group-hover:text-blue-600 text-sm">Ford</span>
-            </button>
-
-            <!-- Hyundai -->
-            <button onclick="filterByBrand('Hyundai')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group flex flex-col items-center justify-center">
-                <img src="https://www.carlogos.org/car-logos/hyundai-logo-2011.png" alt="Hyundai" class="h-10 object-contain mb-2 group-hover:scale-110 transition">
-                <span class="font-semibold text-gray-700 group-hover:text-blue-600 text-sm">Hyundai</span>
-            </button>
-
-            <!-- Kia -->
-            <button onclick="filterByBrand('Kia')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group flex flex-col items-center justify-center">
-                <img src="https://www.carlogos.org/car-logos/kia-logo-2021.png" alt="Kia" class="h-10 object-contain mb-2 group-hover:scale-110 transition">
-                <span class="font-semibold text-gray-700 group-hover:text-blue-600 text-sm">Kia</span>
-            </button>
-
-            <!-- Toyota -->
-            <button onclick="filterByBrand('Toyota')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group flex flex-col items-center justify-center">
-                <img src="https://www.carlogos.org/car-logos/toyota-logo-2020.png" alt="Toyota" class="h-10 object-contain mb-2 group-hover:scale-110 transition">
-                <span class="font-semibold text-gray-700 group-hover:text-blue-600 text-sm">Toyota</span>
-            </button>
-
-            <!-- Autres -->
-            <button onclick="filterByBrand('Autres')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition text-center group flex flex-col items-center justify-center">
-                <div class="text-3xl mb-2">➕</div>
-                <span class="font-semibold text-gray-700 group-hover:text-blue-600 text-sm">Autres</span>
+            <button onclick="filterByCategory('autres')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500 transition text-center group flex flex-col items-center justify-center">
+                <div class="text-3xl mb-2">📦</div>
+                <span class="font-semibold text-gray-700 group-hover:text-amber-600 text-xs">Autres</span>
             </button>
 
         </div>
 
         <!-- Section : Annonces Récentes -->
         <h2 class="text-2xl font-bold mb-6 text-gray-900">Annonces récentes</h2>
-        <div id="cars-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div id="items-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
-                <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400">Photo de la voiture</div>
+                <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400">Photo de l'objet</div>
                 <div class="p-5">
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-bold text-lg text-gray-900">Volkswagen Golf 7</h3>
-                        <span class="bg-blue-50 text-blue-600 text-xs font-semibold px-2.5 py-1 rounded-lg">2018</span>
+                        <h3 class="font-bold text-lg text-gray-900">iPhone 12 Pro - 128Go</h3>
+                        <span class="bg-amber-50 text-amber-700 text-xs font-semibold px-2.5 py-1 rounded-lg">Très bon état</span>
                     </div>
-                    <p class="text-gray-500 text-sm mb-4">120,000 km • Diesel • Boîte Manuelle</p>
+                    <p class="text-gray-500 text-sm mb-4">Débloqué tout opérateur • Vendu avec boîte</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-xl font-extrabold text-emerald-600">55,000 DT</span>
-                        <button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-xl hover:bg-blue-600 hover:text-white transition">Voir détails</button>
+                        <span class="text-xl font-extrabold text-amber-600">1,200 DT</span>
+                        <button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-xl hover:bg-amber-600 hover:text-white transition">Voir détails</button>
                     </div>
                 </div>
             </div>
@@ -168,7 +126,7 @@
 
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-100 mt-20 py-8 text-center text-gray-500 text-sm">
-        <p>&copy; 2026 AutoMarket. Propulsé par GitHub & Firebase.</p>
+        <p>&copy; 2026 BrocanteMarket. Propulsé par GitHub & Firebase.</p>
     </footer>
 
     <!-- Modal d'Authentification -->
@@ -178,56 +136,69 @@
             <h3 id="authModalTitle" class="text-xl font-bold text-gray-900 mb-4">Connexion</h3>
             <form id="authForm" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Numéro de téléphone ou Email</label>
-                    <input type="text" id="authEmail" placeholder="Entrez votre email ou téléphone" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="authEmail" placeholder="votre@email.com" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
-                    <input type="password" id="authPassword" placeholder="••••••••" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <input type="password" id="authPassword" placeholder="••••••••" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
                 </div>
-                <button type="submit" class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition">Valider</button>
+                <button type="submit" class="w-full bg-amber-600 text-white py-2.5 rounded-xl font-semibold hover:bg-amber-700 transition">Valider</button>
             </form>
         </div>
     </div>
 
-    <!-- Modal pour Vendre une Voiture -->
+    <!-- Modal pour Vendre un Objet -->
     <div id="sellModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-lg w-full p-6 relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeSellModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
-            <h3 class="text-xl font-bold text-gray-900 mb-4">🚗 Vendre une voiture</h3>
+            <h3 class="text-xl font-bold text-gray-900 mb-4">📦 Vendre un objet</h3>
             <form id="sellForm" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Marque et Modèle</label>
-                    <input type="text" id="carTitle" placeholder="Ex: Volkswagen Golf 7" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Titre de l'annonce</label>
+                    <input type="text" id="itemTitle" placeholder="Ex: Machine à café Nespresso" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Année</label>
-                        <input type="number" id="carYear" placeholder="2018" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
+                        <select id="itemCategory" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none bg-white">
+                            <option value="electronique">Électronique</option>
+                            <option value="informatique">Informatique</option>
+                            <option value="maison">Maison</option>
+                            <option value="vetements">Vêtements</option>
+                            <option value="vehicules">Véhicules</option>
+                            <option value="loisirs">Loisirs</option>
+                            <option value="autres">Autres</option>
+                        </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Kilométrage (km)</label>
-                        <input type="number" id="carMileage" placeholder="120000" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">État</label>
+                        <select id="itemCondition" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none bg-white">
+                            <option value="Neuf">Neuf</option>
+                            <option value="Très bon état">Très bon état</option>
+                            <option value="Bon état">Bon état</option>
+                            <option value="Occasion">Occasion</option>
+                        </select>
                     </div>
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Prix (DT)</label>
-                    <input type="number" id="carPrice" placeholder="55000" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <input type="number" id="itemPrice" placeholder="150" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Lien de la photo</label>
-                    <input type="url" id="carImage" placeholder="https://exemple.com/photo.jpg" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    <input type="url" id="itemImage" placeholder="https://exemple.com/photo.jpg" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                    <textarea id="carDescription" rows="3" placeholder="Décrivez l'état de votre voiture..." class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+                    <textarea id="itemDescription" rows="3" placeholder="Décrivez l'état de l'objet, les dimensions, etc..." class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none"></textarea>
                 </div>
-                <button type="submit" class="w-full bg-emerald-600 text-white py-2.5 rounded-xl font-semibold hover:bg-emerald-700 transition">Publier l'annonce</button>
+                <button type="submit" class="w-full bg-amber-600 text-white py-2.5 rounded-xl font-semibold hover:bg-amber-700 transition">Publier l'annonce</button>
             </form>
         </div>
     </div>
 
-    <!-- Ton fichier JavaScript externe -->
+    <!-- Script JS -->
     <script type="module" src="app.js"></script>
 </body>
 </html>
