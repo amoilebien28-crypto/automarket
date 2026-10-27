@@ -108,7 +108,7 @@ if (authForm) {
     });
 }
 
-// Gestion de l'ajout d'un objet (Brocante)
+// Gestion de l'ajout d'un objet (Brocante) avec sélection de photo locale
 const sellForm = document.getElementById('sellForm');
 if (sellForm) {
     sellForm.addEventListener('submit', async (e) => {
@@ -117,21 +117,39 @@ if (sellForm) {
         const category = document.getElementById('itemCategory').value;
         const condition = document.getElementById('itemCondition').value;
         const price = document.getElementById('itemPrice').value;
-        const image = document.getElementById('itemImage').value;
         const description = document.getElementById('itemDescription').value;
+        
+        // Récupération de l'élément fichier (si présent dans ton HTML)
+        const fileInput = document.getElementById('itemImageFile');
 
-        try {
-            await addDoc(collection(db, "items"), {
-                title, category, condition, price, image, description,
-                seller: auth.currentUser.email,
-                createdAt: new Date()
-            });
-            alert("Annonce publiée avec succès !");
-            closeSellModal();
-            sellForm.reset();
-            loadItems();
-        } catch (error) {
-            alert("Erreur lors de l'ajout de l'annonce : " + error.message);
+        const processImageAndSubmit = async (imageUrl) => {
+            try {
+                await addDoc(collection(db, "items"), {
+                    title, category, condition, price, 
+                    image: imageUrl || 'https://via.placeholder.com/300', 
+                    description,
+                    seller: auth.currentUser.email,
+                    createdAt: new Date()
+                });
+                alert("Annonce publiée avec succès !");
+                closeSellModal();
+                sellForm.reset();
+                loadItems();
+            } catch (error) {
+                alert("Erreur lors de l'ajout de l'annonce : " + error.message);
+            }
+        };
+
+        if (fileInput && fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(uploadEvent) {
+                processImageAndSubmit(uploadEvent.target.result);
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            // Rétrocompatibilité si un champ texte "itemImage" existe encore
+            const textImage = document.getElementById('itemImage');
+            processImageAndSubmit(textImage ? textImage.value : '');
         }
     });
 }
