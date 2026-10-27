@@ -1,10 +1,30 @@
-/* Styles personnalisés pour AutoMarket */
+/* Styles personnalisés pour BrocanteMarket */
+
+/* Police globale et lissage */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #f8fafc;
+    scroll-behavior: smooth;
 }
 
-/* Effets de transition doux */
-button, input, select {
-    transition: all 0.2s ease-in-out;
+/* Personnalisation de la barre de défilement pour un look plus élégant */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d97706; /* Couleur ambre assortie au thème */
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #b45309;
+}
+
+/* Effets de transition fluides pour les cartes d'annonces */
+.hover\:shadow-md {
+    transition: all 0.3s ease-in-out;
 }
