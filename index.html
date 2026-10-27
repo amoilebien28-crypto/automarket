@@ -1,204 +1,135 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BrocanteMarket - Vendez et achetez tout ce dont vous n'avez plus besoin</title>
-    <!-- Tailwind CSS -->
+    <title>BrocanteMarket - Vendez et achetez entre particuliers</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Manifest PWA -->
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col justify-between">
 
-    <!-- Header / Barre de Navigation -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
+    <!-- En-tête -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <span class="text-2xl font-extrabold text-amber-600">🛍️ BrocanteMarket</span>
+            <div class="flex items-center space-x-2 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <span class="text-2xl font-extrabold text-amber-600">🏺 BrocanteMarket</span>
             </div>
-            <!-- Zone d'authentification dynamique -->
-            <div id="auth-nav-container" class="flex items-center space-x-3">
-                <button onclick="openAuthModal('login')" class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-amber-600 transition">Se connecter</button>
-                <button onclick="openAuthModal('register')" class="px-4 py-2 text-sm font-medium bg-amber-600 text-white rounded-xl shadow-md hover:bg-amber-700 transition">S'inscrire</button>
+            <div class="flex items-center space-x-4">
+                <button onclick="openSellModal()" class="px-4 py-2 text-sm font-semibold bg-amber-600 text-white rounded-xl shadow-md hover:bg-amber-700 transition">
+                    + Vendre un objet
+                </button>
+                <div id="auth-nav-container" class="flex items-center space-x-2">
+                    <!-- Géré dynamiquement par JavaScript -->
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Section Héro (Accroche & Deux Gros Boutons) -->
-    <section class="bg-gradient-to-r from-amber-600 to-orange-600 text-white py-16 px-4 text-center">
-        <div class="max-w-3xl mx-auto">
-            <h1 class="text-3xl md:text-5xl font-bold mb-4">Donnez une seconde vie à vos objets ou faites de bonnes affaires</h1>
-            <p class="text-amber-100 text-lg mb-8">Vendez ce dont vous ne vous servez plus, achetez près de chez vous.</p>
-            
-            <!-- Deux Gros Boutons Principaux -->
-            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
-                <button onclick="openSellModal()" class="bg-white text-amber-700 hover:bg-amber-50 text-lg font-bold px-8 py-4 rounded-2xl shadow-xl transition transform hover:-translate-y-1 flex items-center justify-center gap-3">
-                    <span>📦</span> Vendre un objet
-                </button>
-                <button onclick="scrollToSearch()" class="bg-amber-800 text-white hover:bg-amber-900 text-lg font-bold px-8 py-4 rounded-2xl shadow-xl transition transform hover:-translate-y-1 flex items-center justify-center gap-3">
-                    <span>🔍</span> Explorer les annonces
-                </button>
-            </div>
-
-            <!-- Barre de Recherche & Filtres par Catégorie -->
-            <div id="search-section" class="bg-white p-4 rounded-2xl shadow-xl flex flex-col md:flex-row gap-3">
-                <input type="text" id="searchInput" placeholder="Que recherchez-vous ? (ex: iPhone, Vélo, Canapé...)" class="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500 text-gray-800">
-                <select id="categorySelect" class="px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-amber-500 text-gray-800 bg-white">
-                    <option value="">Toutes les catégories</option>
-                    <option value="electronique">📱 Électronique & Téléphones</option>
-                    <option value="informatique">💻 Informatique & Tablettes</option>
-                    <option value="maison">🛋️ Maison & Meubles</option>
-                    <option value="vetements">👕 Vêtements & Mode</option>
-                    <option value="vehicules">🚗 Véhicules & Pièces</option>
-                    <option value="loisirs">⚽ Loisirs & Sports</option>
-                    <option value="autres">📦 Autres</option>
-                </select>
-                <button onclick="performSearch()" class="bg-amber-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-amber-700 transition">Rechercher</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section : Explorer par Catégorie -->
-    <main class="max-w-7xl mx-auto px-4 py-12">
-        <h2 class="text-2xl font-bold mb-6 text-gray-900">Explorer par catégorie</h2>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-12">
-            
-            <button onclick="filterByCategory('electronique')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500 transition text-center group flex flex-col items-center justify-center">
-                <div class="text-3xl mb-2">📱</div>
-                <span class="font-semibold text-gray-700 group-hover:text-amber-600 text-xs">Électronique</span>
-            </button>
-
-            <button onclick="filterByCategory('informatique')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500 transition text-center group flex flex-col items-center justify-center">
-                <div class="text-3xl mb-2">💻</div>
-                <span class="font-semibold text-gray-700 group-hover:text-amber-600 text-xs">Informatique</span>
-            </button>
-
-            <button onclick="filterByCategory('maison')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500 transition text-center group flex flex-col items-center justify-center">
-                <div class="text-3xl mb-2">🛋️</div>
-                <span class="font-semibold text-gray-700 group-hover:text-amber-600 text-xs">Maison</span>
-            </button>
-
-            <button onclick="filterByCategory('vetements')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500 transition text-center group flex flex-col items-center justify-center">
-                <div class="text-3xl mb-2">👕</div>
-                <span class="font-semibold text-gray-700 group-hover:text-amber-600 text-xs">Vêtements</span>
-            </button>
-
-            <button onclick="filterByCategory('vehicules')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500 transition text-center group flex flex-col items-center justify-center">
-                <div class="text-3xl mb-2">🚗</div>
-                <span class="font-semibold text-gray-700 group-hover:text-amber-600 text-xs">Véhicules</span>
-            </button>
-
-            <button onclick="filterByCategory('loisirs')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500 transition text-center group flex flex-col items-center justify-center">
-                <div class="text-3xl mb-2">⚽</div>
-                <span class="font-semibold text-gray-700 group-hover:text-amber-600 text-xs">Loisirs</span>
-            </button>
-
-            <button onclick="filterByCategory('autres')" class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-amber-500 transition text-center group flex flex-col items-center justify-center">
-                <div class="text-3xl mb-2">📦</div>
-                <span class="font-semibold text-gray-700 group-hover:text-amber-600 text-xs">Autres</span>
-            </button>
-
-        </div>
-
-        <!-- Section : Annonces Récentes -->
-        <h2 class="text-2xl font-bold mb-6 text-gray-900">Annonces récentes</h2>
-        <div id="items-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition">
-                <div class="h-48 bg-gray-200 flex items-center justify-center text-gray-400">Photo de l'objet</div>
-                <div class="p-5">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-bold text-lg text-gray-900">iPhone 12 Pro - 128Go</h3>
-                        <span class="bg-amber-50 text-amber-700 text-xs font-semibold px-2.5 py-1 rounded-lg">Très bon état</span>
-                    </div>
-                    <p class="text-gray-500 text-sm mb-4">Débloqué tout opérateur • Vendu avec boîte</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-extrabold text-amber-600">1,200 DT</span>
-                        <button class="px-3 py-1.5 bg-gray-100 text-gray-700 text-sm font-medium rounded-xl hover:bg-amber-600 hover:text-white transition">Voir détails</button>
-                    </div>
+    <!-- Contenu Principal -->
+    <main class="flex-grow">
+        <!-- Section Bannière / Recherche -->
+        <section id="search-section" class="bg-amber-700 text-white py-16 px-4 text-center">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-4xl font-extrabold mb-4">Trouvez des trésors uniques près de chez vous</h1>
+                <p class="text-amber-100 mb-8 text-lg">Achetez et vendez des objets de seconde main facilement.</p>
+                <div class="bg-white p-2 rounded-2xl shadow-lg flex flex-col md:flex-row gap-2">
+                    <input type="text" id="searchInput" placeholder="Que recherchez-vous ?" class="flex-grow px-4 py-3 rounded-xl text-gray-800 focus:outline-none">
+                    <select id="categorySelect" class="px-4 py-3 rounded-xl text-gray-800 bg-gray-100 focus:outline-none">
+                        <option value="">Toutes les catégories</option>
+                        <option value="Meubles">Meubles</option>
+                        <option value="Décoration">Décoration</option>
+                        <option value="Électronique">Électronique</option>
+                        <option value="Vêtements">Vêtements</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                    <button onclick="performSearch()" class="px-6 py-3 bg-amber-600 text-white font-semibold rounded-xl hover:bg-amber-700 transition">Rechercher</button>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Grille des annonces -->
+        <section class="max-w-7xl mx-auto px-4 py-12">
+            <h2 class="text-2xl font-bold mb-8 text-gray-900">Dernières annonces</h2>
+            <div id="items-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Les annonces seront injectées ici par JavaScript -->
+                <p class="text-gray-500 col-span-3 text-center py-8">Chargement des annonces...</p>
+            </div>
+        </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-100 mt-20 py-8 text-center text-gray-500 text-sm">
-        <p>&copy; 2026 BrocanteMarket. Propulsé par GitHub & Firebase.</p>
-    </footer>
-
     <!-- Modal d'Authentification -->
-    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 relative">
+    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4 shadow-2xl relative">
             <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
-            <h3 id="authModalTitle" class="text-xl font-bold text-gray-900 mb-4">Connexion</h3>
+            <h2 id="authModalTitle" class="text-2xl font-bold mb-6 text-gray-900">Connexion</h2>
             <form id="authForm" class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <input type="email" id="authEmail" placeholder="votre@email.com" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                    <input type="email" id="authEmail" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none" placeholder="votre@email.com">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
-                    <input type="password" id="authPassword" placeholder="••••••••" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                    <input type="password" id="authPassword" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none" placeholder="••••••••">
                 </div>
-                <button type="submit" class="w-full bg-amber-600 text-white py-2.5 rounded-xl font-semibold hover:bg-amber-700 transition">Valider</button>
+                <button type="submit" class="w-full py-3 bg-amber-600 text-white font-semibold rounded-xl shadow-md hover:bg-amber-700 transition">Valider</button>
             </form>
         </div>
     </div>
 
-    <!-- Modal pour Vendre un Objet -->
-    <div id="sellModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 relative max-h-[90vh] overflow-y-auto">
+    <!-- Modal de Vente -->
+    <div id="sellModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-3xl p-8 max-w-lg w-full mx-4 shadow-2xl relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeSellModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-xl font-bold">&times;</button>
-            <h3 class="text-xl font-bold text-gray-900 mb-4">📦 Vendre un objet</h3>
+            <h2 class="text-2xl font-bold mb-6 text-gray-900">Publier une annonce</h2>
             <form id="sellForm" class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Titre de l'annonce</label>
-                    <input type="text" id="itemTitle" placeholder="Ex: Machine à café Nespresso" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
-                        <select id="itemCategory" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none bg-white">
-                            <option value="electronique">Électronique</option>
-                            <option value="informatique">Informatique</option>
-                            <option value="maison">Maison</option>
-                            <option value="vetements">Vêtements</option>
-                            <option value="vehicules">Véhicules</option>
-                            <option value="loisirs">Loisirs</option>
-                            <option value="autres">Autres</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">État</label>
-                        <select id="itemCondition" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none bg-white">
-                            <option value="Neuf">Neuf</option>
-                            <option value="Très bon état">Très bon état</option>
-                            <option value="Bon état">Bon état</option>
-                            <option value="Occasion">Occasion</option>
-                        </select>
-                    </div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nom de l'objet</label>
+                    <input type="text" id="itemTitle" required placeholder="Ex: Lampe ancienne, Vélo..." class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Prix (DT)</label>
-                    <input type="number" id="itemPrice" placeholder="150" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
+                    <select id="itemCategory" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                        <option value="Meubles">Meubles</option>
+                        <option value="Décoration">Décoration</option>
+                        <option value="Électronique">Électronique</option>
+                        <option value="Vêtements">Vêtements</option>
+                        <option value="Autre">Autre</option>
+                    </select>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Lien de la photo</label>
-                    <input type="url" id="itemImage" placeholder="https://exemple.com/photo.jpg" required class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">État</label>
+                    <select id="itemCondition" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                        <option value="Neuf">Neuf</option>
+                        <option value="Très bon état">Très bon état</option>
+                        <option value="Bon état">Bon état</option>
+                        <option value="État correct">État correct</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Prix (en DT)</label>
+                    <input type="number" id="itemPrice" required placeholder="Ex: 50" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                    <textarea id="itemDescription" rows="3" placeholder="Décrivez l'état de l'objet, les dimensions, etc..." class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none"></textarea>
+                    <textarea id="itemDescription" rows="3" placeholder="Décrivez votre objet..." class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:outline-none"></textarea>
                 </div>
-                <button type="submit" class="w-full bg-amber-600 text-white py-2.5 rounded-xl font-semibold hover:bg-amber-700 transition">Publier l'annonce</button>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Photo de l'objet</label>
+                    <input type="file" id="itemImageFile" accept="image/*" capture="environment" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                    <p class="text-xs text-gray-400 mt-1">Prenez une photo ou choisissez une image depuis votre appareil.</p>
+                </div>
+                <button type="submit" class="w-full py-3 bg-amber-600 text-white font-semibold rounded-xl shadow-md hover:bg-amber-700 transition">Publier l'annonce</button>
             </form>
         </div>
     </div>
 
-    <!-- Script JS -->
+    <!-- Pied de page -->
+    <footer class="bg-white border-t border-gray-100 py-6 text-center text-sm text-gray-500 mt-12">
+        <p>&copy; 2026 BrocanteMarket. Tous droits réservés.</p>
+    </footer>
+
+    <!-- Script Principal Firebase -->
     <script type="module" src="app.js"></script>
 </body>
 </html>
