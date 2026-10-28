@@ -15,8 +15,8 @@
 </head>
 <body class="custom-bg text-slate-900 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-white">
 
-    <!-- نافذة اختيار اللغة عند البداية -->
-    <div id="langModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <!-- نافذة اختيار اللغة عند البداية (مؤمنة وغير قابلة للتعليق) -->
+    <div id="langModal" class="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden p-6 text-center space-y-6 border border-slate-100">
             <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner">🏺</div>
             <div>
@@ -24,16 +24,15 @@
                 <p class="text-xs text-slate-500">اختر لغتك المفضلة / Choisissez votre langue</p>
             </div>
             <div class="grid grid-cols-2 gap-3">
-                <button onclick="setLanguage('fr')" class="bg-slate-100 text-slate-800 font-bold py-3.5 rounded-2xl hover:bg-amber-600 hover:text-white transition shadow-sm text-sm">Français</button>
-                <button onclick="setLanguage('ar')" class="bg-slate-900 text-white font-bold py-3.5 rounded-2xl hover:bg-amber-600 transition shadow-sm text-sm">العربية</button>
+                <button type="button" onclick="setLanguage('fr')" class="bg-slate-100 text-slate-800 font-bold py-3.5 rounded-2xl hover:bg-amber-600 hover:text-white transition shadow-sm text-sm cursor-pointer">Français</button>
+                <button type="button" onclick="setLanguage('ar')" class="bg-slate-900 text-white font-bold py-3.5 rounded-2xl hover:bg-amber-600 transition shadow-sm text-sm cursor-pointer">العربية</button>
             </div>
         </div>
     </div>
 
-    <!-- الرأس (Header) مرتب على سطرين لعدم التداخل على الهاتف -->
+    <!-- الرأس (Header) -->
     <header class="bg-white/90 backdrop-blur-md border-b border-slate-200/60 sticky top-0 z-40 shadow-xs">
         <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <!-- السطر الأول: الشعار والاسم -->
             <div class="flex items-center justify-between w-full sm:w-auto">
                 <div class="flex items-center space-x-3 space-x-reverse cursor-pointer group" onclick="switchView('home')">
                     <div class="w-10 h-10 bg-amber-500 text-white rounded-2xl flex items-center justify-center text-xl shadow-md shadow-amber-500/20 group-hover:scale-105 transition">🏺</div>
@@ -44,7 +43,6 @@
                 </div>
             </div>
 
-            <!-- السطر الثاني: الأزرار غير متداخلة -->
             <div class="flex items-center justify-end w-full sm:w-auto gap-2 overflow-x-auto pb-1 sm:pb-0">
                 <button onclick="openSellModal()" class="bg-gradient-to-r from-amber-600 to-amber-500 text-white px-3.5 py-2 rounded-xl font-bold text-xs shadow-md shadow-amber-500/25 hover:from-amber-700 hover:to-amber-600 active:scale-95 transition flex items-center space-x-1 space-x-reverse whitespace-nowrap">
                     <span class="text-base leading-none">+</span>
@@ -59,21 +57,18 @@
         </div>
     </header>
 
-    <!-- المحتوى الرئيسي (الصفحة الرئيسية) -->
+    <!-- المحتوى الرئيسي -->
     <main id="homeView" class="max-w-5xl w-full mx-auto px-4 py-6 flex-grow space-y-6">
-        
-        <!-- بانر الترحيب والشعار التوضيحي -->
         <div class="bg-white/90 backdrop-blur-sm p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/60 text-center space-y-3 relative overflow-hidden">
             <h1 id="welcomeTitle" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Esouk Tunisie - السوق التونسي</h1>
             <p id="welcomeDesc" class="text-xs sm:text-sm font-bold text-amber-700 max-w-2xl mx-auto bg-amber-50/80 py-2.5 px-4 rounded-2xl border border-amber-100">بيع وشراء: كل شيء جديد أو مستعمل في كامل تراب الجمهورية</p>
             <div class="pt-2">
-                <button onclick="changeLanguagePrompt()" class="text-xs text-slate-400 font-semibold hover:text-amber-600 transition inline-flex items-center gap-1">
+                <button onclick="changeLanguagePrompt()" class="text-xs text-slate-400 font-semibold hover:text-amber-600 transition inline-flex items-center gap-1 cursor-pointer">
                     <span>🌐 تغيير اللغة / Changer de langue</span>
                 </button>
             </div>
         </div>
 
-        <!-- شريط البحث والفلاتر -->
         <div class="bg-white/90 backdrop-blur-sm p-4 sm:p-5 rounded-3xl shadow-sm border border-slate-200/60 space-y-3">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
@@ -92,7 +87,6 @@
             </div>
         </div>
 
-        <!-- فئات سريعة -->
         <div>
             <h2 id="quickCatTitle" class="text-xs font-bold text-slate-400 mb-3 uppercase tracking-wider px-1">التصنيفات السريعة</h2>
             <div id="quickCategories" class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
@@ -100,7 +94,6 @@
             </div>
         </div>
 
-        <!-- قائمة الإعلانات -->
         <section class="space-y-4">
             <div class="flex justify-between items-center px-1">
                 <h2 id="recentAdsTitle" class="text-base sm:text-lg font-black text-slate-900">الإعلانات الحديثة</h2>
@@ -114,7 +107,7 @@
         </section>
     </main>
 
-    <!-- لوحة التحكم الإدارية الخاصة بالأدمن فقط -->
+    <!-- لوحة التحكم الإدارية للأدمن فقط -->
     <main id="adminView" class="max-w-5xl w-full mx-auto px-4 py-6 flex-grow hidden space-y-6">
         <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/60 space-y-6">
             <div class="flex justify-between items-center border-b border-slate-100 pb-4">
@@ -125,7 +118,6 @@
                 <button onclick="handleLogout()" class="bg-red-50 text-red-600 px-4 py-2 rounded-xl text-xs font-bold hover:bg-red-100 transition">تسجيل الخروج</button>
             </div>
 
-            <!-- إضافة فئة جديدة -->
             <div class="space-y-3">
                 <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إضافة فئة جديدة للتطبيق</h3>
                 <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
@@ -134,7 +126,6 @@
                 </form>
             </div>
 
-            <!-- إحصائيات سريعة -->
             <div class="pt-4 border-t border-slate-100 space-y-3">
                 <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إحصائيات المنصة</h3>
                 <div class="grid grid-cols-2 gap-4">
@@ -157,7 +148,7 @@
         <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية</p>
     </footer>
 
-    <!-- نافذة نشر إعلان (بيع) مع مربعات معاينة الصور -->
+    <!-- نافذة نشر إعلان (بيع) -->
     <div id="sellModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -174,15 +165,11 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1.5">الفئة (Catégorie)</label>
-                        <select id="itemCategory" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
-                            <!-- تعبئة ديناميكية -->
-                        </select>
+                        <select id="itemCategory" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition"></select>
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1.5">الولاية (Gouvernorat)</label>
-                        <select id="itemState" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
-                            <!-- تعبئة ديناميكية -->
-                        </select>
+                        <select id="itemState" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition"></select>
                     </div>
                 </div>
 
@@ -212,12 +199,10 @@
                     <textarea id="itemDescription" rows="3" placeholder="أكتب تفاصيل الغرض..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition"></textarea>
                 </div>
 
-                <!-- خانة التقاط الصورة مع 4 مربعات معاينة -->
                 <div class="space-y-2">
                     <label class="block text-xs font-bold text-slate-700">صور الغرض (اختر أو القِط حتى 4 صور)</label>
                     <input type="file" id="itemImageFile" accept="image/*" capture="environment" multiple onchange="previewImages(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition cursor-pointer bg-slate-50 border border-slate-200 rounded-xl p-2">
                     
-                    <!-- 4 مربعات معاينة الصور الصغيرة -->
                     <div id="imagePreviewContainer" class="grid grid-cols-4 gap-2 pt-1">
                         <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">1</div>
                         <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">2</div>
@@ -231,7 +216,7 @@
         </div>
     </div>
 
-    <!-- نافذة تسجيل الدخول / إنشاء حساب (بدون أي خانة إضافية للأدمن) -->
+    <!-- نافذة تسجيل الدخول / إنشاء حساب -->
     <div id="authModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -283,7 +268,6 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // البريد الإلكتروني الخاص بك وكلمة السر المعتمدة للأدمن
         const ADMIN_EMAIL = "mouradters@admin.tn";
         const ADMIN_PASS = "77771";
 
@@ -301,12 +285,20 @@
         window.setLanguage = function(lang) {
             window.currentLang = lang;
             localStorage.setItem('esouk_lang', lang);
-            document.getElementById('langModal').classList.add('hidden');
+            const modal = document.getElementById('langModal');
+            if (modal) {
+                modal.style.display = 'none';
+                modal.classList.add('hidden');
+            }
             applyTranslations();
         };
 
         window.changeLanguagePrompt = function() {
-            document.getElementById('langModal').classList.remove('hidden');
+            const modal = document.getElementById('langModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                modal.classList.remove('hidden');
+            }
         };
 
         function applyTranslations() {
@@ -339,9 +331,14 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('langModal');
             if (!window.currentLang) {
-                document.getElementById('langModal').classList.remove('hidden');
+                if (modal) modal.classList.remove('hidden');
             } else {
+                if (modal) {
+                    modal.classList.add('hidden');
+                    modal.style.display = 'none';
+                }
                 applyTranslations();
             }
             populateDropdowns();
@@ -409,7 +406,6 @@
             }
         }
 
-        // معاينة الصور في المربعات الأربعة
         window.previewImages = function(e) {
             const files = e.target.files;
             const container = document.getElementById('imagePreviewContainer');
@@ -436,7 +432,6 @@
             const password = document.getElementById('authPassword').value;
             const isAr = window.currentLang === 'ar';
 
-            // إذا دخلت أنت كأدمن، نتأكد من كلمة المرور الخاصة بك وننشئ الحساب تلقائياً إذا لم يكن موجوداً
             if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
                 if (password !== ADMIN_PASS) {
                     alert(isAr ? "كلمة مرور الأدمن غير صحيحة!" : "Mot de passe administrateur incorrect !");
@@ -459,7 +454,6 @@
                     try {
                         await createUserWithEmailAndPassword(auth, email, password);
                     } catch (regErr) {
-                        // لو الحساب موجود مسبقاً، نحاول تسجيل الدخول مباشرة
                         await signInWithEmailAndPassword(auth, email, password);
                     }
                 }
