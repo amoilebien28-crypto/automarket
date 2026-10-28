@@ -32,7 +32,6 @@
         .animate-bounce-slow {
             animation: bounceSlow 2s infinite;
         }
-        /* تأثير العنوان المتحرك الدارج للتصنيفات */
         @keyframes marquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
@@ -96,7 +95,7 @@
     <!-- المحتوى الرئيسي -->
     <main id="homeView" class="max-w-5xl w-full mx-auto px-4 py-4 flex-grow space-y-4">
         
-        <!-- البطاقة الأولى مصغرة (Welcome Card أصغر حجماً لتظهر البطاقتان الرئيسيتان فوراً) -->
+        <!-- البطاقة الأولى مصغرة -->
         <div class="bg-white/90 backdrop-blur-sm px-5 py-3.5 rounded-2xl shadow-xs border border-slate-200/60 flex items-center justify-between gap-4">
             <div>
                 <h1 id="welcomeTitle" class="text-base sm:text-lg font-black text-slate-900 tracking-tight">Esouk Tunisie - السوق التونسي</h1>
@@ -109,7 +108,7 @@
             </div>
         </div>
 
-        <!-- البطاقتان الرئيسيتان في المنتصف مباشرة (البيع والشراء) مرئيتان مباشرة على الشاشة -->
+        <!-- البطاقتان الرئيسيتان في المنتصف -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
             <!-- بطاقة البيع -->
             <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 p-5 rounded-3xl shadow-lg text-center text-white space-y-2.5 border border-amber-400/40 relative overflow-hidden">
@@ -127,7 +126,7 @@
                 </div>
             </div>
 
-            <!-- بطاقة الشراء الجديدة بلون داكن وفخم -->
+            <!-- بطاقة الشراء -->
             <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-5 rounded-3xl shadow-lg text-center text-white space-y-2.5 border border-slate-700 relative overflow-hidden">
                 <div class="absolute -right-4 -bottom-4 text-7xl opacity-10 select-none">🛒</div>
                 <div class="relative z-10 space-y-1">
@@ -169,7 +168,7 @@
             </div>
         </div>
 
-        <!-- عنوان فئات ملون و متحرك (Scrolling Marquee Title) -->
+        <!-- عنوان فئات ملون و متحرك -->
         <div class="bg-gradient-to-r from-amber-600 to-amber-700 text-white py-2 rounded-2xl shadow-xs overflow-hidden flex items-center">
             <div class="bg-slate-900 text-amber-300 px-3 py-1 text-[11px] font-black tracking-wider uppercase shrink-0 z-10 ml-2 rounded-xl">⚡ تونس العريقة</div>
             <div class="marquee-container text-xs font-bold tracking-wide">
@@ -259,7 +258,7 @@
         <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية</p>
     </footer>
 
-    <!-- نافذة نشر إعلان (بيع) مع دعم 5 صور ومعاينتها بوضوح -->
+    <!-- نافذة نشر إعلان (بيع) مع تجميع الصور حتى 5 صور بدون مسح القديم -->
     <div id="sellModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -311,7 +310,7 @@
                 </div>
 
                 <div class="space-y-2">
-                    <label class="block text-xs font-bold text-slate-700">صور الغرض (اختر أو التقط حتى 5 صور)</label>
+                    <label class="block text-xs font-bold text-slate-700">صور الغرض (اختر حتى 5 صور متتالية)</label>
                     <input type="file" id="itemImageFile" accept="image/*" capture="environment" multiple onchange="previewImages(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition cursor-pointer bg-slate-50 border border-slate-200 rounded-xl p-2">
                     
                     <!-- 5 خانات معاينة صور واضحة في الأسفل -->
@@ -362,7 +361,7 @@
         </div>
     </div>
 
-    <!-- الكود البرمجى والمنطق -->
+    <!-- الكود البرمجى والمنطق المعدّل لتراكم الصور حتى 5 صور بدون مسح -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
@@ -394,7 +393,7 @@
         window.currentLang = localStorage.getItem('esouk_lang') || '';
         let explicitUsersCount = 1;
         let isLoginMode = false;
-        let selectedImagesBase64 = [];
+        let selectedImagesBase64 = []; // مصفوفة لتخزين وتراكم الصور
 
         function showToast(message, icon = "✨") {
             const toast = document.getElementById('toastNotification');
@@ -532,21 +531,17 @@
             }
         }
 
-        // معاينة حتى 5 صور في الأسفل بدقة عالية
+        // دالة معاينة وتراكم الصور (تحافظ على الصور السابقة وتضيف الجديدة حتى 5 كحد أقصى)
         window.previewImages = function(e) {
             const files = e.target.files;
-            const container = document.getElementById('imagePreviewContainer');
-            container.innerHTML = "";
-            selectedImagesBase64 = [];
+            if (!files || files.length === 0) return;
 
-            if (!files || files.length === 0) {
-                renderEmptyImageSlots(container, 5);
-                return;
-            }
+            for (let i = 0; i < files.length; i++) {
+                if (selectedImagesBase64.length >= 5) {
+                    showToast("الحد الأقصى هو 5 صور", "⚠️");
+                    break;
+                }
 
-            const maxFiles = Math.min(files.length, 5);
-
-            for (let i = 0; i < maxFiles; i++) {
                 const file = files[i];
                 const reader = new FileReader();
                 reader.onload = function(uploadEvent) {
@@ -577,27 +572,47 @@
                         ctx.drawImage(img, 0, 0, width, height);
 
                         const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
-                        selectedImagesBase64.push(compressedDataUrl);
-
-                        const div = document.createElement('div');
-                        div.className = "h-14 bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative shadow-xs";
-                        div.innerHTML = `<img src="${compressedDataUrl}" class="w-full h-full object-cover">`;
-                        container.appendChild(div);
+                        
+                        if (selectedImagesBase64.length < 5) {
+                            selectedImagesBase64.push(compressedDataUrl);
+                            updateImagePreviewUI();
+                        }
                     };
                 };
                 reader.readAsDataURL(file);
             }
+            // مسح حقل الـ input لكي يسمح بإضافة صور أخرى لاحقاً إن أردت
+            e.target.value = "";
         };
 
-        function renderEmptyImageSlots(container, count) {
+        // تحديث واجهة خانات الصور الـ 5
+        function updateImagePreviewUI() {
+            const container = document.getElementById('imagePreviewContainer');
             container.innerHTML = "";
-            for (let i = 1; i <= count; i++) {
-                const div = document.createElement('div');
-                div.className = "h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]";
-                div.innerText = i;
-                container.appendChild(div);
+
+            for (let i = 0; i < 5; i++) {
+                if (i < selectedImagesBase64.length) {
+                    const div = document.createElement('div');
+                    div.className = "h-14 bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative shadow-xs group";
+                    div.innerHTML = `
+                        <img src="${selectedImagesBase64[i]}" class="w-full h-full object-cover">
+                        <button type="button" onclick="removeImage(${i})" class="absolute top-0.5 right-0.5 bg-red-600 text-white rounded-full w-4 h-4 text-[9px] flex items-center justify-center opacity-80 hover:opacity-100">&times;</button>
+                    `;
+                    container.appendChild(div);
+                } else {
+                    const div = document.createElement('div');
+                    div.className = "h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]";
+                    div.innerText = (i + 1);
+                    container.appendChild(div);
+                }
             }
         }
+
+        // إمكانية حذف صورة معينة من القائمة قبل النشر
+        window.removeImage = function(index) {
+            selectedImagesBase64.splice(index, 1);
+            updateImagePreviewUI();
+        };
 
         window.handleAuthSubmit = async function(e) {
             e.preventDefault();
@@ -771,7 +786,7 @@
                 showToast(isAr ? "تم نشر إعلانك بنجاح!" : "Annonce publiée !", "🚀");
                 document.getElementById('sellForm').reset();
                 selectedImagesBase64 = [];
-                renderEmptyImageSlots(document.getElementById('imagePreviewContainer'), 5);
+                updateImagePreviewUI();
                 closeSellModal();
                 loadItems();
             } catch (err) {
