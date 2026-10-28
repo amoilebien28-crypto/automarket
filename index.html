@@ -15,7 +15,7 @@
 </head>
 <body class="custom-bg text-slate-900 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-white">
 
-    <!-- نافذة اختيار اللغة عند البداية (مؤمنة وغير قابلة للتعليق) -->
+    <!-- نافذة اختيار اللغة عند البداية -->
     <div id="langModal" class="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden p-6 text-center space-y-6 border border-slate-100">
             <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner">🏺</div>
@@ -211,7 +211,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="w-full bg-gradient-to-r from-amber-600 to-amber-500 text-white font-bold py-3.5 rounded-2xl hover:from-amber-700 hover:to-amber-600 transition shadow-md text-sm">نشر الإعلان الآن</button>
+                <button type="submit" id="submitPublishBtn" class="w-full bg-gradient-to-r from-amber-600 to-amber-500 text-white font-bold py-3.5 rounded-2xl hover:from-amber-700 hover:to-amber-600 transition shadow-md text-sm">نشر الإعلان الآن</button>
             </form>
         </div>
     </div>
@@ -406,23 +406,31 @@
             }
         }
 
+        // معاينة الصور بشكل فوري وسليم
         window.previewImages = function(e) {
             const files = e.target.files;
             const container = document.getElementById('imagePreviewContainer');
             container.innerHTML = "";
             selectedImagesBase64 = [];
 
+            if (!files || files.length === 0) return;
+
             const maxFiles = Math.min(files.length, 4);
+            let loadedCount = 0;
+
             for (let i = 0; i < maxFiles; i++) {
+                const file = files[i];
                 const reader = new FileReader();
-                reader.readAsDataURL(files[i]);
                 reader.onload = function(uploadEvent) {
                     selectedImagesBase64.push(uploadEvent.target.result);
+                    loadedCount++;
+
                     const div = document.createElement('div');
                     div.className = "h-16 bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative shadow-xs";
                     div.innerHTML = `<img src="${uploadEvent.target.result}" class="w-full h-full object-cover">`;
                     container.appendChild(div);
-                }
+                };
+                reader.readAsDataURL(file);
             }
         };
 
@@ -544,9 +552,21 @@
             }
         };
 
+        // نشر الإعلان بشكل آمن وسريع دون تعليق
         window.handlePublishItem = async function(e) {
             e.preventDefault();
             if (!auth.currentUser) return;
+
+            const submitBtn = document.getElementById('submitPublishBtn');
+            const isAr = window.currentLang === 'ar';
+
+            if (selectedImagesBase64.length === 0) {
+                alert(isAr ? "يرجى اختيار صورة واحدة على الأقل." : "Veuillez ajouter une photo.");
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = isAr ? "جاري نشر الإعلان..." : "Publication en cours...";
 
             const title = document.getElementById('itemTitle').value;
             const category = document.getElementById('itemCategory').value;
@@ -555,11 +575,6 @@
             const price = document.getElementById('itemPrice').value;
             const phone = document.getElementById('itemPhone').value;
             const description = document.getElementById('itemDescription').value;
-
-            if (selectedImagesBase64.length === 0) {
-                alert(window.currentLang === 'ar' ? "يرجى اختيار صورة واحدة على الأقل." : "Veuillez ajouter une photo.");
-                return;
-            }
 
             try {
                 await addDoc(collection(db, "items"), {
@@ -572,7 +587,8 @@
                     userEmail: auth.currentUser.email,
                     createdAt: serverTimestamp()
                 });
-                alert(window.currentLang === 'ar' ? "تم نشر إعلانك بنجاح على Esouk Tunisie!" : "Annonce publiée avec succès !");
+                
+                alert(isAr ? "تم نشر إعلانك بنجاح على Esouk Tunisie!" : "Annonce publiée avec succès !");
                 document.getElementById('sellForm').reset();
                 selectedImagesBase64 = [];
                 document.getElementById('imagePreviewContainer').innerHTML = `
@@ -584,7 +600,10 @@
                 closeSellModal();
                 loadItems();
             } catch (err) {
-                alert("Erreur : " + err.message);
+                alert((isAr ? "خطأ في النشر: " : "Erreur : ") + err.message);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = isAr ? "نشر الإعلان الآن" : "Publier l'annonce";
             }
         };
 
