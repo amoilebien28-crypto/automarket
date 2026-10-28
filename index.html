@@ -18,7 +18,7 @@
     <!-- نافذة اختيار اللغة عند البداية -->
     <div id="langModal" class="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden p-6 text-center space-y-6 border border-slate-100">
-            <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner">🏺</div>
+            <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner">🛍️</div>
             <div>
                 <h2 class="text-xl font-black text-slate-900 mb-1">مرحباً بكم / Bienvenue</h2>
                 <p class="text-xs text-slate-500">اختر لغتك المفضلة / Choisissez votre langue</p>
@@ -30,24 +30,28 @@
         </div>
     </div>
 
-    <!-- الرأس (Header) -->
-    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200/60 sticky top-0 z-40 shadow-xs">
+    <!-- الرأس (Header) - خلفية بلون جذاب ومريح غير بيضاء تماماً -->
+    <header class="bg-slate-100/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 shadow-xs">
         <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div class="flex items-center justify-between w-full sm:w-auto">
-                <div class="flex items-center space-x-3 space-x-reverse cursor-pointer group" onclick="switchView('home')">
-                    <div class="w-12 h-12 bg-amber-500 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg shadow-amber-500/25 group-hover:scale-105 transition">🏺</div>
-                    <div>
+            
+            <!-- أزرار الدخول وإنشاء حساب على اليسار -->
+            <div id="auth-nav-container" class="flex items-center space-x-2 space-x-reverse order-2 sm:order-1">
+                <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200/80 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs">إنشاء حساب</button>
+                <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">دخول</button>
+            </div>
+
+            <!-- الشعار واللوجو على اليمين بمسافة مريحة ولون مميز للعنوان الفرعي -->
+            <div class="flex items-center justify-end w-full sm:w-auto order-1 sm:order-2">
+                <div class="flex items-center space-x-3.5 space-x-reverse cursor-pointer group" onclick="switchView('home')">
+                    <div class="text-right">
                         <span class="font-black text-slate-900 text-xl tracking-tight block leading-tight">Esouk<span class="text-amber-600">Tunisie</span></span>
-                        <span class="text-[11px] text-slate-500 font-bold tracking-wide block">السوق التونسي الشامل</span>
+                        <span class="text-[11px] text-amber-800 font-extrabold tracking-wide block mt-0.5">السوق التونسي الشامل</span>
                     </div>
+                    <!-- اللوجو الثابت للبيع والشراء (حقيبة تسوق / متجر عصري) -->
+                    <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg shadow-amber-500/25 group-hover:scale-105 transition">🛍️</div>
                 </div>
             </div>
 
-            <!-- أزرار الدخول وإنشاء حساب فقط في الأعلى -->
-            <div id="auth-nav-container" class="flex items-center space-x-2 space-x-reverse">
-                <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200/60 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap">إنشاء حساب</button>
-                <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">دخول</button>
-            </div>
         </div>
     </header>
 
@@ -532,7 +536,7 @@
                 `;
             } else {
                 nav.innerHTML = `
-                    <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200/60 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap">${isAr ? 'إنشاء حساب' : "S'inscrire"}</button>
+                    <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200/80 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs">${isAr ? 'إنشاء حساب' : "S'inscrire"}</button>
                     <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">${isAr ? 'دخول' : 'Connexion'}</button>
                 `;
             }
