@@ -3,37 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BrocanteMarket</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Brocante Market - Achat et Vente entre particuliers</title>
+    <!-- Tailwind CSS pour un design moderne et responsive -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Ton fichier de style CSS séparé -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between font-sans">
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col justify-between">
 
-    <!-- En-tête mobile / desktop -->
-    <header class="bg-white shadow-sm sticky top-0 z-40 border-b border-slate-100">
-        <div class="max-w-md md:max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
-            <h1 class="text-xl font-black text-amber-600 tracking-tight flex items-center gap-1">
-                🏺 BrocanteMarket
-            </h1>
-            <div class="flex items-center gap-2">
-                <button onclick="openSellModal()" class="bg-amber-600 text-white px-3.5 py-2 rounded-xl text-sm font-bold shadow-md shadow-amber-600/20 active:scale-95 transition">
-                    + Vendre
+    <!-- En-tête (Header) -->
+    <header class="bg-white border-b border-slate-100 sticky top-0 z-40 shadow-xs">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+            
+            <!-- Logo et Nom -->
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl">🏺</span>
+                <span class="font-black text-slate-900 text-lg tracking-tight">Brocante<span class="text-amber-600">Market</span></span>
+            </div>
+
+            <!-- Actions principales : Vendre en vedette + Compte -->
+            <div class="flex items-center space-x-2">
+                <!-- Bouton Vendre ultra visible en premier -->
+                <button onclick="openSellModal()" class="bg-gradient-to-r from-amber-600 to-amber-500 text-white px-4 py-2.5 rounded-2xl font-bold text-sm shadow-md shadow-amber-500/20 hover:from-amber-700 hover:to-amber-600 active:scale-95 transition flex items-center space-x-1.5">
+                    <span class="text-lg leading-none">+</span>
+                    <span>Vendre</span>
                 </button>
-                <div id="auth-nav-container" class="flex items-center gap-1">
-                    <!-- Géré par JavaScript -->
+
+                <!-- Conteneur Connexion / Déconnexion géré dynamiquement par JavaScript -->
+                <div id="auth-nav-container" class="flex items-center">
+                    <!-- Injecté par app.js -->
                 </div>
             </div>
+
         </div>
     </header>
 
     <!-- Contenu Principal -->
-    <main class="flex-grow max-w-md md:max-w-4xl mx-auto w-full px-4 py-6">
+    <main class="max-w-4xl w-full mx-auto px-4 py-6 flex-grow">
         
-        <!-- Barre de recherche tactile -->
-        <div class="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 mb-6 flex flex-col gap-2">
-            <input type="text" id="searchInput" placeholder="Rechercher un objet..." class="w-full bg-slate-50 px-4 py-2.5 rounded-xl text-sm border border-slate-200 focus:outline-none focus:border-amber-500">
+        <!-- Barre de Recherche et Filtres -->
+        <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 mb-6 space-y-3">
+            <input type="text" id="searchInput" placeholder="Rechercher un objet..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition">
+            
             <div class="flex gap-2">
-                <select id="categorySelect" class="w-full bg-slate-50 px-3 py-2.5 rounded-xl text-sm border border-slate-200 focus:outline-none focus:border-amber-500">
+                <select id="categorySelect" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition">
                     <option value="">Toutes les catégories</option>
                     <option value="Meubles">Meubles</option>
                     <option value="Décoration">Décoration</option>
@@ -41,54 +54,38 @@
                     <option value="Vêtements">Vêtements</option>
                     <option value="Autre">Autre</option>
                 </select>
-                <button onclick="performSearch()" class="bg-slate-900 text-white px-5 py-2.5 rounded-xl text-sm font-semibold active:scale-95 transition">
-                    Filtrer
-                </button>
+                <button onclick="performSearch()" class="bg-slate-900 text-white px-6 py-3 rounded-2xl text-sm font-bold hover:bg-slate-800 transition">Filtrer</button>
             </div>
         </div>
 
-        <!-- Liste des annonces -->
-        <h2 class="text-lg font-bold text-slate-900 mb-4">Annonces récentes</h2>
-        <div id="items-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-12">
-            <p class="text-slate-400 text-center py-8 col-span-full text-sm">Chargement des annonces...</p>
-        </div>
+        <!-- Liste des Annonces -->
+        <section>
+            <h2 class="text-lg font-black text-slate-900 mb-4">Annonces récentes</h2>
+            <div id="items-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Les annonces seront injectées dynamiquement ici par app.js -->
+            </div>
+        </section>
+
     </main>
 
-    <!-- Modal d'Authentification (Connexion / Inscription) -->
-    <div id="authModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center z-50 hidden p-0 sm:p-4">
-        <div class="bg-white rounded-t-3xl sm:rounded-3xl p-6 w-full max-w-md shadow-2xl relative animate-in fade-in slide-in-from-bottom duration-200">
-            <button onclick="closeAuthModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 text-xl font-bold w-8 h-8 flex items-center justify-center rounded-full bg-slate-100">&times;</button>
-            <h3 id="authModalTitle" class="text-xl font-bold mb-5 text-slate-900">Connexion</h3>
-            <form id="authForm" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Email</label>
-                    <input type="email" id="authEmail" required class="w-full bg-slate-50 px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-amber-500" placeholder="votre@email.com">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Mot de passe</label>
-                    <input type="password" id="authPassword" required class="w-full bg-slate-50 px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-amber-500" placeholder="••••••••">
-                </div>
-                <button type="submit" class="w-full py-3.5 bg-amber-600 text-white font-bold rounded-xl shadow-lg shadow-amber-600/30 active:scale-95 transition text-sm">Valider</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal de Vente (Optimisée mobile avec Appareil Photo) -->
-    <div id="sellModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center z-50 hidden p-0 sm:p-4">
-        <div class="bg-white rounded-t-3xl sm:rounded-3xl p-6 w-full max-w-md shadow-2xl relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeSellModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 text-xl font-bold w-8 h-8 flex items-center justify-center rounded-full bg-slate-100">&times;</button>
-            <h3 class="text-xl font-bold mb-5 text-slate-900">Publier une annonce</h3>
+    <!-- MODALE DE PUBLICATION (Vendre) -->
+    <div id="sellModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-xl overflow-hidden max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 class="font-bold text-slate-900">Publier une annonce</h3>
+                <button onclick="closeSellModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold px-2">&times;</button>
+            </div>
             
-            <form id="sellForm" class="space-y-4">
+            <form id="sellForm" class="p-5 overflow-y-auto space-y-4">
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Nom de l'objet</label>
-                    <input type="text" id="itemTitle" required placeholder="Ex: Bureau vintage" class="w-full bg-slate-50 px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-amber-500">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Titre de l'objet</label>
+                    <input type="text" id="itemTitle" required placeholder="Ex: Table ancienne en bois" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
                 </div>
-                
+
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Catégorie</label>
-                        <select id="itemCategory" class="w-full bg-slate-50 px-3 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-amber-500">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Catégorie</label>
+                        <select id="itemCategory" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
                             <option value="Meubles">Meubles</option>
                             <option value="Décoration">Décoration</option>
                             <option value="Électronique">Électronique</option>
@@ -97,44 +94,61 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">État</label>
-                        <select id="itemCondition" class="w-full bg-slate-50 px-3 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-amber-500">
+                        <label class="block text-xs font-bold text-slate-700 mb-1">État</label>
+                        <select id="itemCondition" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
                             <option value="Neuf">Neuf</option>
                             <option value="Très bon état">Très bon état</option>
                             <option value="Bon état">Bon état</option>
-                            <option value="État correct">État correct</option>
+                            <option value="À restaurer">À restaurer</option>
                         </select>
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Prix (DT)</label>
-                    <input type="number" id="itemPrice" required placeholder="Ex: 45" class="w-full bg-slate-50 px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-amber-500">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Prix (DT)</label>
+                    <input type="number" id="itemPrice" required placeholder="Ex: 150" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Description</label>
-                    <textarea id="itemDescription" rows="2" placeholder="Quelques mots sur l'objet..." class="w-full bg-slate-50 px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-amber-500"></textarea>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Description</label>
+                    <textarea id="itemDescription" rows="3" placeholder="Décrivez votre objet..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500"></textarea>
                 </div>
 
-                <!-- BOUTON APPAREIL PHOTO / GALERIE -->
                 <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Photo de l'objet</label>
-                    <div class="relative border-2 border-dashed border-slate-200 rounded-2xl p-4 text-center bg-slate-50 hover:bg-slate-100 transition">
-                        <input type="file" id="itemImageFile" accept="image/*" capture="environment" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
-                        <div class="flex flex-col items-center justify-center gap-1">
-                            <span class="text-2xl">📸</span>
-                            <span class="text-xs font-bold text-amber-600">Prendre une photo ou choisir un fichier</span>
-                        </div>
-                    </div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Photo (Appareil photo ou Galerie)</label>
+                    <input type="file" id="itemImageFile" accept="image/*" capture="environment" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
                 </div>
 
-                <button type="submit" class="w-full py-3.5 bg-amber-600 text-white font-bold rounded-xl shadow-lg shadow-amber-600/30 active:scale-95 transition text-sm">Publier l'annonce</button>
+                <button type="submit" class="w-full bg-amber-600 text-white font-bold py-3 rounded-xl hover:bg-amber-700 transition shadow-md shadow-amber-600/20">Publier l'annonce</button>
             </form>
         </div>
     </div>
 
-    <!-- Script principal -->
+    <!-- MODALE D'AUTHENTIFICATION (Connexion / Inscription) -->
+    <div id="authModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-sm rounded-3xl shadow-xl overflow-hidden">
+            <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 class="font-bold text-slate-900">Connexion / Inscription</h3>
+                <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold px-2">&times;</button>
+            </div>
+            
+            <form id="authForm" class="p-5 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Adresse e-mail</label>
+                    <input type="email" id="authEmail" required placeholder="nom@exemple.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Mot de passe</label>
+                    <input type="password" id="authPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+
+                <button type="submit" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition">Se connecter / S'inscrire</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lien vers ton fichier JavaScript séparé -->
     <script type="module" src="app.js"></script>
 </body>
 </html>
