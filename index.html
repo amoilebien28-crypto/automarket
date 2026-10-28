@@ -8,12 +8,34 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { -webkit-tap-highlight-color: transparent; }
+        /* خلفية الموقع مع نمط شفاف يرمز إلى السوق والتجارة */
         .custom-bg {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #fef3c7 100%);
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 0.75px, transparent 0.75px), radial-gradient(#cbd5e1 0.75px, #f8fafc 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        /* تصميم رسالة التنبيه الصغيرة المصغرة (Toast Notification) */
+        #toastNotification {
+            transition: all 0.3s ease;
+            transform: translateY(-20px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #toastNotification.show {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
         }
     </style>
 </head>
 <body class="custom-bg text-slate-900 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-white">
+
+    <!-- رسالة التنبيه الصغيرة المصغرة بدلاً من الـ Alert المزعج -->
+    <div id="toastNotification" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-5 py-2.5 rounded-2xl shadow-xl text-xs font-bold border border-slate-700 flex items-center gap-2">
+        <span id="toastIcon">✨</span>
+        <span id="toastText">تم بنجاح</span>
+    </div>
 
     <!-- نافذة اختيار اللغة عند البداية -->
     <div id="langModal" class="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm flex items-center justify-center p-4">
@@ -30,8 +52,8 @@
         </div>
     </div>
 
-    <!-- الرأس (Header) -->
-    <header class="bg-slate-100/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 shadow-xs">
+    <!-- الرأس (Header) - تم فصل وتوسيع المسافة لمنع أي تداخل -->
+    <header class="bg-slate-100/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 shadow-xs">
         <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
             
             <!-- أزرار الدخول وإنشاء حساب على اليسار -->
@@ -40,14 +62,14 @@
                 <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">دخول</button>
             </div>
 
-            <!-- الشعار واللوجو على اليمين -->
+            <!-- الشعار واللوجو على اليمين بمسافة مريحة تمنع التداخل -->
             <div class="flex items-center justify-end w-full sm:w-auto order-1 sm:order-2">
-                <div class="flex items-center space-x-3.5 space-x-reverse cursor-pointer group" onclick="switchView('home')">
-                    <div class="text-right">
+                <div class="flex items-center space-x-4 space-x-reverse cursor-pointer group" onclick="switchView('home')">
+                    <div class="text-right pl-2">
                         <span class="font-black text-slate-900 text-xl tracking-tight block leading-tight">Esouk<span class="text-amber-600">Tunisie</span></span>
                         <span class="text-[11px] text-amber-800 font-extrabold tracking-wide block mt-0.5">السوق التونسي الشامل</span>
                     </div>
-                    <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg shadow-amber-500/25 group-hover:scale-105 transition">🛍️</div>
+                    <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg shadow-amber-500/25 group-hover:scale-105 transition shrink-0">🛍️</div>
                 </div>
             </div>
 
@@ -66,7 +88,7 @@
             </div>
         </div>
 
-        <!-- زر البيع الرئيسي الكبير في وسط الصفحة: ماذا تريد أن تبيع اليوم؟ -->
+        <!-- زر البيع الرئيسي الكبير في وسط الصفحة بالنص الجديد -->
         <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 p-6 sm:p-8 rounded-3xl shadow-xl text-center text-white space-y-4 border border-amber-400/40 relative overflow-hidden">
             <div class="absolute -right-6 -bottom-6 text-8xl opacity-10 select-none">🏷️</div>
             <div class="relative z-10 space-y-2">
@@ -75,9 +97,9 @@
                 <p class="text-xs sm:text-sm text-amber-100 font-medium max-w-md mx-auto">انشر إعلانك بكل سهولة وصِل إلى آلاف المشترين في مختلف ولايات الجمهورية.</p>
             </div>
             <div class="pt-1 relative z-10">
-                <button onclick="openSellModal()" class="bg-slate-900 text-white font-black px-8 py-4 rounded-2xl text-sm sm:text-base shadow-lg hover:bg-slate-800 hover:scale-105 active:scale-95 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
+                <button onclick="openSellModal()" class="bg-slate-900 text-white font-black px-6 sm:px-8 py-4 rounded-2xl text-xs sm:text-base shadow-lg hover:bg-slate-800 hover:scale-105 active:scale-95 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
                     <span class="text-xl leading-none text-amber-400">+</span>
-                    <span>انشر إعلانك الآن</span>
+                    <span>اضغط هنا لتنشر إعلانك الآن</span>
                 </button>
             </div>
         </div>
@@ -157,9 +179,7 @@
                     <input type="text" id="newCategoryName" required placeholder="أضف فئة جديدة (مثال: عقارات)..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500">
                     <button type="submit" class="bg-amber-600 text-white px-6 py-3 rounded-xl text-xs sm:text-sm font-bold hover:bg-amber-700 transition whitespace-nowrap shadow-sm">إضافة فئة</button>
                 </form>
-                <div id="adminCategoriesList" class="flex flex-wrap gap-2 pt-2">
-                    <!-- سيتم تعبئتها برمجياً -->
-                </div>
+                <div id="adminCategoriesList" class="flex flex-wrap gap-2 pt-2"></div>
             </div>
 
             <!-- إدارة جميع الإعلانات المنشورة (حذف الإعلانات المخالفة) -->
@@ -309,9 +329,20 @@
 
         let categoriesList = ["أثاث وتحف (Meubles)", "إلكترونيات وهواتف (Électronique)", "أجهزة منزلية (Électroménager)", "ملابس وأزياء (Vêtements)", "سيارات ووسائل نقل", "أخرى / Divers"];
         window.currentLang = localStorage.getItem('esouk_lang') || '';
-        let explicitUsersCount = 1; // عداد تقديري للمستخدمين المسجلين
+        let explicitUsersCount = 1;
         let isLoginMode = false;
         let selectedImagesBase64 = [];
+
+        // دالة إظهار التنبيه المصغّر الناعم بدلاً من الـ Alert
+        function showToast(message, icon = "✨") {
+            const toast = document.getElementById('toastNotification');
+            document.getElementById('toastText').innerText = message;
+            document.getElementById('toastIcon').innerText = icon;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
 
         window.setLanguage = function(lang) {
             window.currentLang = lang;
@@ -399,7 +430,7 @@
 
         window.openSellModal = function() {
             if (!auth.currentUser) {
-                alert(window.currentLang === 'ar' ? "يرجى تسجيل الدخول أولاً لنشر إعلانك." : "Veuillez vous connecter pour publier une annonce.");
+                showToast(window.currentLang === 'ar' ? "يرجى تسجيل الدخول أولاً." : "Veuillez vous connecter.", "🔒");
                 openAuthModal('login');
                 return;
             }
@@ -496,7 +527,7 @@
 
             if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
                 if (password !== ADMIN_PASS) {
-                    alert(isAr ? "كلمة مرور الأدمن غير صحيحة!" : "Mot de passe administrateur incorrect !");
+                    showToast(isAr ? "كلمة مرور الأدمن غير صحيحة!" : "Mot de passe incorrect !", "⚠️");
                     return;
                 }
             }
@@ -507,7 +538,7 @@
                 } else {
                     const passConfirm = document.getElementById('authPasswordConfirm').value;
                     if (password !== passConfirm) {
-                        alert(isAr ? "كلمات المرور غير متطابقة!" : "Les mots de passe ne correspondent pas !");
+                        showToast(isAr ? "كلمات المرور غير متطابقة!" : "Mots de passe non concordnants !", "⚠️");
                         return;
                     }
                     try {
@@ -522,7 +553,7 @@
                     }
                 }
                 
-                alert(isAr ? "تم تسجيل الدخول بنجاح!" : "Connexion réussie !");
+                showToast(isAr ? "تم تسجيل الدخول بنجاح!" : "Connexion réussie !", "🎉");
                 closeAuthModal();
 
                 if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
@@ -531,14 +562,14 @@
                     switchView('home');
                 }
             } catch (err) {
-                alert((isAr ? "خطأ في المصادقة: " : "Erreur d'authentification : ") + err.message);
+                showToast((isAr ? "خطأ: " : "Erreur : ") + err.message, "❌");
             }
         };
 
         window.handleLogout = async function() {
             await signOut(auth);
             switchView('home');
-            alert(window.currentLang === 'ar' ? "تم تسجيل الخروج." : "Déconnecté avec succès.");
+            showToast(window.currentLang === 'ar' ? "تم تسجيل الخروج." : "Déconnecté.", "👋");
         };
 
         onAuthStateChanged(auth, (user) => {
@@ -604,22 +635,21 @@
                 categoriesList.push(newCat);
                 populateDropdowns();
                 document.getElementById('newCategoryName').value = '';
-                alert(window.currentLang === 'ar' ? "تمت إضافة الفئة بنجاح!" : "Catégorie ajoutée avec succès !");
+                showToast("تمت إضافة الفئة بنجاح!", "✅");
                 loadAdminDashboard();
             }
         };
 
-        // حذف فئة من لوحة التحكم
         window.handleDeleteCategory = function(catName) {
             if(categoriesList.length <= 1) {
-                alert("يجب أن تبقى فئة واحدة على الأقل في المنصة.");
+                showToast("يجب أن تبقى فئة واحدة على الأقل.", "⚠️");
                 return;
             }
             if(confirm(`هل أنت متأكد من حذف الفئة "${catName}"؟`)) {
                 categoriesList = categoriesList.filter(c => c !== catName);
                 populateDropdowns();
                 loadAdminDashboard();
-                alert("تم حذف الفئة بنجاح.");
+                showToast("تم حذف الفئة بنجاح.", "🗑️");
             }
         };
 
@@ -631,12 +661,12 @@
             const isAr = window.currentLang === 'ar';
 
             if (selectedImagesBase64.length === 0) {
-                alert(isAr ? "يرجى اختيار صورة واحدة على الأقل." : "Veuillez ajouter une photo.");
+                showToast(isAr ? "يرجى اختيار صورة واحدة على الأقل." : "Ajoutez une photo.", "⚠️");
                 return;
             }
 
             submitBtn.disabled = true;
-            submitBtn.innerText = isAr ? "جاري نشر الإعلان..." : "Publication en cours...";
+            submitBtn.innerText = isAr ? "جاري نشر الإعلان..." : "Publication...";
 
             const title = document.getElementById('itemTitle').value;
             const category = document.getElementById('itemCategory').value;
@@ -658,7 +688,7 @@
                     createdAt: serverTimestamp()
                 });
                 
-                alert(isAr ? "تم نشر إعلانك بنجاح على Esouk Tunisie!" : "Annonce publiée avec succès !");
+                showToast(isAr ? "تم نشر إعلانك بنجاح!" : "Annonce publiée !", "🚀");
                 document.getElementById('sellForm').reset();
                 selectedImagesBase64 = [];
                 document.getElementById('imagePreviewContainer').innerHTML = `
@@ -670,23 +700,22 @@
                 closeSellModal();
                 loadItems();
             } catch (err) {
-                alert((isAr ? "خطأ في النشر: " : "Erreur : ") + err.message);
+                showToast((isAr ? "خطأ: " : "Erreur : ") + err.message, "❌");
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerText = isAr ? "نشر الإعلان الآن" : "Publier l'annonce";
             }
         };
 
-        // حذف إعلان بواسطة الأدمن
         window.handleAdminDeleteItem = async function(id) {
-            if (confirm("هل أنت متأكد من حذف هذا الإعلان نهائياً من الموقع؟")) {
+            if (confirm("هل أنت متأكد من حذف هذا الإعلان نهائياً؟")) {
                 try {
                     await deleteDoc(doc(db, "items", id));
-                    alert("تم حذف الإعلان بنجاح.");
+                    showToast("تم حذف الإعلان بنجاح.", "🗑️");
                     loadAdminDashboard();
                     loadItems();
                 } catch(err) {
-                    alert("حدث خطأ أثناء الحذف: " + err.message);
+                    showToast("خطأ أثناء الحذف.", "❌");
                 }
             }
         };
@@ -761,12 +790,10 @@
             loadItems(category, keyword, state);
         };
 
-        // تحديث وتحميل لوحة الأدمن الشاملة
         async function loadAdminDashboard() {
             document.getElementById('adminTotalCats').innerText = categoriesList.length;
             document.getElementById('adminTotalUsers').innerText = explicitUsersCount;
             
-            // عرض الفئات في لوحة الأدمن مع زر حذف لكل فئة
             const catsContainer = document.getElementById('adminCategoriesList');
             catsContainer.innerHTML = "";
             categoriesList.forEach(cat => {
@@ -776,7 +803,6 @@
                 catsContainer.appendChild(tag);
             });
 
-            // جلب وعرض جميع الإعلانات لإدارتها وحذفها
             const adminItemsContainer = document.getElementById('adminItemsListContainer');
             adminItemsContainer.innerHTML = `<p class="text-xs text-slate-400">جاري تحميل الإعلانات...</p>`;
 
