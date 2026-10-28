@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <!-- الرأس (Header) - خلفية بلون جذاب ومريح غير بيضاء تماماً -->
+    <!-- الرأس (Header) -->
     <header class="bg-slate-100/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 shadow-xs">
         <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
             
@@ -40,14 +40,13 @@
                 <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">دخول</button>
             </div>
 
-            <!-- الشعار واللوجو على اليمين بمسافة مريحة ولون مميز للعنوان الفرعي -->
+            <!-- الشعار واللوجو على اليمين -->
             <div class="flex items-center justify-end w-full sm:w-auto order-1 sm:order-2">
                 <div class="flex items-center space-x-3.5 space-x-reverse cursor-pointer group" onclick="switchView('home')">
                     <div class="text-right">
                         <span class="font-black text-slate-900 text-xl tracking-tight block leading-tight">Esouk<span class="text-amber-600">Tunisie</span></span>
                         <span class="text-[11px] text-amber-800 font-extrabold tracking-wide block mt-0.5">السوق التونسي الشامل</span>
                     </div>
-                    <!-- اللوجو الثابت للبيع والشراء (حقيبة تسوق / متجر عصري) -->
                     <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-lg shadow-amber-500/25 group-hover:scale-105 transition">🛍️</div>
                 </div>
             </div>
@@ -121,36 +120,53 @@
         </section>
     </main>
 
-    <!-- لوحة التحكم الإدارية للأدمن فقط -->
+    <!-- لوحة التحكم الإدارية للأدمن الشاملة والقوية -->
     <main id="adminView" class="max-w-5xl w-full mx-auto px-4 py-6 flex-grow hidden space-y-6">
         <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/60 space-y-6">
             <div class="flex justify-between items-center border-b border-slate-100 pb-4">
                 <div>
-                    <h1 class="text-lg sm:text-xl font-black text-slate-900">لوحة تحكم الأدمن (Admin Dashboard)</h1>
-                    <p class="text-xs text-slate-500">مرحباً بك يا مراد. أنت الآن في لوحة الإدارة.</p>
+                    <h1 class="text-lg sm:text-xl font-black text-slate-900">لوحة تحكم الأدمن الشاملة (Admin Dashboard)</h1>
+                    <p class="text-xs text-slate-500">مرحباً بك يا مراد. تحكم كاملاً في المنصة من هنا.</p>
                 </div>
                 <button onclick="handleLogout()" class="bg-red-50 text-red-600 px-4 py-2 rounded-xl text-xs font-bold hover:bg-red-100 transition">تسجيل الخروج</button>
             </div>
 
+            <!-- إحصائيات المنصة المتقدمة -->
             <div class="space-y-3">
-                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إضافة فئة جديدة للتطبيق</h3>
-                <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
-                    <input type="text" id="newCategoryName" required placeholder="مثال: عقارات، سيارات..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500">
-                    <button type="submit" class="bg-amber-600 text-white px-6 py-3 rounded-xl text-xs sm:text-sm font-bold hover:bg-amber-700 transition whitespace-nowrap shadow-sm">إضافة</button>
-                </form>
-            </div>
-
-            <div class="pt-4 border-t border-slate-100 space-y-3">
                 <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إحصائيات المنصة</h3>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-100">
-                        <p class="text-xs text-slate-400 font-medium">إجمالي الإعلانات</p>
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-center">
+                        <p class="text-[11px] text-slate-400 font-medium">إجمالي الإعلانات</p>
                         <p id="adminTotalItems" class="text-xl sm:text-2xl font-black text-slate-900 mt-1">0</p>
                     </div>
-                    <div class="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-100">
-                        <p class="text-xs text-slate-400 font-medium">الفئات المتاحة</p>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-center">
+                        <p class="text-[11px] text-slate-400 font-medium">الفئات المتاحة</p>
                         <p id="adminTotalCats" class="text-xl sm:text-2xl font-black text-slate-900 mt-1">0</p>
                     </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-center">
+                        <p class="text-[11px] text-slate-400 font-medium">حسابات المستخدمين</p>
+                        <p id="adminTotalUsers" class="text-xl sm:text-2xl font-black text-slate-900 mt-1">1</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إدارة وفئات الموقع (إضافة وحذف) -->
+            <div class="pt-4 border-t border-slate-100 space-y-3">
+                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إدارة فئات الموقع</h3>
+                <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
+                    <input type="text" id="newCategoryName" required placeholder="أضف فئة جديدة (مثال: عقارات)..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500">
+                    <button type="submit" class="bg-amber-600 text-white px-6 py-3 rounded-xl text-xs sm:text-sm font-bold hover:bg-amber-700 transition whitespace-nowrap shadow-sm">إضافة فئة</button>
+                </form>
+                <div id="adminCategoriesList" class="flex flex-wrap gap-2 pt-2">
+                    <!-- سيتم تعبئتها برمجياً -->
+                </div>
+            </div>
+
+            <!-- إدارة جميع الإعلانات المنشورة (حذف الإعلانات المخالفة) -->
+            <div class="pt-4 border-t border-slate-100 space-y-3">
+                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إدارة ومتابعة جميع الإعلانات المنشورة</h3>
+                <div id="adminItemsListContainer" class="space-y-2 max-h-96 overflow-y-auto pr-1">
+                    <p class="text-xs text-slate-400">جاري تحميل قائمة الإعلانات للتحكم بها...</p>
                 </div>
             </div>
         </div>
@@ -267,7 +283,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAk9Dg4ns0QoWCl3QyoNwTxiQ9Xz5WFUAQ",
@@ -293,6 +309,7 @@
 
         let categoriesList = ["أثاث وتحف (Meubles)", "إلكترونيات وهواتف (Électronique)", "أجهزة منزلية (Électroménager)", "ملابس وأزياء (Vêtements)", "سيارات ووسائل نقل", "أخرى / Divers"];
         window.currentLang = localStorage.getItem('esouk_lang') || '';
+        let explicitUsersCount = 1; // عداد تقديري للمستخدمين المسجلين
         let isLoginMode = false;
         let selectedImagesBase64 = [];
 
@@ -363,7 +380,7 @@
             if(viewName === 'admin') {
                 home.classList.add('hidden');
                 admin.classList.remove('hidden');
-                loadAdminStats();
+                loadAdminDashboard();
             } else {
                 admin.classList.add('hidden');
                 home.classList.remove('hidden');
@@ -495,6 +512,7 @@
                     }
                     try {
                         await createUserWithEmailAndPassword(auth, email, password);
+                        explicitUsersCount++;
                     } catch (regErr) {
                         if (regErr.code === 'auth/email-already-in-use') {
                             await signInWithEmailAndPassword(auth, email, password);
@@ -587,7 +605,21 @@
                 populateDropdowns();
                 document.getElementById('newCategoryName').value = '';
                 alert(window.currentLang === 'ar' ? "تمت إضافة الفئة بنجاح!" : "Catégorie ajoutée avec succès !");
-                loadAdminStats();
+                loadAdminDashboard();
+            }
+        };
+
+        // حذف فئة من لوحة التحكم
+        window.handleDeleteCategory = function(catName) {
+            if(categoriesList.length <= 1) {
+                alert("يجب أن تبقى فئة واحدة على الأقل في المنصة.");
+                return;
+            }
+            if(confirm(`هل أنت متأكد من حذف الفئة "${catName}"؟`)) {
+                categoriesList = categoriesList.filter(c => c !== catName);
+                populateDropdowns();
+                loadAdminDashboard();
+                alert("تم حذف الفئة بنجاح.");
             }
         };
 
@@ -642,6 +674,20 @@
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.innerText = isAr ? "نشر الإعلان الآن" : "Publier l'annonce";
+            }
+        };
+
+        // حذف إعلان بواسطة الأدمن
+        window.handleAdminDeleteItem = async function(id) {
+            if (confirm("هل أنت متأكد من حذف هذا الإعلان نهائياً من الموقع؟")) {
+                try {
+                    await deleteDoc(doc(db, "items", id));
+                    alert("تم حذف الإعلان بنجاح.");
+                    loadAdminDashboard();
+                    loadItems();
+                } catch(err) {
+                    alert("حدث خطأ أثناء الحذف: " + err.message);
+                }
             }
         };
 
@@ -715,13 +761,54 @@
             loadItems(category, keyword, state);
         };
 
-        async function loadAdminStats() {
+        // تحديث وتحميل لوحة الأدمن الشاملة
+        async function loadAdminDashboard() {
             document.getElementById('adminTotalCats').innerText = categoriesList.length;
+            document.getElementById('adminTotalUsers').innerText = explicitUsersCount;
+            
+            // عرض الفئات في لوحة الأدمن مع زر حذف لكل فئة
+            const catsContainer = document.getElementById('adminCategoriesList');
+            catsContainer.innerHTML = "";
+            categoriesList.forEach(cat => {
+                const tag = document.createElement('div');
+                tag.className = "bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-2";
+                tag.innerHTML = `<span>${cat}</span> <button type="button" onclick="handleDeleteCategory('${cat}')" class="text-red-500 hover:text-red-700 font-bold">&times;</button>`;
+                catsContainer.appendChild(tag);
+            });
+
+            // جلب وعرض جميع الإعلانات لإدارتها وحذفها
+            const adminItemsContainer = document.getElementById('adminItemsListContainer');
+            adminItemsContainer.innerHTML = `<p class="text-xs text-slate-400">جاري تحميل الإعلانات...</p>`;
+
             try {
                 const snapshot = await getDocs(collection(db, "items"));
                 document.getElementById('adminTotalItems').innerText = snapshot.size;
+                adminItemsContainer.innerHTML = "";
+
+                if (snapshot.empty) {
+                    adminItemsContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">لا توجد إعلانات منشورة حالياً.</p>`;
+                    return;
+                }
+
+                snapshot.forEach(docSnap => {
+                    const item = docSnap.data();
+                    const id = docSnap.id;
+                    const row = document.createElement('div');
+                    row.className = "bg-slate-50 border border-slate-200/80 p-3 rounded-2xl flex items-center justify-between gap-3 text-xs";
+                    row.innerHTML = `
+                        <div class="flex items-center space-x-3 space-x-reverse truncate">
+                            <img src="${item.image}" class="w-10 h-10 object-cover rounded-xl shrink-0">
+                            <div class="truncate">
+                                <p class="font-bold text-slate-900 truncate">${item.title}</p>
+                                <p class="text-slate-500 text-[11px]">${item.price} DT • ${item.category} • <span class="text-amber-700">${item.state || ''}</span></p>
+                            </div>
+                        </div>
+                        <button onclick="handleAdminDeleteItem('${id}')" class="bg-red-50 text-red-600 hover:bg-red-100 px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition">حذف الإعلان</button>
+                    `;
+                    adminItemsContainer.appendChild(row);
+                });
             } catch(e) {
-                document.getElementById('adminTotalItems').innerText = "0";
+                adminItemsContainer.innerHTML = `<p class="text-xs text-red-500">حدث خطأ أثناء جلب قائمة الإعلانات.</p>`;
             }
         }
     </script>
