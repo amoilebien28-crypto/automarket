@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brocante Market - Achat et Vente entre particuliers</title>
-    <!-- Tailwind CSS pour un design moderne et responsive -->
+    <title id="pageTitle">Brocante Market - Achat et Vente entre particuliers</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { -webkit-tap-highlight-color: transparent; }
@@ -12,97 +12,42 @@
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col justify-between">
 
+    <!-- FENÊTRE DE CHOIX DE LANGUE AU DÉMARRAGE -->
+    <div id="langModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden p-6 text-center space-y-6">
+            <div class="text-4xl">🏺</div>
+            <div>
+                <h2 class="text-xl font-black text-slate-900 mb-1">Bienvenue / مرحباً</h2>
+                <p class="text-xs text-slate-500">Choisissez votre langue / اختر لغتك المفضلة</p>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="setLanguage('fr')" class="bg-slate-100 text-slate-800 font-bold py-3 rounded-2xl hover:bg-amber-600 hover:text-white transition shadow-xs">Français</button>
+                <button onclick="setLanguage('ar')" class="bg-slate-900 text-white font-bold py-3 rounded-2xl hover:bg-amber-600 transition shadow-xs">العربية</button>
+            </div>
+        </div>
+    </div>
+
     <!-- EN-TÊTE -->
     <header class="bg-white border-b border-slate-100 sticky top-0 z-40 shadow-xs">
         <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center space-x-2 cursor-pointer" onclick="switchView('home')">
+            <div class="flex items-center space-x-2">
                 <span class="text-2xl">🏺</span>
-                <span class="font-black text-slate-900 text-lg tracking-tight">Brocante<span class="text-amber-600">Market</span></span>
+                <span class="font-black text-slate-900 text-lg tracking-tight" data-fr="BrocanteMarket" data-ar="سوق العتيق">BrocanteMarket</span>
             </div>
 
-            <div class="flex items-center space-x-2">
-                <!-- Bouton Vendre prioritaire -->
-                <button onclick="openSellModal()" class="bg-gradient-to-r from-amber-600 to-amber-500 text-white px-4 py-2.5 rounded-2xl font-bold text-sm shadow-md shadow-amber-500/20 hover:from-amber-700 hover:to-amber-600 active:scale-95 transition flex items-center space-x-1.5">
-                    <span class="text-lg leading-none">+</span>
-                    <span>Vendre</span>
-                </button>
-
-                <!-- Zone Connexion / Admin / Compte -->
-                <div id="auth-nav-container" class="flex items-center space-x-2">
-                    <button onclick="openAuthModal()" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-sm font-bold hover:bg-slate-800 transition">Connexion</button>
-                </div>
+            <!-- Zone de connexion dynamique -->
+            <div id="auth-nav-container" class="flex items-center space-x-2">
+                <button onclick="openAuthModal()" id="btnLoginText" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-sm font-bold hover:bg-slate-800 transition">Connexion</button>
             </div>
         </div>
     </header>
 
-    <!-- CONTENU PRINCIPAL (VUE ACCUEIL) -->
-    <main id="homeView" class="max-w-4xl w-full mx-auto px-4 py-6 flex-grow space-y-6">
-        
-        <!-- Barre de Recherche et Filtres -->
-        <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 space-y-3">
-            <input type="text" id="searchInput" placeholder="Rechercher un objet..." oninput="performSearch()" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition">
-            
-            <div class="flex gap-2">
-                <select id="categorySelect" onchange="performSearch()" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition">
-                    <option value="">Toutes les catégories</option>
-                    <!-- Chargé dynamiquement -->
-                </select>
-            </div>
-        </div>
-
-        <!-- Grille des Catégories Rapides -->
-        <div>
-            <h2 class="text-sm font-bold text-slate-500 mb-3 uppercase tracking-wider">Explorer par catégories</h2>
-            <div id="quickCategories" class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
-                <button onclick="filterByCategory('')" class="bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap shadow-sm">Tout</button>
-                <!-- Injecté dynamiquement -->
-            </div>
-        </div>
-
-        <!-- Liste des Annonces -->
-        <section>
-            <h2 class="text-lg font-black text-slate-900 mb-4">Annonces récentes</h2>
-            <div id="items-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <p class="text-slate-400 text-center py-8 col-span-full text-sm">Chargement des annonces...</p>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- CONTENU PANNEAU ADMINISTRATION (Caché par défaut) -->
-    <main id="adminView" class="max-w-4xl w-full mx-auto px-4 py-6 flex-grow hidden space-y-6">
-        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 space-y-6">
-            <div class="flex justify-between items-center border-b border-slate-100 pb-4">
-                <div>
-                    <h1 class="text-xl font-black text-slate-900">Panneau d'Administration</h1>
-                    <p class="text-xs text-slate-500">Gérez les catégories et surveillez l'activité.</p>
-                </div>
-                <button onclick="switchView('home')" class="bg-slate-100 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-200 transition">Retour au site</button>
-            </div>
-
-            <!-- Gestion des Catégories -->
-            <div class="space-y-4">
-                <h3 class="font-bold text-slate-800 text-sm">Ajouter une nouvelle catégorie</h3>
-                <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
-                    <input type="text" id="newCategoryName" required placeholder="Ex: Outillage, Livres..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500">
-                    <button type="submit" class="bg-amber-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-amber-700 transition whitespace-nowrap">Ajouter</button>
-                </form>
-            </div>
-
-            <!-- Statistiques / Gestion globale -->
-            <div class="pt-4 border-t border-slate-100 space-y-3">
-                <h3 class="font-bold text-slate-800 text-sm">Statistiques du site</h3>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                        <p class="text-xs text-slate-500">Total Annonces</p>
-                        <p id="adminTotalItems" class="text-xl font-black text-slate-900">0</p>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                        <p class="text-xs text-slate-500">Catégories Actives</p>
-                        <p id="adminTotalCats" class="text-xl font-black text-slate-900">0</p>
-                    </div>
-                </div>
-            </div>
+    <!-- CONTENU PRINCIPAL -->
+    <main class="max-w-4xl w-full mx-auto px-4 py-6 flex-grow space-y-6">
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 text-center space-y-3">
+            <h1 id="welcomeTitle" class="text-xl font-black text-slate-900">Bienvenue sur Brocante Market</h1>
+            <p id="welcomeDesc" class="text-sm text-slate-500">Connecte-toi ou crée un compte pour commencer à profiter de l'application.</p>
+            <button onclick="changeLanguagePrompt()" class="text-xs text-amber-600 font-bold underline hover:text-amber-700 pt-2 block mx-auto">Changer de langue / تغيير اللغة</button>
         </div>
     </main>
 
@@ -111,94 +56,35 @@
         &copy; 2026 Brocante Market - Tous droits réservés.
     </footer>
 
-    <!-- MODALE DE PUBLICATION (VENDRE) -->
-    <div id="sellModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-lg rounded-3xl shadow-xl overflow-hidden max-h-[90vh] flex flex-col">
-            <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-                <h3 class="font-bold text-slate-900">Publier une annonce</h3>
-                <button onclick="closeSellModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold px-2">&times;</button>
-            </div>
-            
-            <form id="sellForm" onsubmit="handlePublishItem(event)" class="p-5 overflow-y-auto space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Titre de l'objet</label>
-                    <input type="text" id="itemTitle" required placeholder="Ex: Table ancienne en bois" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Catégorie</label>
-                        <select id="itemCategory" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
-                            <!-- Dynamique -->
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">État</label>
-                        <select id="itemCondition" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
-                            <option value="Neuf">Neuf</option>
-                            <option value="Très bon état">Très bon état</option>
-                            <option value="Bon état">Bon état</option>
-                            <option value="À restaurer">À restaurer</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Prix (DT)</label>
-                    <input type="number" id="itemPrice" required placeholder="Ex: 150" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Description</label>
-                    <textarea id="itemDescription" rows="3" placeholder="Décrivez votre objet..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500"></textarea>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Photo (Appareil photo ou Galerie)</label>
-                    <input type="file" id="itemImageFile" accept="image/*" capture="environment" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
-                </div>
-
-                <button type="submit" class="w-full bg-amber-600 text-white font-bold py-3 rounded-xl hover:bg-amber-700 transition shadow-md shadow-amber-600/20">Publier l'annonce</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- MODALE AUTHENTIFICATION & CODE ADMIN -->
+    <!-- MODALE AUTHENTIFICATION -->
     <div id="authModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl shadow-xl overflow-hidden">
             <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-                <h3 class="font-bold text-slate-900">Connexion / Administration</h3>
+                <h3 id="modalAuthTitle" class="font-bold text-slate-900">Connexion / Inscription</h3>
                 <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold px-2">&times;</button>
             </div>
             
             <form id="authForm" onsubmit="handleAuth(event)" class="p-5 space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Adresse e-mail</label>
+                    <label id="labelEmail" class="block text-xs font-bold text-slate-700 mb-1">Adresse e-mail</label>
                     <input type="email" id="authEmail" required placeholder="nom@exemple.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Mot de passe</label>
+                    <label id="labelPass" class="block text-xs font-bold text-slate-700 mb-1">Mot de passe</label>
                     <input type="password" id="authPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
                 </div>
 
-                <div class="pt-2 border-t border-slate-100">
-                    <label class="block text-xs font-bold text-amber-700 mb-1">Code secret Administrateur (Optionnel)</label>
-                    <input type="password" id="adminCodeInput" placeholder="Entrez le code admin..." class="w-full bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
-                </div>
-
-                <button type="submit" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition">Se connecter</button>
+                <button type="submit" id="btnSubmitAuth" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition">Se connecter / S'inscrire</button>
             </form>
         </div>
     </div>
 
-    <!-- LOGIQUE JAVASCRIPT & FIREBASE -->
+    <!-- LOGIQUE FIREBASE, AUTH & TRADUCTION -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
-        // CONFIGURATION FIREBASE (Utilise ton projet brocantemarketpro)
         const firebaseConfig = {
             apiKey: "AIzaSyAk9Dg4ns0QoWCl3QyoNwTxiQ9Xz5WFUAQ",
             authDomain: "brocantemarketpro.firebaseapp.com",
@@ -210,230 +96,103 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
 
-        // CODE SECRET ADMIN CONFIGURABLE
-        const SECRET_ADMIN_CODE = "1234"; 
+        // --- GESTION DES LANGUES (FR / AR) ---
+        window.currentLang = localStorage.getItem('brocante_lang') || '';
 
-        // État des catégories par défaut
-        let categoriesList = ["Meubles", "Décoration", "Électronique", "Vêtements", "Autre"];
+        window.setLanguage = function(lang) {
+            window.currentLang = lang;
+            localStorage.setItem('brocante_lang', lang);
+            document.getElementById('langModal').classList.add('hidden');
+            applyTranslations();
+        };
 
-        window.switchView = function(viewName) {
-            const home = document.getElementById('homeView');
-            const admin = document.getElementById('adminView');
-            if(viewName === 'admin') {
-                home.classList.add('hidden');
-                admin.classList.remove('hidden');
-                loadAdminStats();
+        window.changeLanguagePrompt = function() {
+            document.getElementById('langModal').classList.remove('hidden');
+        };
+
+        function applyTranslations() {
+            const isAr = window.currentLang === 'ar';
+            const html = document.getElementById('htmlRoot');
+            
+            if (isAr) {
+                html.setAttribute('dir', 'rtl');
+                html.setAttribute('lang', 'ar');
+                document.getElementById('pageTitle').innerText = "سوق العتيق - بيع وشراء بين الأفراد";
+                document.getElementById('welcomeTitle').innerText = "مرحباً بكم في سوق العتيق";
+                document.getElementById('welcomeDesc').innerText = "قم بتسجيل الدخول أو أنشئ حساباً لبدء استخدام التطبيق.";
+                document.getElementById('btnLoginText').innerText = "تسجيل الدخول";
+                document.getElementById('modalAuthTitle').innerText = "تسجيل الدخول / إنشاء حساب";
+                document.getElementById('labelEmail').innerText = "البريد الإلكتروني";
+                document.getElementById('labelPass').innerText = "كلمة المرور";
+                document.getElementById('btnSubmitAuth').innerText = "دخول / تسسجيل";
             } else {
-                admin.classList.add('hidden');
-                home.classList.remove('hidden');
+                html.setAttribute('dir', 'ltr');
+                html.setAttribute('lang', 'fr');
+                document.getElementById('pageTitle').innerText = "Brocante Market - Achat et Vente entre particuliers";
+                document.getElementById('welcomeTitle').innerText = "Bienvenue sur Brocante Market";
+                document.getElementById('welcomeDesc').innerText = "Connecte-toi ou crée un compte pour commencer à profiter de l'application.";
+                document.getElementById('btnLoginText').innerText = "Connexion";
+                document.getElementById('modalAuthTitle').innerText = "Connexion / Inscription";
+                document.getElementById('labelEmail').innerText = "Adresse e-mail";
+                document.getElementById('labelPass').innerText = "Mot de passe";
+                document.getElementById('btnSubmitAuth').innerText = "Se connecter / S'inscrire";
             }
         }
 
+        // Au chargement, si la langue n'est pas encore choisie, on affiche la modale
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!window.currentLang) {
+                document.getElementById('langModal').classList.remove('hidden');
+            } else {
+                applyTranslations();
+            }
+        });
+
         window.openAuthModal = () => document.getElementById('authModal').classList.remove('hidden');
         window.closeAuthModal = () => document.getElementById('authModal').classList.add('hidden');
-        window.openSellModal = () => {
-            if (!auth.currentUser) {
-                alert("Veuillez vous connecter pour publier une annonce.");
-                openAuthModal();
-                return;
-            }
-            document.getElementById('sellModal').classList.remove('hidden');
-        };
-        window.closeSellModal = () => document.getElementById('sellModal').classList.add('hidden');
 
-        // Gestion de l'authentification & Admin
         window.handleAuth = async function(e) {
             e.preventDefault();
             const email = document.getElementById('authEmail').value;
             const password = document.getElementById('authPassword').value;
-            const adminCode = document.getElementById('adminCodeInput').value;
+            const isAr = window.currentLang === 'ar';
 
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                alert("Connexion réussie !");
+                alert(isAr ? "تم تسجيل الدخول بنجاح!" : "Connexion réussie !");
+                closeAuthModal();
             } catch (err) {
                 try {
                     await createUserWithEmailAndPassword(auth, email, password);
-                    alert("Compte créé et connecté !");
+                    alert(isAr ? "تم إنشاء الحساب بنجاح!" : "Compte créé et connecté avec succès !");
+                    closeAuthModal();
                 } catch (createErr) {
-                    alert("Erreur : " + createErr.message);
-                    return;
+                    alert((isAr ? "خطأ: " : "Erreur : ") + createErr.message);
                 }
-            }
-
-            closeAuthModal();
-
-            // Vérification du code admin
-            if (adminCode === SECRET_ADMIN_CODE) {
-                alert("Accès Administrateur accordé !");
-                switchView('admin');
             }
         };
 
         window.handleLogout = async function() {
             await signOut(auth);
-            switchView('home');
-            alert("Déconnecté avec succès.");
+            const isAr = window.currentLang === 'ar';
+            alert(isAr ? "تم تسجيل الخروج." : "Déconnecté avec succès.");
         };
 
-        // État utilisateur connecté
         onAuthStateChanged(auth, (user) => {
             const nav = document.getElementById('auth-nav-container');
+            const isAr = window.currentLang === 'ar';
             if (user) {
                 nav.innerHTML = `
-                    <button onclick="switchView('admin')" class="bg-amber-100 text-amber-800 px-3 py-2 rounded-xl text-xs font-bold hover:bg-amber-200 transition hidden sm:inline">Admin</button>
-                    <button onclick="handleLogout()" class="bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs font-bold hover:bg-slate-300 transition">Déco</button>
+                    <span class="text-xs font-medium text-slate-600 hidden sm:inline mr-2">${user.email}</span>
+                    <button onclick="handleLogout()" class="bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs font-bold hover:bg-slate-300 transition">${isAr ? 'خروج' : 'Déconnexion'}</button>
                 `;
             } else {
                 nav.innerHTML = `
-                    <button onclick="openAuthModal()" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition">Connexion</button>
+                    <button onclick="openAuthModal()" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition">${isAr ? 'دخول' : 'Connexion'}</button>
                 `;
             }
         });
-
-        // Gestion des Catégories dynamiques
-        function updateCategoryDropdowns() {
-            const selectSearch = document.getElementById('categorySelect');
-            const selectSell = document.getElementById('itemCategory');
-            const quickCats = document.getElementById('quickCategories');
-
-            let searchOpts = '<option value="">Toutes les catégories</option>';
-            let sellOpts = '';
-            let quickHTML = '<button onclick="filterByCategory(\'\')" class="bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap shadow-sm">Tout</button>';
-
-            categoriesList.forEach(cat => {
-                searchOpts += `<option value="${cat}">${cat}</option>`;
-                sellOpts += `<option value="${cat}">${cat}</option>`;
-                quickHTML += `<button onclick="filterByCategory('${cat}')" class="bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap hover:bg-slate-50 transition">${cat}</button>`;
-            });
-
-            selectSearch.innerHTML = searchOpts;
-            selectSell.innerHTML = sellOpts;
-            quickCats.innerHTML = quickHTML;
-        }
-
-        window.filterByCategory = function(cat) {
-            document.getElementById('categorySelect').value = cat;
-            performSearch();
-        }
-
-        window.handleAddCategory = function(e) {
-            e.preventDefault();
-            const newCat = document.getElementById('newCategoryName').value.trim();
-            if(newCat && !categoriesList.includes(newCat)) {
-                categoriesList.push(newCat);
-                updateCategoryDropdowns();
-                document.getElementById('newCategoryName').value = '';
-                alert(`Catégorie "${newCat}" ajoutée avec succès !`);
-                loadAdminStats();
-            }
-        }
-
-        // Publication d'annonces
-        window.handlePublishItem = async function(e) {
-            e.preventDefault();
-            if (!auth.currentUser) return;
-
-            const title = document.getElementById('itemTitle').value;
-            const category = document.getElementById('itemCategory').value;
-            const condition = document.getElementById('itemCondition').value;
-            const price = document.getElementById('itemPrice').value;
-            const description = document.getElementById('itemDescription').value;
-            const imageFile = document.getElementById('itemImageFile').files[0];
-
-            if (!imageFile) return alert("Veuillez ajouter une photo.");
-
-            const reader = new FileReader();
-            reader.readAsDataURL(imageFile);
-            reader.onload = async function() {
-                try {
-                    await addDoc(collection(db, "items"), {
-                        title, category, condition,
-                        price: Number(price),
-                        description,
-                        image: reader.result,
-                        userEmail: auth.currentUser.email,
-                        createdAt: serverTimestamp()
-                    });
-                    alert("Annonce publiée avec succès !");
-                    document.getElementById('sellForm').reset();
-                    closeSellModal();
-                    loadItems();
-                } catch (err) {
-                    alert("Erreur : " + err.message);
-                }
-            };
-        };
-
-        // Chargement des annonces
-        async function loadItems(categoryFilter = "", keyword = "") {
-            const grid = document.getElementById('items-grid');
-            grid.innerHTML = '<p class="text-slate-400 text-center py-8 col-span-full text-sm">Chargement...</p>';
-
-            try {
-                const snapshot = await getDocs(collection(db, "items"));
-                grid.innerHTML = "";
-
-                if (snapshot.empty) {
-                    grid.innerHTML = '<p class="text-slate-400 text-center py-8 col-span-full text-sm">Aucune annonce pour le moment.</p>';
-                    return;
-                }
-
-                snapshot.forEach(docSnap => {
-                    const item = docSnap.data();
-                    if (categoryFilter && item.category !== categoryFilter) return;
-                    if (keyword && !item.title.toLowerCase().includes(keyword.toLowerCase())) return;
-
-                    const card = document.createElement('div');
-                    card.className = "bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 flex flex-col justify-between";
-                    card.innerHTML = `
-                        <div>
-                            <img src="${item.image}" alt="${item.title}" class="w-full h-48 object-cover">
-                            <div class="p-4">
-                                <div class="flex justify-between items-start mb-2">
-                                    <h3 class="font-bold text-slate-900 text-base">${item.title}</h3>
-                                    <span class="bg-amber-50 text-amber-700 text-xs font-extrabold px-2.5 py-1 rounded-lg">${item.price} DT</span>
-                                </div>
-                                <p class="text-xs text-slate-500 mb-2">${item.category} • <span class="font-semibold">${item.condition}</span></p>
-                                <p class="text-xs text-slate-600 line-clamp-2">${item.description || 'Aucune description.'}</p>
-                            </div>
-                        </div>
-                        <div class="p-4 pt-0 text-xs text-slate-400 border-t border-slate-50 mt-2 flex justify-between items-center">
-                            <span>Par : ${item.userEmail || 'Anonyme'}</span>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                });
-
-                if (grid.innerHTML === "") {
-                    grid.innerHTML = '<p class="text-slate-400 text-center py-8 col-span-full text-sm">Aucun résultat trouvé.</p>';
-                }
-            } catch (err) {
-                grid.innerHTML = '<p class="text-red-400 text-center py-8 col-span-full text-sm">Erreur de chargement.</p>';
-            }
-        }
-
-        window.performSearch = function() {
-            const keyword = document.getElementById('searchInput').value;
-            const category = document.getElementById('categorySelect').value;
-            loadItems(category, keyword);
-        };
-
-        async function loadAdminStats() {
-            document.getElementById('adminTotalCats').innerText = categoriesList.length;
-            try {
-                const snapshot = await getDocs(collection(db, "items"));
-                document.getElementById('adminTotalItems').innerText = snapshot.size;
-            } catch(e) {
-                document.getElementById('adminTotalItems').innerText = "0";
-            }
-        }
-
-        // Initialisation
-        updateCategoryDropdowns();
-        loadItems();
     </script>
 </body>
 </html>
