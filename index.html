@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr" id="htmlRoot">
+<html lang="ar" id="htmlRoot" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Brocante Market - Achat et Vente entre particuliers</title>
+    <title id="pageTitle">سوق العتيق - بيع وشراء بين الأفراد</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -12,13 +12,13 @@
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col justify-between">
 
-    <!-- FENÊTRE DE CHOIX DE LANGUE AU DÉMARRAGE -->
+    <!-- نافذة اختيار اللغة عند البداية -->
     <div id="langModal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-xs flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden p-6 text-center space-y-6">
             <div class="text-4xl">🏺</div>
             <div>
-                <h2 class="text-xl font-black text-slate-900 mb-1">Bienvenue / مرحباً</h2>
-                <p class="text-xs text-slate-500">Choisissez votre langue / اختر لغتك المفضلة</p>
+                <h2 class="text-xl font-black text-slate-900 mb-1">مرحباً / Bienvenue</h2>
+                <p class="text-xs text-slate-500">اختر لغتك المفضلة / Choisissez votre langue</p>
             </div>
             <div class="grid grid-cols-2 gap-3">
                 <button onclick="setLanguage('fr')" class="bg-slate-100 text-slate-800 font-bold py-3 rounded-2xl hover:bg-amber-600 hover:text-white transition shadow-xs">Français</button>
@@ -27,60 +27,71 @@
         </div>
     </div>
 
-    <!-- EN-TÊTE -->
+    <!-- الرأس (Header) -->
     <header class="bg-white border-b border-slate-100 sticky top-0 z-40 shadow-xs">
         <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-2 space-x-reverse">
                 <span class="text-2xl">🏺</span>
-                <span class="font-black text-slate-900 text-lg tracking-tight" data-fr="BrocanteMarket" data-ar="سوق العتيق">BrocanteMarket</span>
+                <span class="font-black text-slate-900 text-lg tracking-tight" data-fr="BrocanteMarket" data-ar="سوق العتيق">سوق العتيق</span>
             </div>
 
-            <!-- Zone de connexion dynamique -->
-            <div id="auth-nav-container" class="flex items-center space-x-2">
-                <button onclick="openAuthModal()" id="btnLoginText" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-sm font-bold hover:bg-slate-800 transition">Connexion</button>
+            <!-- منطقة الأزرار في الأعلى (تسجيل الدخول أو الحساب) -->
+            <div id="auth-nav-container" class="flex items-center space-x-2 space-x-reverse">
+                <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-700 transition">إنشاء حساب</button>
+                <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition">دخول</button>
             </div>
         </div>
     </header>
 
-    <!-- CONTENU PRINCIPAL -->
+    <!-- المحتوى الرئيسي -->
     <main class="max-w-4xl w-full mx-auto px-4 py-6 flex-grow space-y-6">
         <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 text-center space-y-3">
-            <h1 id="welcomeTitle" class="text-xl font-black text-slate-900">Bienvenue sur Brocante Market</h1>
-            <p id="welcomeDesc" class="text-sm text-slate-500">Connecte-toi ou crée un compte pour commencer à profiter de l'application.</p>
-            <button onclick="changeLanguagePrompt()" class="text-xs text-amber-600 font-bold underline hover:text-amber-700 pt-2 block mx-auto">Changer de langue / تغيير اللغة</button>
+            <h1 id="welcomeTitle" class="text-xl font-black text-slate-900">مرحباً بكم في سوق العتيق</h1>
+            <p id="welcomeDesc" class="text-sm text-slate-500">قم بتسجيل الدخول أو أنشئ حساباً لبدء استخدام التطبيق.</p>
+            <button onclick="changeLanguagePrompt()" class="text-xs text-amber-600 font-bold underline hover:text-amber-700 pt-2 block mx-auto">تغيير اللغة / Changer de langue</button>
         </div>
     </main>
 
-    <!-- FOOTER -->
+    <!-- التذييل -->
     <footer class="bg-white border-t border-slate-100 py-4 text-center text-xs text-slate-400">
-        &copy; 2026 Brocante Market - Tous droits réservés.
+        &copy; 2026 سوق العتيق - جميع الحقوق محفوظة.
     </footer>
 
-    <!-- MODALE AUTHENTIFICATION -->
+    <!-- نافذة التسجيل أو الدخول (Modal) -->
     <div id="authModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl shadow-xl overflow-hidden">
             <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-                <h3 id="modalAuthTitle" class="font-bold text-slate-900">Connexion / Inscription</h3>
+                <h3 id="modalAuthTitle" class="font-bold text-slate-900 text-sm">إنشاء حساب جديد</h3>
                 <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold px-2">&times;</button>
             </div>
             
-            <form id="authForm" onsubmit="handleAuth(event)" class="p-5 space-y-4">
+            <form id="authForm" onsubmit="handleAuthSubmit(event)" class="p-5 space-y-4">
                 <div>
-                    <label id="labelEmail" class="block text-xs font-bold text-slate-700 mb-1">Adresse e-mail</label>
+                    <label id="labelEmail" class="block text-xs font-bold text-slate-700 mb-1">البريد الإلكتروني</label>
                     <input type="email" id="authEmail" required placeholder="nom@exemple.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
                 </div>
 
                 <div>
-                    <label id="labelPass" class="block text-xs font-bold text-slate-700 mb-1">Mot de passe</label>
+                    <label id="labelPass" class="block text-xs font-bold text-slate-700 mb-1">الرقم السري (كلمة المرور)</label>
                     <input type="password" id="authPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
                 </div>
 
-                <button type="submit" id="btnSubmitAuth" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition">Se connecter / S'inscrire</button>
+                <!-- حقل تأكيد كلمة المرور يظهر فقط عند التسجيل -->
+                <div id="confirmPassContainer">
+                    <label id="labelConfirmPass" class="block text-xs font-bold text-slate-700 mb-1">إعادة الرقم السري (تأكيد)</label>
+                    <input type="password" id="authPasswordConfirm" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+
+                <button type="submit" id="btnSubmitAuth" class="w-full bg-amber-600 text-white font-bold py-3 rounded-xl hover:bg-amber-700 transition shadow-md shadow-amber-600/20 text-sm">تسجيل حساب جديد</button>
+                
+                <div class="text-center pt-2">
+                    <button type="button" id="switchAuthModeBtn" onclick="toggleAuthMode()" class="text-xs text-slate-500 underline hover:text-slate-800">لديك حساب بالفعل؟ سجل دخولك هنا</button>
+                </div>
             </form>
         </div>
     </div>
 
-    <!-- LOGIQUE FIREBASE, AUTH & TRADUCTION -->
+    <!-- الشيفرة البرمجية والربط مع Firebase -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
@@ -97,8 +108,8 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // --- GESTION DES LANGUES (FR / AR) ---
         window.currentLang = localStorage.getItem('brocante_lang') || '';
+        let isLoginMode = false; // افتراضياً وضع التسجيل (Inscription)
 
         window.setLanguage = function(lang) {
             window.currentLang = lang;
@@ -121,26 +132,21 @@
                 document.getElementById('pageTitle').innerText = "سوق العتيق - بيع وشراء بين الأفراد";
                 document.getElementById('welcomeTitle').innerText = "مرحباً بكم في سوق العتيق";
                 document.getElementById('welcomeDesc').innerText = "قم بتسجيل الدخول أو أنشئ حساباً لبدء استخدام التطبيق.";
-                document.getElementById('btnLoginText').innerText = "تسجيل الدخول";
-                document.getElementById('modalAuthTitle').innerText = "تسجيل الدخول / إنشاء حساب";
-                document.getElementById('labelEmail').innerText = "البريد الإلكتروني";
-                document.getElementById('labelPass').innerText = "كلمة المرور";
-                document.getElementById('btnSubmitAuth').innerText = "دخول / تسسجيل";
+                document.getElementById('btnSignupTop').innerText = "إنشاء حساب";
+                document.getElementById('btnLoginTop').innerText = "دخول";
+                updateAuthModalTexts();
             } else {
                 html.setAttribute('dir', 'ltr');
                 html.setAttribute('lang', 'fr');
                 document.getElementById('pageTitle').innerText = "Brocante Market - Achat et Vente entre particuliers";
                 document.getElementById('welcomeTitle').innerText = "Bienvenue sur Brocante Market";
                 document.getElementById('welcomeDesc').innerText = "Connecte-toi ou crée un compte pour commencer à profiter de l'application.";
-                document.getElementById('btnLoginText').innerText = "Connexion";
-                document.getElementById('modalAuthTitle').innerText = "Connexion / Inscription";
-                document.getElementById('labelEmail').innerText = "Adresse e-mail";
-                document.getElementById('labelPass').innerText = "Mot de passe";
-                document.getElementById('btnSubmitAuth').innerText = "Se connecter / S'inscrire";
+                document.getElementById('btnSignupTop').innerText = "S'inscrire";
+                document.getElementById('btnLoginTop').innerText = "Connexion";
+                updateAuthModalTexts();
             }
         }
 
-        // Au chargement, si la langue n'est pas encore choisie, on affiche la modale
         window.addEventListener('DOMContentLoaded', () => {
             if (!window.currentLang) {
                 document.getElementById('langModal').classList.remove('hidden');
@@ -149,27 +155,67 @@
             }
         });
 
-        window.openAuthModal = () => document.getElementById('authModal').classList.remove('hidden');
-        window.closeAuthModal = () => document.getElementById('authModal').classList.add('hidden');
+        window.openAuthModal = function(mode) {
+            isLoginMode = (mode === 'login');
+            updateAuthModalTexts();
+            document.getElementById('authModal').classList.remove('hidden');
+        };
 
-        window.handleAuth = async function(e) {
+        window.closeAuthModal = function() {
+            document.getElementById('authModal').classList.add('hidden');
+        };
+
+        window.toggleAuthMode = function() {
+            isLoginMode = !isLoginMode;
+            updateAuthModalTexts();
+        };
+
+        function updateAuthModalTexts() {
+            const isAr = window.currentLang === 'ar';
+            const confirmContainer = document.getElementById('confirmPassContainer');
+            const titleEl = document.getElementById('modalAuthTitle');
+            const submitBtn = document.getElementById('btnSubmitAuth');
+            const switchBtn = document.getElementById('switchAuthModeBtn');
+
+            if (isLoginMode) {
+                confirmContainer.classList.add('hidden');
+                titleEl.innerText = isAr ? "تسجيل الدخول" : "Connexion";
+                submitBtn.innerText = isAr ? "تسجيل الدخول" : "Se connecter";
+                switchBtn.innerText = isAr ? "ليس لديك حساب؟ انقر هنا لإنشاء حساب جديد" : "Pas de compte ? S'inscrire ici";
+            } else {
+                confirmContainer.classList.remove('hidden');
+                titleEl.innerText = isAr ? "إنشاء حساب جديد (Inscription)" : "Créer un compte (Inscription)";
+                submitBtn.innerText = isAr ? "تأكيد التسجيل" : "S'inscrire";
+                switchBtn.innerText = isAr ? "لديك حساب بالفعل؟ سجل دخولك هنا" : "Déjà un compte ? Se connecter";
+            }
+        }
+
+        // تنفيذ عملية التسجيل أو الدخول عبر Firebase
+        window.handleAuthSubmit = async function(e) {
             e.preventDefault();
             const email = document.getElementById('authEmail').value;
             const password = document.getElementById('authPassword').value;
             const isAr = window.currentLang === 'ar';
 
+            if (!isLoginMode) {
+                const passwordConfirm = document.getElementById('authPasswordConfirm').value;
+                if (password !== passwordConfirm) {
+                    alert(isAr ? "كلمات المرور غير متطابقة! يجيب إعادة إدخال الرقم السري بشكل صحيح." : "Les mots de passe ne correspondent pas !");
+                    return;
+                }
+            }
+
             try {
-                await signInWithEmailAndPassword(auth, email, password);
-                alert(isAr ? "تم تسجيل الدخول بنجاح!" : "Connexion réussie !");
+                if (isLoginMode) {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    alert(isAr ? "تم تسجيل الدخول بنجاح!" : "Connexion réussie !");
+                } else {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                    alert(isAr ? "تم إنشاء الحساب بنجاح!" : "Compte créé avec succès !");
+                }
                 closeAuthModal();
             } catch (err) {
-                try {
-                    await createUserWithEmailAndPassword(auth, email, password);
-                    alert(isAr ? "تم إنشاء الحساب بنجاح!" : "Compte créé et connecté avec succès !");
-                    closeAuthModal();
-                } catch (createErr) {
-                    alert((isAr ? "خطأ: " : "Erreur : ") + createErr.message);
-                }
+                alert((isAr ? "خطأ: " : "Erreur : ") + err.message);
             }
         };
 
@@ -179,17 +225,19 @@
             alert(isAr ? "تم تسجيل الخروج." : "Déconnecté avec succès.");
         };
 
+        // تحديث أزرار القائمة العلوية حسب حالة المستخدم
         onAuthStateChanged(auth, (user) => {
             const nav = document.getElementById('auth-nav-container');
             const isAr = window.currentLang === 'ar';
             if (user) {
                 nav.innerHTML = `
                     <span class="text-xs font-medium text-slate-600 hidden sm:inline mr-2">${user.email}</span>
-                    <button onclick="handleLogout()" class="bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs font-bold hover:bg-slate-300 transition">${isAr ? 'خروج' : 'Déconnexion'}</button>
+                    <button onclick="handleLogout()" class="bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-300 transition">${isAr ? 'خروج' : 'Déconnexion'}</button>
                 `;
             } else {
                 nav.innerHTML = `
-                    <button onclick="openAuthModal()" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition">${isAr ? 'دخول' : 'Connexion'}</button>
+                    <button onclick="openAuthModal('signup')" class="bg-amber-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-700 transition">${isAr ? 'إنشاء حساب' : "S'inscrire"}</button>
+                    <button onclick="openAuthModal('login')" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition">${isAr ? 'دخول' : 'Connexion'}</button>
                 `;
             }
         });
