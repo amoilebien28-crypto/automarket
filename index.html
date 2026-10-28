@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brocante Market - Achat et Vente entre particuliers</title>
-    <!-- Tailwind CSS pour un design moderne et responsive -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ton fichier de style CSS séparé -->
+    <!-- Ton fichier de style CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col justify-between">
@@ -29,7 +29,7 @@
                     <span>Vendre</span>
                 </button>
 
-                <!-- Conteneur Connexion / Déconnexion géré dynamiquement par JavaScript -->
+                <!-- Conteneur Connexion / Déconnexion géré dynamiquement par app.js -->
                 <div id="auth-nav-container" class="flex items-center">
                     <!-- Injecté par app.js -->
                 </div>
@@ -67,6 +67,11 @@
         </section>
 
     </main>
+
+    <!-- Footer simple -->
+    <footer class="bg-white border-t border-slate-100 py-4 text-center text-xs text-slate-400">
+        &copy; 2026 Brocante Market - Tous droits réservés.
+    </footer>
 
     <!-- MODALE DE PUBLICATION (Vendre) -->
     <div id="sellModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
@@ -148,7 +153,7 @@
         </div>
     </div>
 
-    <!-- Lien vers ton fichier JavaScript séparé -->
+    <!-- Script JavaScript principal -->
     <script type="module" src="app.js"></script>
 </body>
 </html>
