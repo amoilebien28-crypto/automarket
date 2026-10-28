@@ -55,28 +55,31 @@
         <span id="toastText">تم بنجاح</span>
     </div>
 
-    <!-- نافذة تفاصيل الإعلان (Modal Details) عند النقر على أي إعلان -->
-    <div id="itemDetailsModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
-            <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+    <!-- نافذة تفاصيل الإعلان المحسنة مع زر اتصال ثابت وقسم تعليقات -->
+    <div id="itemDetailsModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col border border-slate-100">
+            
+            <!-- رأس النافذة -->
+            <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50 shrink-0">
                 <h3 id="modalItemTitleHeader" class="font-bold text-slate-900 text-sm sm:text-base truncate">تفاصيل الإعلان</h3>
                 <button onclick="closeDetailsModal()" class="w-8 h-8 rounded-full bg-slate-200/60 text-slate-500 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
             </div>
-            <div class="p-5 overflow-y-auto space-y-5">
+
+            <!-- المحتوى القابل للتمرير (Scrollable Content) -->
+            <div class="p-4 sm:p-6 overflow-y-auto space-y-5 flex-grow">
                 <!-- معرض الصور -->
                 <div>
-                    <div id="modalMainImageContainer" class="w-full h-64 sm:h-80 bg-slate-100 rounded-2xl overflow-hidden shadow-sm border border-slate-200">
+                    <div id="modalMainImageContainer" class="w-full h-60 sm:h-72 bg-slate-100 rounded-2xl overflow-hidden shadow-sm border border-slate-200">
                         <img id="modalMainImage" src="" class="w-full h-full object-cover">
                     </div>
-                    <!-- الصور المصغرة الإضافية -->
                     <div id="modalThumbnails" class="flex gap-2 mt-3 overflow-x-auto pb-1"></div>
                 </div>
 
                 <!-- معلومات الإعلان الأساسية -->
                 <div class="space-y-3">
                     <div class="flex flex-wrap justify-between items-start gap-2">
-                        <h2 id="modalItemTitle" class="text-xl font-black text-slate-900"></h2>
-                        <span id="modalItemPrice" class="bg-slate-900 text-white text-sm font-black px-4 py-2 rounded-xl"></span>
+                        <h2 id="modalItemTitle" class="text-lg sm:text-xl font-black text-slate-900"></h2>
+                        <span id="modalItemPrice" class="bg-slate-900 text-white text-xs sm:text-sm font-black px-4 py-2 rounded-xl"></span>
                     </div>
                     <div class="flex flex-wrap gap-2 text-xs font-bold">
                         <span id="modalItemCategory" class="bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1.5 rounded-xl"></span>
@@ -91,25 +94,58 @@
                     <p id="modalItemDescription" class="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line"></p>
                 </div>
 
-                <!-- زر الاتصال بالبائع -->
-                <div class="pt-2">
-                    <a id="modalCallBtn" href="#" class="w-full bg-amber-600 text-white font-bold py-3.5 rounded-2xl hover:bg-amber-700 transition shadow-md flex items-center justify-center gap-2 text-sm">
-                        <span>📞 الاتصال بالبائع مباشرة</span>
-                    </a>
+                <!-- معلومات البائع -->
+                <div class="bg-amber-50/60 border border-amber-100 p-3.5 rounded-2xl flex items-center justify-between text-xs font-bold text-slate-700">
+                    <span>👤 الناشر: <span id="modalItemSellerEmail" class="text-amber-800"></span></span>
+                </div>
+
+                <!-- قسم التعليقات (Commentaires) -->
+                <div class="pt-2 border-t border-slate-100 space-y-3">
+                    <h4 class="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+                        <span>💬 التعليقات والأسئلة</span>
+                    </h4>
+                    
+                    <div id="commentsListContainer" class="space-y-2 max-h-40 overflow-y-auto pr-1">
+                        <p class="text-xs text-slate-400 italic">لا توجد تعليقات حتى الآن. كن أول من يسأل البائع!</p>
+                    </div>
+
+                    <form onsubmit="handlePostComment(event)" class="flex gap-2 pt-1">
+                        <input type="text" id="commentInputText" required placeholder="اكتب تعليقاً أو استفساراً للبائع..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-amber-500 focus:bg-white transition">
+                        <button type="submit" class="bg-slate-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-800 transition shrink-0">إرسال</button>
+                    </form>
                 </div>
             </div>
+
+            <!-- شريط الاتصال الثابت في الأسفل -->
+            <div class="p-3.5 sm:p-4 bg-white border-t border-slate-100 shrink-0 shadow-lg">
+                <a id="modalCallBtn" href="#" class="w-full bg-amber-600 text-white font-bold py-3.5 rounded-2xl hover:bg-amber-700 transition shadow-md flex items-center justify-center gap-2 text-xs sm:text-sm">
+                    <span>📞 الاتصال بالبائع مباشرة</span>
+                </a>
+            </div>
+
         </div>
     </div>
 
     <!-- نافذة اختيار الفئات عند الضغط على "ماذا تريد أن تشتري اليوم؟" -->
     <div id="buyCategoriesModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <h3 class="font-bold text-slate-900 text-sm sm:text-base">اختر القسم الذي تريد تصفحه 🛍️</h3>
                 <button onclick="closeBuyModal()" class="w-8 h-8 rounded-full bg-slate-200/60 text-slate-500 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
             </div>
-            <div id="buyCategoriesGrid" class="p-5 overflow-y-auto grid grid-cols-2 gap-3">
-                <!-- يتم تعبئتها ديناميكياً بالأقسام -->
+            <div id="buyCategoriesGrid" class="p-5 overflow-y-auto grid grid-cols-2 gap-3"></div>
+        </div>
+    </div>
+
+    <!-- نافذة فضاء إعلاناتي للمستخدم -->
+    <div id="myAdsModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
+            <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 class="font-bold text-slate-900 text-sm sm:text-base">إعلاناتي الشخصية ومتابعتها (Mes Annonces)</h3>
+                <button onclick="closeMyAdsModal()" class="w-8 h-8 rounded-full bg-slate-200/60 text-slate-500 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
+            </div>
+            <div id="myAdsListContainer" class="p-5 overflow-y-auto space-y-3 flex-grow">
+                <p class="text-xs text-slate-400 text-center py-6">جاري تحميل إعلاناتك...</p>
             </div>
         </div>
     </div>
@@ -154,7 +190,6 @@
     <!-- المحتوى الرئيسي -->
     <main id="homeView" class="max-w-5xl w-full mx-auto px-4 py-4 flex-grow space-y-4">
         
-        <!-- البطاقة الأولى مصغرة -->
         <div class="bg-white/90 backdrop-blur-sm px-5 py-3.5 rounded-2xl shadow-xs border border-slate-200/60 flex items-center justify-between gap-4">
             <div>
                 <h1 id="welcomeTitle" class="text-base sm:text-lg font-black text-slate-900 tracking-tight">Esouk Tunisie - السوق التونسي</h1>
@@ -167,9 +202,7 @@
             </div>
         </div>
 
-        <!-- البطاقتان الرئيسيتان في المنتصف -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-            <!-- بطاقة البيع -->
             <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 p-5 rounded-3xl shadow-lg text-center text-white space-y-2.5 border border-amber-400/40 relative overflow-hidden">
                 <div class="absolute -right-4 -bottom-4 text-7xl opacity-10 select-none">🏷️</div>
                 <div class="relative z-10 space-y-1">
@@ -185,7 +218,6 @@
                 </div>
             </div>
 
-            <!-- بطاقة الشراء -->
             <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-5 rounded-3xl shadow-lg text-center text-white space-y-2.5 border border-slate-700 relative overflow-hidden">
                 <div class="absolute -right-4 -bottom-4 text-7xl opacity-10 select-none">🛒</div>
                 <div class="relative z-10 space-y-1">
@@ -201,7 +233,6 @@
             </div>
         </div>
 
-        <!-- إشارة وتوجيه للإعلانات في الأسفل -->
         <div class="text-center py-1">
             <div onclick="scrollToAds()" class="inline-flex flex-col items-center cursor-pointer text-amber-700 hover:text-amber-800 transition animate-bounce-slow">
                 <span class="text-[11px] font-bold mb-0.5">انظر إلى الأسفل لمشاهدة أحدث الإعلانات 👇</span>
@@ -227,7 +258,6 @@
             </div>
         </div>
 
-        <!-- عنوان فئات ملون و متحرك -->
         <div class="bg-gradient-to-r from-amber-600 to-amber-700 text-white py-2 rounded-2xl shadow-xs overflow-hidden flex items-center">
             <div class="bg-slate-900 text-amber-300 px-3 py-1 text-[11px] font-black tracking-wider uppercase shrink-0 z-10 ml-2 rounded-xl">⚡ تونس العريقة</div>
             <div class="marquee-container text-xs font-bold tracking-wide">
@@ -294,12 +324,27 @@
             </div>
 
             <div class="pt-4 border-t border-slate-100 space-y-3">
-                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إدارة فئات الموقع</h3>
+                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إدارة فئات الموقع (محفوظة بقاعدة البيانات)</h3>
                 <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
                     <input type="text" id="newCategoryName" required placeholder="أضف فئة جديدة..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500">
                     <button type="submit" class="bg-amber-600 text-white px-6 py-3 rounded-xl text-xs sm:text-sm font-bold hover:bg-amber-700 transition whitespace-nowrap shadow-sm">إضافة</button>
                 </form>
                 <div id="adminCategoriesList" class="flex flex-wrap gap-2 pt-2"></div>
+            </div>
+
+            <!-- قسم إدارة قائمة البائعين ومعاينة ما يبيعونه -->
+            <div class="pt-4 border-t border-slate-100 space-y-3">
+                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">قائمة البائعين وسلعهم (Liste des Vendeurs)</h3>
+                <div id="adminVendorsListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <p class="text-xs text-slate-400">جاري تحميل البائعين...</p>
+                </div>
+                <div id="adminVendorItemsSection" class="hidden pt-3 border-t border-slate-100 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <h4 id="adminVendorTitleHeader" class="font-bold text-xs text-amber-800">إعلانات البائع: </h4>
+                        <button onclick="hideAdminVendorItems()" class="text-xs text-slate-500 hover:text-slate-800 underline">إغلاق عرض البائع</button>
+                    </div>
+                    <div id="adminVendorItemsContainer" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
+                </div>
             </div>
 
             <div class="pt-4 border-t border-slate-100 space-y-3">
@@ -317,7 +362,7 @@
         <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية</p>
     </footer>
 
-    <!-- نافذة نشر إعلان (بيع) مع اختيار مرن للصور ومعاينتها -->
+    <!-- نافذة نشر إعلان (بيع) -->
     <div id="sellModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -370,10 +415,8 @@
 
                 <div class="space-y-2">
                     <label class="block text-xs font-bold text-slate-700">صور الغرض (اختر من المعرض أو التقط حتى 5 صور)</label>
-                    <!-- تم إزالة capture لتجنب فرض الكاميرا الأمامية/السلفي وجعل اختيار المعرض سهلاً -->
                     <input type="file" id="itemImageFile" accept="image/*" multiple onchange="previewImages(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition cursor-pointer bg-slate-50 border border-slate-200 rounded-xl p-2">
                     
-                    <!-- 5 خانات معاينة صور واضحة في الأسفل -->
                     <div id="imagePreviewContainer" class="grid grid-cols-5 gap-2 pt-1">
                         <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">1</div>
                         <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">2</div>
@@ -421,11 +464,11 @@
         </div>
     </div>
 
-    <!-- الكود البرمجى والمنطق -->
+    <!-- الكود البرمجى والمنطق المتكامل -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp, query, where } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAk9Dg4ns0QoWCl3QyoNwTxiQ9Xz5WFUAQ",
@@ -449,12 +492,13 @@
             "قصرين", "سيدي بوزيد", "قابس", "مدنين", "تطاوين", "قفصة", "توزر", "قبلي"
         ];
 
-        let categoriesList = ["أثاث وتحف (Meubles)", "إلكترونيات وهواتف (Électronique)", "أجهزة منزلية (Électroménager)", "ملابس وأزياء (Vêtements)", "سيارات ووسائل نقل", "أخرى / Divers"];
+        let categoriesList = [];
         window.currentLang = localStorage.getItem('esouk_lang') || '';
         let explicitUsersCount = 1;
         let isLoginMode = false;
         let selectedImagesBase64 = [];
-        let allLoadedItems = []; // لتخزين الإعلانات مؤقتاً لعرض التفاصيل
+        let allLoadedItems = [];
+        let currentOpenItemId = null;
 
         function showToast(message, icon = "✨") {
             const toast = document.getElementById('toastNotification');
@@ -470,7 +514,30 @@
             document.getElementById('adsSectionTarget').scrollIntoView({ behavior: 'smooth' });
         };
 
-        // فتح نافذة أقسام الشراء
+        // تحميل الفئات من Firestore لضمان عدم ضياعها أبداً
+        async function fetchCategories() {
+            try {
+                const snapshot = await getDocs(collection(db, "categories"));
+                if (snapshot.empty) {
+                    // فئات افتراضية أولية إذا كانت القاعدة فارغة
+                    const defaultCats = ["أثاث وتحف (Meubles)", "إلكترونيات وهواتف (Électronique)", "أجهزة منزلية (Électroménager)", "ملابس وأزياء (Vêtements)", "سيارات ووسائل نقل", "أخرى / Divers"];
+                    categoriesList = defaultCats;
+                    for (let cat of defaultCats) {
+                        await addDoc(collection(db, "categories"), { name: cat });
+                    }
+                } else {
+                    categoriesList = [];
+                    snapshot.forEach(docSnap => {
+                        categoriesList.push(docSnap.data().name);
+                    });
+                }
+                populateDropdowns();
+            } catch (e) {
+                categoriesList = ["أثاث وتحف (Meubles)", "إلكترونيات وهواتف (Électronique)", "سيارات ووسائل نقل", "أخرى / Divers"];
+                populateDropdowns();
+            }
+        }
+
         window.openBuyCategoriesModal = function() {
             const grid = document.getElementById('buyCategoriesGrid');
             grid.innerHTML = `
@@ -500,9 +567,11 @@
         };
 
         // فتح نافذة تفاصيل الإعلان
-        window.openItemDetails = function(index) {
+        window.openItemDetails = async function(index) {
             const item = allLoadedItems[index];
             if (!item) return;
+
+            currentOpenItemId = item.id;
 
             document.getElementById('modalItemTitle').innerText = item.title;
             document.getElementById('modalItemTitleHeader').innerText = item.title;
@@ -511,6 +580,7 @@
             document.getElementById('modalItemState').innerText = "📍 " + (item.state || 'تونس');
             document.getElementById('modalItemCondition').innerText = "✨ " + (item.condition || '');
             document.getElementById('modalItemDescription').innerText = item.description || 'لا يوجد وصف تفصيلي لهذا الغرض.';
+            document.getElementById('modalItemSellerEmail').innerText = item.userEmail || 'بائع محترف';
             document.getElementById('modalCallBtn').href = `tel:${item.phone || ''}`;
 
             const images = (item.images && item.images.length > 0) ? item.images : [item.image];
@@ -518,7 +588,7 @@
 
             const thumbsContainer = document.getElementById('modalThumbnails');
             thumbsContainer.innerHTML = "";
-            images.forEach((imgUrl, i) => {
+            images.forEach((imgUrl) => {
                 thumbsContainer.innerHTML += `
                     <div onclick="document.getElementById('modalMainImage').src='${imgUrl}'" class="w-16 h-16 rounded-xl border border-slate-200 overflow-hidden cursor-pointer shrink-0 hover:opacity-80 transition shadow-xs">
                         <img src="${imgUrl}" class="w-full h-full object-cover">
@@ -527,10 +597,130 @@
             });
 
             document.getElementById('itemDetailsModal').classList.remove('hidden');
+            loadItemComments(item.id);
         };
 
         window.closeDetailsModal = function() {
             document.getElementById('itemDetailsModal').classList.add('hidden');
+            currentOpenItemId = null;
+        };
+
+        // إدارة التعليقات
+        async function loadItemComments(itemId) {
+            const container = document.getElementById('commentsListContainer');
+            container.innerHTML = `<p class="text-xs text-slate-400">جاري تحميل التعليقات...</p>`;
+
+            try {
+                const q = query(collection(db, "comments"), where("itemId", "==", itemId));
+                const snapshot = await getDocs(q);
+                container.innerHTML = "";
+
+                if (snapshot.empty) {
+                    container.innerHTML = `<p class="text-xs text-slate-400 italic">لا توجد تعليقات حتى الآن. كن أول من يسأل البائع!</p>`;
+                    return;
+                }
+
+                snapshot.forEach(docSnap => {
+                    const com = docSnap.data();
+                    const commentDiv = document.createElement('div');
+                    commentDiv.className = "bg-slate-50 border border-slate-100 p-2.5 rounded-xl text-xs space-y-1";
+                    commentDiv.innerHTML = `
+                        <div class="flex justify-between items-center text-[10px] text-slate-400 font-bold">
+                            <span>👤 ${com.userEmail ? com.userEmail.split('@')[0] : 'زائر'}</span>
+                        </div>
+                        <p class="text-slate-700 font-medium">${com.text}</p>
+                    `;
+                    container.appendChild(commentDiv);
+                });
+            } catch (e) {
+                container.innerHTML = `<p class="text-xs text-red-400">تعسّر تحميل التعليقات.</p>`;
+            }
+        }
+
+        window.handlePostComment = async function(e) {
+            e.preventDefault();
+            if (!auth.currentUser) {
+                showToast("يرجى تسجيل الدخول لكتابة تعليق.", "🔒");
+                openAuthModal('login');
+                return;
+            }
+            if (!currentOpenItemId) return;
+
+            const textInput = document.getElementById('commentInputText');
+            const text = textInput.value.trim();
+            if (!text) return;
+
+            try {
+                await addDoc(collection(db, "comments"), {
+                    itemId: currentOpenItemId,
+                    userEmail: auth.currentUser.email,
+                    text: text,
+                    createdAt: serverTimestamp()
+                });
+                textInput.value = "";
+                showToast("تم إرسال تعليقك بنجاح!", "💬");
+                loadItemComments(currentOpenItemId);
+            } catch (err) {
+                showToast("حدث خطأ أثناء إرسال التعليق.", "❌");
+            }
+        };
+
+        // فضاء إعلاناتي للمستخدم العادي
+        window.openMyAdsModal = async function() {
+            if (!auth.currentUser) return;
+            const container = document.getElementById('myAdsListContainer');
+            container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">جاري تحميل إعلاناتك...</p>`;
+            document.getElementById('myAdsModal').classList.remove('hidden');
+
+            try {
+                const snapshot = await getDocs(collection(db, "items"));
+                container.innerHTML = "";
+                let userAdsCount = 0;
+
+                snapshot.forEach(docSnap => {
+                    const item = docSnap.data();
+                    const id = docSnap.id;
+                    if (item.userEmail === auth.currentUser.email) {
+                        userAdsCount++;
+                        const row = document.createElement('div');
+                        row.className = "bg-slate-50 border border-slate-200/80 p-3 rounded-2xl flex items-center justify-between gap-3 text-xs";
+                        row.innerHTML = `
+                            <div class="flex items-center space-x-3 space-x-reverse truncate">
+                                <img src="${item.image}" class="w-12 h-12 object-cover rounded-xl shrink-0">
+                                <div class="truncate">
+                                    <p class="font-bold text-slate-900 truncate">${item.title}</p>
+                                    <p class="text-slate-500 text-[11px]">${item.price} DT • ${item.category}</p>
+                                </div>
+                            </div>
+                            <button onclick="handleUserDeleteItem('${id}')" class="bg-red-50 text-red-600 hover:bg-red-100 px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition">حذف الإعلان</button>
+                        `;
+                        container.appendChild(row);
+                    }
+                });
+
+                if (userAdsCount === 0) {
+                    container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">ليس لديك أي إعلانات منشورة حتى الآن.</p>`;
+                }
+            } catch (e) {
+                container.innerHTML = `<p class="text-xs text-red-500 text-center">حدث خطأ أثناء جلب إعلاناتك.</p>`;
+            }
+        };
+
+        window.closeMyAdsModal = function() {
+            document.getElementById('myAdsModal').classList.add('hidden');
+        };
+
+        window.handleUserDeleteItem = async function(id) {
+            if (confirm("هل أنت متأكد من حذف هذا الإعلان؟")) {
+                try {
+                    await deleteDoc(doc(db, "items", id));
+                    showToast("تم الحذف بنجاح.", "🗑️");
+                    openMyAdsModal();
+                    loadItems();
+                } catch (e) {
+                    showToast("خطأ أثناء الحذف.", "❌");
+                }
+            }
         };
 
         window.setLanguage = function(lang) {
@@ -579,7 +769,7 @@
             }
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', async () => {
             const modal = document.getElementById('langModal');
             if (!window.currentLang) {
                 if (modal) modal.classList.remove('hidden');
@@ -590,7 +780,7 @@
                 }
                 applyTranslations();
             }
-            populateDropdowns();
+            await fetchCategories();
             loadItems();
         });
 
@@ -655,7 +845,7 @@
             }
         }
 
-        // معاينة وتراكم حتى 5 صور بسلاسة بدون مشاكل كاميرا سلفي
+        // معاينة وتراكم الصور حتى 5 صور بسلاسة
         window.previewImages = function(e) {
             const files = e.target.files;
             if (!files || files.length === 0) return;
@@ -796,7 +986,8 @@
                     switchView('admin');
                 }
                 nav.innerHTML = `
-                    <span class="text-xs font-medium text-slate-600 hidden sm:inline mr-1 truncate max-w-[100px]">${user.email}</span>
+                    <button onclick="openMyAdsModal()" class="bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap">📦 إعلاناتي</button>
+                    <span class="text-xs font-medium text-slate-600 hidden sm:inline mr-1 truncate max-w-[90px]">${user.email}</span>
                     <button onclick="handleLogout()" class="bg-slate-200 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-300 transition whitespace-nowrap">${isAr ? 'خروج' : 'Déco'}</button>
                 `;
             } else {
@@ -816,7 +1007,7 @@
 
             let searchOpts = `<option value="">${window.currentLang === 'ar' ? 'جميع الفئات' : 'Toutes les catégories'}</option>`;
             let sellOpts = '';
-            let quickHTML = `<button onclick="filterByCategory('')" class="bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap shadow-sm">الكل / Tout</button>`;
+            let quickHTML = `<button onclick="filterByCategory('')" class="bg-amber-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap shadow-sm">الكل / Tout</button>`;
 
             categoriesList.forEach(cat => {
                 searchOpts += `<option value="${cat}">${cat}</option>`;
@@ -832,11 +1023,11 @@
                 filterStateOpts += `<option value="${st}">${st}</option>`;
             });
 
-            selectSearch.innerHTML = searchOpts;
-            selectSell.innerHTML = sellOpts;
-            selectState.innerHTML = stateOpts;
-            selectFilterState.innerHTML = filterStateOpts;
-            quickCats.innerHTML = quickHTML;
+            if(selectSearch) selectSearch.innerHTML = searchOpts;
+            if(selectSell) selectSell.innerHTML = sellOpts;
+            if(selectState) selectState.innerHTML = stateOpts;
+            if(selectFilterState) selectFilterState.innerHTML = filterStateOpts;
+            if(quickCats) quickCats.innerHTML = quickHTML;
         }
 
         window.filterByCategory = function(cat) {
@@ -844,28 +1035,44 @@
             performSearch();
         };
 
-        window.handleAddCategory = function(e) {
+        // إضافة فئة جديدة مباشرة لقاعدة البيانات
+        window.handleAddCategory = async function(e) {
             e.preventDefault();
             const newCat = document.getElementById('newCategoryName').value.trim();
             if(newCat && !categoriesList.includes(newCat)) {
-                categoriesList.push(newCat);
-                populateDropdowns();
-                document.getElementById('newCategoryName').value = '';
-                showToast("تمت إضافة الفئة بنجاح!", "✅");
-                loadAdminDashboard();
+                try {
+                    await addDoc(collection(db, "categories"), { name: newCat });
+                    categoriesList.push(newCat);
+                    populateDropdowns();
+                    document.getElementById('newCategoryName').value = '';
+                    showToast("تمت إضافة وحفظ الفئة بنجاح!", "✅");
+                    loadAdminDashboard();
+                } catch(err) {
+                    showToast("خطأ أثناء حفظ الفئة.", "❌");
+                }
             }
         };
 
-        window.handleDeleteCategory = function(catName) {
+        window.handleDeleteCategory = async function(catName) {
             if(categoriesList.length <= 1) {
                 showToast("يجب أن تبقى فئة واحدة على الأقل.", "⚠️");
                 return;
             }
             if(confirm(`هل أنت متأكد من حذف الفئة "${catName}"؟`)) {
-                categoriesList = categoriesList.filter(c => c !== catName);
-                populateDropdowns();
-                loadAdminDashboard();
-                showToast("تم حذف الفئة بنجاح.", "🗑️");
+                try {
+                    const snap = await getDocs(collection(db, "categories"));
+                    snap.forEach(async (d) => {
+                        if (d.data().name === catName) {
+                            await deleteDoc(doc(db, "categories", d.id));
+                        }
+                    });
+                    categoriesList = categoriesList.filter(c => c !== catName);
+                    populateDropdowns();
+                    loadAdminDashboard();
+                    showToast("تم حذف الفئة بنجاح.", "🗑️");
+                } catch(e) {
+                    showToast("خطأ أثناء الحذف.", "❌");
+                }
             }
         };
 
@@ -934,6 +1141,7 @@
         async function loadItems(categoryFilter = "", keyword = "", stateFilter = "") {
             const grid = document.getElementById('items-grid');
             const countBadge = document.getElementById('itemsCountBadge');
+            if(!grid) return;
             grid.innerHTML = `<div class="bg-white/60 p-8 rounded-3xl text-center col-span-full border border-slate-200/60"><p class="text-slate-400 text-xs sm:text-sm font-medium">جاري التحميل...</p></div>`;
 
             try {
@@ -944,17 +1152,18 @@
 
                 if (snapshot.empty) {
                     grid.innerHTML = `<div class="bg-white/80 p-8 rounded-3xl text-center col-span-full border border-slate-200/60"><p class="text-slate-400 text-xs sm:text-sm">لا توجد إعلانات منشورة حتى الآن. كن أول من ينشر!</p></div>`;
-                    countBadge.innerText = "0 إعلان";
+                    if(countBadge) countBadge.innerText = "0 إعلان";
                     return;
                 }
 
                 snapshot.forEach(docSnap => {
                     const item = docSnap.data();
+                    const id = docSnap.id;
                     if (categoryFilter && item.category !== categoryFilter) return;
                     if (stateFilter && item.state !== stateFilter) return;
                     if (keyword && !item.title.toLowerCase().includes(keyword.toLowerCase())) return;
 
-                    allLoadedItems.push(item);
+                    allLoadedItems.push({ id, ...item });
                     const currentIndex = allLoadedItems.length - 1;
                     count++;
 
@@ -989,11 +1198,11 @@
                     grid.appendChild(card);
                 });
 
-                countBadge.innerText = `${count} إعلان`;
+                if(countBadge) countBadge.innerText = `${count} إعلان`;
 
                 if (grid.innerHTML === "") {
                     grid.innerHTML = `<div class="bg-white/80 p-8 rounded-3xl text-center col-span-full border border-slate-200/60"><p class="text-slate-400 text-xs sm:text-sm">لا توجد نتائج مطابقة لبحثك.</p></div>`;
-                    countBadge.innerText = "0 إعلان";
+                    if(countBadge) countBadge.innerText = "0 إعلان";
                 }
             } catch (err) {
                 grid.innerHTML = `<div class="bg-white/80 p-8 rounded-3xl text-center col-span-full border border-red-100"><p class="text-red-400 text-xs sm:text-sm">حدث خطأ أثناء تحميل الإعلانات.</p></div>`;
@@ -1007,6 +1216,7 @@
             loadItems(category, keyword, state);
         };
 
+        // لوحة تحكم الأدمن المحدثة مع قائمة البائعين وسلعهم
         async function loadAdminDashboard() {
             document.getElementById('adminTotalCats').innerText = categoriesList.length;
             document.getElementById('adminTotalUsers').innerText = explicitUsersCount;
@@ -1021,28 +1231,41 @@
             });
 
             const adminItemsContainer = document.getElementById('adminItemsListContainer');
+            const vendorsContainer = document.getElementById('adminVendorsListContainer');
             adminItemsContainer.innerHTML = `<p class="text-xs text-slate-400">جاري تحميل الإعلانات...</p>`;
+            vendorsContainer.innerHTML = `<p class="text-xs text-slate-400">جاري تحميل البائعين...</p>`;
 
             try {
                 const snapshot = await getDocs(collection(db, "items"));
                 document.getElementById('adminTotalItems').innerText = snapshot.size;
                 adminItemsContainer.innerHTML = "";
 
+                let vendorsMap = {};
+
                 if (snapshot.empty) {
                     adminItemsContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">لا توجد إعلانات منشورة حالياً.</p>`;
+                    vendorsContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">لا يوجد بائعون مسجلون حالياً.</p>`;
                     return;
                 }
 
                 snapshot.forEach(docSnap => {
                     const item = docSnap.data();
                     const id = docSnap.id;
+                    const email = item.userEmail || "مجهول";
+
+                    if (!vendorsMap[email]) {
+                        vendorsMap[email] = [];
+                    }
+                    vendorsMap[email].push({ id, ...item });
+
+                    // صف الإعلان للأدمن
                     const row = document.createElement('div');
                     row.className = "bg-slate-50 border border-slate-200/80 p-3 rounded-2xl flex items-center justify-between gap-3 text-xs";
                     row.innerHTML = `
                         <div class="flex items-center space-x-3 space-x-reverse truncate">
                             <img src="${item.image}" class="w-10 h-10 object-cover rounded-xl shrink-0">
                             <div class="truncate">
-                                <p class="font-bold text-slate-900 truncate">${item.title}</p>
+                                <p class="font-bold text-slate-900 truncate">${item.title} <span class="text-[10px] text-amber-700">(${email})</span></p>
                                 <p class="text-slate-500 text-[11px]">${item.price} DT • ${item.category} • <span class="text-amber-700">${item.state || ''}</span></p>
                             </div>
                         </div>
@@ -1050,10 +1273,57 @@
                     `;
                     adminItemsContainer.appendChild(row);
                 });
+
+                // تعبئة قائمة البائعين
+                vendorsContainer.innerHTML = "";
+                Object.keys(vendorsMap).forEach(email => {
+                    const itemsList = vendorsMap[email];
+                    const vCard = document.createElement('div');
+                    vCard.className = "bg-slate-50 border border-slate-200 p-3.5 rounded-2xl flex items-center justify-between gap-2 text-xs";
+                    vCard.innerHTML = `
+                        <div>
+                            <p class="font-bold text-slate-900 truncate">👤 ${email}</p>
+                            <p class="text-[11px] text-amber-700 font-semibold">${itemsList.length} إعلان منشور</p>
+                        </div>
+                        <button onclick='showVendorItems(${JSON.stringify(email)}, ${JSON.stringify(itemsList)})' class="bg-slate-900 text-white px-3 py-1.5 rounded-xl font-bold hover:bg-slate-800 transition whitespace-nowrap">عرض سلع البائع</button>
+                    `;
+                    vendorsContainer.appendChild(vCard);
+                });
+
             } catch(e) {
                 adminItemsContainer.innerHTML = `<p class="text-xs text-red-500">حدث خطأ أثناء جلب قائمة الإعلانات.</p>`;
+                vendorsContainer.innerHTML = `<p class="text-xs text-red-500">حدث خطأ أثناء جلب البائعين.</p>`;
             }
         }
+
+        // عرض سلع بائع معين عند النقر عليه في لوحة الأدمن
+        window.showVendorItems = function(email, itemsList) {
+            const section = document.getElementById('adminVendorItemsSection');
+            const titleHeader = document.getElementById('adminVendorTitleHeader');
+            const container = document.getElementById('adminVendorItemsContainer');
+
+            titleHeader.innerText = `إعلانات البائع: ${email} (${itemsList.length} إعلان)`;
+            container.innerHTML = "";
+
+            itemsList.forEach(item => {
+                const itemRow = document.createElement('div');
+                itemRow.className = "bg-white border border-slate-200 p-2.5 rounded-xl flex items-center justify-between gap-2 text-xs";
+                itemRow.innerHTML = `
+                    <div class="flex items-center space-x-2 space-x-reverse truncate">
+                        <img src="${item.image}" class="w-8 h-8 object-cover rounded-lg shrink-0">
+                        <span class="font-bold text-slate-800 truncate">${item.title} (${item.price} DT)</span>
+                    </div>
+                    <span class="text-amber-700 text-[11px] font-semibold">${item.category}</span>
+                `;
+                container.appendChild(itemRow);
+            });
+
+            section.classList.remove('hidden');
+        };
+
+        window.hideAdminVendorItems = function() {
+            document.getElementById('adminVendorItemsSection').classList.add('hidden');
+        };
     </script>
 </body>
 </html>
