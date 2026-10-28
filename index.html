@@ -8,14 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { -webkit-tap-highlight-color: transparent; }
-        /* خلفية الموقع مع نمط شفاف يرمز إلى السوق والتجارة */
         .custom-bg {
             background-color: #f8fafc;
             background-image: radial-gradient(#cbd5e1 0.75px, transparent 0.75px), radial-gradient(#cbd5e1 0.75px, #f8fafc 0.75px);
             background-size: 30px 30px;
             background-position: 0 0, 15px 15px;
         }
-        /* تصميم رسالة التنبيه الصغيرة المصغرة (Toast Notification) */
         #toastNotification {
             transition: all 0.3s ease;
             transform: translateY(-20px);
@@ -27,11 +25,18 @@
             opacity: 1;
             pointer-events: auto;
         }
+        @keyframes bounceSlow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
+        }
+        .animate-bounce-slow {
+            animation: bounceSlow 2s infinite;
+        }
     </style>
 </head>
 <body class="custom-bg text-slate-900 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-white">
 
-    <!-- رسالة التنبيه الصغيرة المصغرة بدلاً من الـ Alert المزعج -->
+    <!-- رسالة التنبيه الصغيرة المصغرة -->
     <div id="toastNotification" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-5 py-2.5 rounded-2xl shadow-xl text-xs font-bold border border-slate-700 flex items-center gap-2">
         <span id="toastIcon">✨</span>
         <span id="toastText">تم بنجاح</span>
@@ -52,20 +57,18 @@
         </div>
     </div>
 
-    <!-- الرأس (Header) - تم فصل وتوسيع المسافة لمنع أي تداخل -->
+    <!-- الرأس (Header) - تم حل تداخل الشعار نهائياً -->
     <header class="bg-slate-100/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 shadow-xs">
         <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
             
-            <!-- أزرار الدخول وإنشاء حساب على اليسار -->
             <div id="auth-nav-container" class="flex items-center space-x-2 space-x-reverse order-2 sm:order-1">
                 <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200/80 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs">إنشاء حساب</button>
                 <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">دخول</button>
             </div>
 
-            <!-- الشعار واللوجو على اليمين بمسافة مريحة تمنع التداخل -->
             <div class="flex items-center justify-end w-full sm:w-auto order-1 sm:order-2">
-                <div class="flex items-center space-x-4 space-x-reverse cursor-pointer group" onclick="switchView('home')">
-                    <div class="text-right pl-2">
+                <div class="flex items-center space-x-5 space-x-reverse cursor-pointer group" onclick="switchView('home')">
+                    <div class="text-right pl-3">
                         <span class="font-black text-slate-900 text-xl tracking-tight block leading-tight">Esouk<span class="text-amber-600">Tunisie</span></span>
                         <span class="text-[11px] text-amber-800 font-extrabold tracking-wide block mt-0.5">السوق التونسي الشامل</span>
                     </div>
@@ -88,23 +91,49 @@
             </div>
         </div>
 
-        <!-- زر البيع الرئيسي الكبير في وسط الصفحة بالنص الجديد -->
-        <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 p-6 sm:p-8 rounded-3xl shadow-xl text-center text-white space-y-4 border border-amber-400/40 relative overflow-hidden">
-            <div class="absolute -right-6 -bottom-6 text-8xl opacity-10 select-none">🏷️</div>
-            <div class="relative z-10 space-y-2">
-                <span class="bg-white/25 text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-sm">منصة الإعلانات الأولى في تونس</span>
-                <h2 class="text-2xl sm:text-3xl font-black tracking-tight drop-shadow-sm">ماذا تريد أن تبيع اليوم؟</h2>
-                <p class="text-xs sm:text-sm text-amber-100 font-medium max-w-md mx-auto">انشر إعلانك بكل سهولة وصِل إلى آلاف المشترين في مختلف ولايات الجمهورية.</p>
+        <!-- البطاقتان الرئيسيتان في المنتصف (البيع والشراء) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- بطاقة البيع -->
+            <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 p-6 rounded-3xl shadow-xl text-center text-white space-y-3 border border-amber-400/40 relative overflow-hidden">
+                <div class="absolute -right-4 -bottom-4 text-7xl opacity-10 select-none">🏷️</div>
+                <div class="relative z-10 space-y-1">
+                    <span class="bg-white/25 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">قسم البائعين</span>
+                    <h2 class="text-xl sm:text-2xl font-black tracking-tight">ماذا تريد أن تبيع اليوم؟</h2>
+                    <p class="text-xs text-amber-100 font-medium">انشر إضاعتك وصِل إلى آلاف المشترين.</p>
+                </div>
+                <div class="pt-1 relative z-10">
+                    <button onclick="openSellModal()" class="bg-slate-900 text-white font-black px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-md hover:bg-slate-800 hover:scale-105 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
+                        <span class="text-base leading-none text-amber-400">+</span>
+                        <span>اضغط هنا لتنشر إعلانك الآن</span>
+                    </button>
+                </div>
             </div>
-            <div class="pt-1 relative z-10">
-                <button onclick="openSellModal()" class="bg-slate-900 text-white font-black px-6 sm:px-8 py-4 rounded-2xl text-xs sm:text-base shadow-lg hover:bg-slate-800 hover:scale-105 active:scale-95 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
-                    <span class="text-xl leading-none text-amber-400">+</span>
-                    <span>اضغط هنا لتنشر إعلانك الآن</span>
-                </button>
+
+            <!-- بطاقة الشراء الجديدة -->
+            <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6 rounded-3xl shadow-xl text-center text-white space-y-3 border border-slate-700 relative overflow-hidden">
+                <div class="absolute -right-4 -bottom-4 text-7xl opacity-10 select-none">🛒</div>
+                <div class="relative z-10 space-y-1">
+                    <span class="bg-amber-500/30 text-amber-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">قسم المشترين</span>
+                    <h2 class="text-xl sm:text-2xl font-black tracking-tight">ماذا تريد أن تشتري اليوم؟</h2>
+                    <p class="text-xs text-slate-300 font-medium">تصفح آلاف العروض والسلع في كل تونس.</p>
+                </div>
+                <div class="pt-1 relative z-10">
+                    <button onclick="scrollToAds()" class="bg-amber-600 text-white font-black px-5 py-3 rounded-2xl text-xs sm:text-sm shadow-md hover:bg-amber-700 hover:scale-105 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
+                        <span>🔍 تصفح الإعلانات والأسعار</span>
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class="bg-white/90 backdrop-blur-sm p-4 sm:p-5 rounded-3xl shadow-sm border border-slate-200/60 space-y-3">
+        <!-- إشارة وتوجيه للإعلانات في الأسفل -->
+        <div class="text-center py-2">
+            <div onclick="scrollToAds()" class="inline-flex flex-col items-center cursor-pointer text-slate-500 hover:text-amber-600 transition animate-bounce-slow">
+                <span class="text-xs font-bold mb-1">انظر إلى الأسفل لمشاهدة أحدث الإعلانات 👇</span>
+                <span class="text-lg">⌄</span>
+            </div>
+        </div>
+
+        <div id="adsSectionTarget" class="bg-white/90 backdrop-blur-sm p-4 sm:p-5 rounded-3xl shadow-sm border border-slate-200/60 space-y-3">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                     <input type="text" id="searchInput" placeholder="ابحث عما تريد..." oninput="performSearch()" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
@@ -131,7 +160,7 @@
 
         <section class="space-y-4">
             <div class="flex justify-between items-center px-1">
-                <h2 id="recentAdsTitle" class="text-base sm:text-lg font-black text-slate-900">الإعلانات الحديثة</h2>
+                <h2 id="recentAdsTitle" class="text-base sm:text-lg font-black text-slate-900">الإعلانات الحديثة (Annonces Récentes)</h2>
                 <span id="itemsCountBadge" class="text-xs font-bold text-slate-400 bg-white px-3 py-1 rounded-full border border-slate-200/60">0 إعلان</span>
             </div>
             <div id="items-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -142,18 +171,17 @@
         </section>
     </main>
 
-    <!-- لوحة التحكم الإدارية للأدمن الشاملة والقوية -->
+    <!-- لوحة التحكم الإدارية للأدمن -->
     <main id="adminView" class="max-w-5xl w-full mx-auto px-4 py-6 flex-grow hidden space-y-6">
         <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/60 space-y-6">
             <div class="flex justify-between items-center border-b border-slate-100 pb-4">
                 <div>
-                    <h1 class="text-lg sm:text-xl font-black text-slate-900">لوحة تحكم الأدمن الشاملة (Admin Dashboard)</h1>
+                    <h1 class="text-lg sm:text-xl font-black text-slate-900">لوحة تحكم الأدمن (Admin Dashboard)</h1>
                     <p class="text-xs text-slate-500">مرحباً بك يا مراد. تحكم كاملاً في المنصة من هنا.</p>
                 </div>
                 <button onclick="handleLogout()" class="bg-red-50 text-red-600 px-4 py-2 rounded-xl text-xs font-bold hover:bg-red-100 transition">تسجيل الخروج</button>
             </div>
 
-            <!-- إحصائيات المنصة المتقدمة -->
             <div class="space-y-3">
                 <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إحصائيات المنصة</h3>
                 <div class="grid grid-cols-3 gap-3">
@@ -166,27 +194,25 @@
                         <p id="adminTotalCats" class="text-xl sm:text-2xl font-black text-slate-900 mt-1">0</p>
                     </div>
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-center">
-                        <p class="text-[11px] text-slate-400 font-medium">حسابات المستخدمين</p>
+                        <p class="text-[11px] text-slate-400 font-medium">المستخدمون</p>
                         <p id="adminTotalUsers" class="text-xl sm:text-2xl font-black text-slate-900 mt-1">1</p>
                     </div>
                 </div>
             </div>
 
-            <!-- إدارة وفئات الموقع (إضافة وحذف) -->
             <div class="pt-4 border-t border-slate-100 space-y-3">
                 <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إدارة فئات الموقع</h3>
                 <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
-                    <input type="text" id="newCategoryName" required placeholder="أضف فئة جديدة (مثال: عقارات)..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500">
-                    <button type="submit" class="bg-amber-600 text-white px-6 py-3 rounded-xl text-xs sm:text-sm font-bold hover:bg-amber-700 transition whitespace-nowrap shadow-sm">إضافة فئة</button>
+                    <input type="text" id="newCategoryName" required placeholder="أضف فئة جديدة..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500">
+                    <button type="submit" class="bg-amber-600 text-white px-6 py-3 rounded-xl text-xs sm:text-sm font-bold hover:bg-amber-700 transition whitespace-nowrap shadow-sm">إضافة</button>
                 </form>
                 <div id="adminCategoriesList" class="flex flex-wrap gap-2 pt-2"></div>
             </div>
 
-            <!-- إدارة جميع الإعلانات المنشورة (حذف الإعلانات المخالفة) -->
             <div class="pt-4 border-t border-slate-100 space-y-3">
-                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إدارة ومتابعة جميع الإعلانات المنشورة</h3>
+                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إدارة ومتابعة جميع الإعلانات</h3>
                 <div id="adminItemsListContainer" class="space-y-2 max-h-96 overflow-y-auto pr-1">
-                    <p class="text-xs text-slate-400">جاري تحميل قائمة الإعلانات للتحكم بها...</p>
+                    <p class="text-xs text-slate-400">جاري تحميل الإعلانات...</p>
                 </div>
             </div>
         </div>
@@ -198,7 +224,7 @@
         <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية</p>
     </footer>
 
-    <!-- نافذة نشر إعلان (بيع) -->
+    <!-- نافذة نشر إعلان (بيع) مع دعم 5 صور ومعاينتها بوضوح -->
     <div id="sellModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -209,7 +235,7 @@
             <form id="sellForm" onsubmit="handlePublishItem(event)" class="p-5 overflow-y-auto space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">عنوان الإعلان أو الغرض</label>
-                    <input type="text" id="itemTitle" required placeholder="مثال: طاولة خشبية تقليدية أصلية" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
+                    <input type="text" id="itemTitle" required placeholder="مثال: طاولة خشبية تقليدية" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -250,14 +276,16 @@
                 </div>
 
                 <div class="space-y-2">
-                    <label class="block text-xs font-bold text-slate-700">صور الغرض (اختر أو القِط حتى 4 صور)</label>
+                    <label class="block text-xs font-bold text-slate-700">صور الغرض (اختر أو التقط حتى 5 صور)</label>
                     <input type="file" id="itemImageFile" accept="image/*" capture="environment" multiple onchange="previewImages(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition cursor-pointer bg-slate-50 border border-slate-200 rounded-xl p-2">
                     
-                    <div id="imagePreviewContainer" class="grid grid-cols-4 gap-2 pt-1">
-                        <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">1</div>
-                        <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">2</div>
-                        <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">3</div>
-                        <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">4</div>
+                    <!-- 5 خانات معاينة صور واضحة في الأسفل -->
+                    <div id="imagePreviewContainer" class="grid grid-cols-5 gap-2 pt-1">
+                        <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">1</div>
+                        <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">2</div>
+                        <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">3</div>
+                        <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">4</div>
+                        <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">5</div>
                     </div>
                 </div>
 
@@ -333,7 +361,6 @@
         let isLoginMode = false;
         let selectedImagesBase64 = [];
 
-        // دالة إظهار التنبيه المصغّر الناعم بدلاً من الـ Alert
         function showToast(message, icon = "✨") {
             const toast = document.getElementById('toastNotification');
             document.getElementById('toastText').innerText = message;
@@ -343,6 +370,10 @@
                 toast.classList.remove('show');
             }, 3000);
         }
+
+        window.scrollToAds = function() {
+            document.getElementById('adsSectionTarget').scrollIntoView({ behavior: 'smooth' });
+        };
 
         window.setLanguage = function(lang) {
             window.currentLang = lang;
@@ -466,15 +497,19 @@
             }
         }
 
+        // معاينة حتى 5 صور في الأسفل بدقة عالية
         window.previewImages = function(e) {
             const files = e.target.files;
             const container = document.getElementById('imagePreviewContainer');
             container.innerHTML = "";
             selectedImagesBase64 = [];
 
-            if (!files || files.length === 0) return;
+            if (!files || files.length === 0) {
+                renderEmptyImageSlots(container, 5);
+                return;
+            }
 
-            const maxFiles = Math.min(files.length, 4);
+            const maxFiles = Math.min(files.length, 5);
 
             for (let i = 0; i < maxFiles; i++) {
                 const file = files[i];
@@ -510,7 +545,7 @@
                         selectedImagesBase64.push(compressedDataUrl);
 
                         const div = document.createElement('div');
-                        div.className = "h-16 bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative shadow-xs";
+                        div.className = "h-14 bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative shadow-xs";
                         div.innerHTML = `<img src="${compressedDataUrl}" class="w-full h-full object-cover">`;
                         container.appendChild(div);
                     };
@@ -518,6 +553,16 @@
                 reader.readAsDataURL(file);
             }
         };
+
+        function renderEmptyImageSlots(container, count) {
+            container.innerHTML = "";
+            for (let i = 1; i <= count; i++) {
+                const div = document.createElement('div');
+                div.className = "h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]";
+                div.innerText = i;
+                container.appendChild(div);
+            }
+        }
 
         window.handleAuthSubmit = async function(e) {
             e.preventDefault();
@@ -691,12 +736,7 @@
                 showToast(isAr ? "تم نشر إعلانك بنجاح!" : "Annonce publiée !", "🚀");
                 document.getElementById('sellForm').reset();
                 selectedImagesBase64 = [];
-                document.getElementById('imagePreviewContainer').innerHTML = `
-                    <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">1</div>
-                    <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">2</div>
-                    <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">3</div>
-                    <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">4</div>
-                `;
+                renderEmptyImageSlots(document.getElementById('imagePreviewContainer'), 5);
                 closeSellModal();
                 loadItems();
             } catch (err) {
