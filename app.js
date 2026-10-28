@@ -1,154 +1,229 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brocante Market - Achat et Vente entre particuliers</title>
-    <!-- Tailwind CSS pour un design moderne et responsive -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Ton fichier de style personnel si tu en as un -->
-    <link rel="stylesheet" href="style.css">
-</head>
-<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col justify-between">
+// --- CONFIGURATION FIREBASE (Projet brocantemarketpro) ---
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-analytics.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
-    <!-- En-tête (Header) -->
-    <header class="bg-white border-b border-slate-100 sticky top-0 z-40 shadow-xs">
-        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-            
-            <!-- Logo et Nom -->
-            <div class="flex items-center space-x-2">
-                <span class="text-2xl">🏺</span>
-                <span class="font-black text-slate-900 text-lg tracking-tight">Brocante<span class="text-amber-600">Market</span></span>
-            </div>
+const firebaseConfig = {
+    apiKey: "AIzaSyAk9Dg4ns0QoWCl3QyoNwTxiQ9Xz5WFUAQ",
+    authDomain: "brocantemarketpro.firebaseapp.com",
+    projectId: "brocantemarketpro",
+    storageBucket: "brocantemarketpro.firebasestorage.app",
+    messagingSenderId: "343953099017",
+    appId: "1:343953099017:web:3288ac33d670bfa27a6bd8",
+    measurementId: "G-5LGDFGF9EE"
+};
 
-            <!-- Actions principales : Vendre en vedette + Compte -->
-            <div class="flex items-center space-x-2">
-                <!-- Bouton Vendre ultra visible en premier -->
-                <button onclick="openSellModal()" class="bg-gradient-to-r from-amber-600 to-amber-500 text-white px-4 py-2.5 rounded-2xl font-bold text-sm shadow-md shadow-amber-500/20 hover:from-amber-700 hover:to-amber-600 active:scale-95 transition flex items-center space-x-1.5">
-                    <span class="text-lg leading-none">+</span>
-                    <span>Vendre</span>
-                </button>
+// Initialisation de Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-                <!-- Conteneur Connexion / Déconnexion géré dynamiquement par JavaScript -->
-                <div id="auth-nav-container" class="flex items-center">
-                    <!-- Injecté par app.js -->
-                </div>
-            </div>
+// --- 1. GESTION DE L'AUTHENTIFICATION & MODALES ---
+window.openAuthModal = function(mode) {
+    const modal = document.getElementById('authModal');
+    if (modal) modal.classList.remove('hidden');
+};
 
-        </div>
-    </header>
+window.closeAuthModal = function() {
+    const modal = document.getElementById('authModal');
+    if (modal) modal.classList.add('hidden');
+};
 
-    <!-- Contenu Principal -->
-    <main class="max-w-4xl w-full mx-auto px-4 py-6 flex-grow">
-        
-        <!-- Barre de Recherche et Filtres -->
-        <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 mb-6 space-y-3">
-            <input type="text" id="searchInput" placeholder="Rechercher un objet..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition">
-            
-            <div class="flex gap-2">
-                <select id="categorySelect" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition">
-                    <option value="">Toutes les catégories</option>
-                    <option value="Meubles">Meubles</option>
-                    <option value="Décoration">Décoration</option>
-                    <option value="Électronique">Électronique</option>
-                    <option value="Vêtements">Vêtements</option>
-                    <option value="Autre">Autre</option>
-                </select>
-                <button onclick="performSearch()" class="bg-slate-900 text-white px-6 py-3 rounded-2xl text-sm font-bold hover:bg-slate-800 transition">Filtrer</button>
-            </div>
-        </div>
+window.openSellModal = function() {
+    if (!auth.currentUser) {
+        alert("Veuillez vous connecter pour publier une annonce.");
+        openAuthModal();
+        return;
+    }
+    const sellModal = document.getElementById('sellModal');
+    if (sellModal) sellModal.classList.remove('hidden');
+};
 
-        <!-- Liste des Annonces -->
-        <section>
-            <h2 class="text-lg font-black text-slate-900 mb-4">Annonces récentes</h2>
-            <div id="items-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Les annonces seront injectées dynamiquement ici par app.js -->
-            </div>
-        </section>
+window.closeSellModal = function() {
+    const sellModal = document.getElementById('sellModal');
+    if (sellModal) sellModal.classList.add('hidden');
+};
 
-    </main>
+// Gestion Soumission Formulaire d'Authentification (Connexion / Inscription automatique)
+const authForm = document.getElementById('authForm');
+if (authForm) {
+    authForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('authEmail').value;
+        const password = document.getElementById('authPassword').value;
 
-    <!-- MODALE DE PUBLICATION (Vendre) -->
-    <div id="sellModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-lg rounded-3xl shadow-xl overflow-hidden max-h-[90vh] flex flex-col">
-            <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-                <h3 class="font-bold text-slate-900">Publier une annonce</h3>
-                <button onclick="closeSellModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold px-2">&times;</button>
-            </div>
-            
-            <form id="sellForm" class="p-5 overflow-y-auto space-y-4">
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            alert("Connexion réussie !");
+            closeAuthModal();
+        } catch (error) {
+            try {
+                await createUserWithEmailAndPassword(auth, email, password);
+                alert("Compte créé et connecté avec succès !");
+                closeAuthModal();
+            } catch (createError) {
+                alert("Erreur : " + createError.message);
+            }
+        }
+    });
+}
+
+// Observer l'état de l'utilisateur (Met à jour dynamiquement le bouton de connexion en haut)
+onAuthStateChanged(auth, (user) => {
+    const navContainer = document.getElementById('auth-nav-container');
+    if (!navContainer) return;
+
+    if (user) {
+        navContainer.innerHTML = `
+            <span class="text-xs font-medium text-slate-600 hidden sm:inline mr-2">${user.email}</span>
+            <button onclick="handleLogout()" class="bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-sm font-bold hover:bg-slate-300 transition">Déconnexion</button>
+        `;
+    } else {
+        navContainer.innerHTML = `
+            <button onclick="openAuthModal()" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-sm font-bold hover:bg-slate-800 transition">Connexion</button>
+        `;
+    }
+});
+
+window.handleLogout = async function() {
+    await signOut(auth);
+    alert("Déconnecté avec succès.");
+};
+
+// --- 2. GESTION DES ANNONCES & APPAREIL PHOTO ---
+const sellForm = document.getElementById('sellForm');
+if (sellForm) {
+    sellForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        if (!auth.currentUser) {
+            alert("Vous devez être connecté pour publier.");
+            openAuthModal();
+            return;
+        }
+
+        const title = document.getElementById('itemTitle').value;
+        const category = document.getElementById('itemCategory').value;
+        const condition = document.getElementById('itemCondition').value;
+        const price = document.getElementById('itemPrice').value;
+        const description = document.getElementById('itemDescription').value;
+        const imageInput = document.getElementById('itemImageFile');
+
+        if (!imageInput.files || imageInput.files.length === 0) {
+            alert("Veuillez ajouter une photo de l'objet avec l'appareil photo.");
+            return;
+        }
+
+        const imageFile = imageInput.files[0];
+
+        const submitBtn = sellForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn ? submitBtn.innerText : "Publier";
+        if (submitBtn) {
+            submitBtn.innerText = "Publication en cours...";
+            submitBtn.disabled = true;
+        }
+
+        const reader = new FileReader();
+        reader.readAsDataURL(imageFile);
+        reader.onload = async function () {
+            const base64Image = reader.result;
+
+            try {
+                await addDoc(collection(db, "items"), {
+                    title,
+                    category,
+                    condition,
+                    price: Number(price),
+                    description,
+                    image: base64Image,
+                    userEmail: auth.currentUser.email,
+                    createdAt: serverTimestamp()
+                });
+
+                alert("Annonce publiée avec succès !");
+                sellForm.reset();
+                closeSellModal();
+                loadItems(); 
+            } catch (error) {
+                alert("Erreur lors de la publication : " + error.message);
+            } finally {
+                if (submitBtn) {
+                    submitBtn.innerText = originalBtnText;
+                    submitBtn.disabled = false;
+                }
+            }
+        };
+
+        reader.onerror = function () {
+            alert("Erreur lors de la lecture de la photo.");
+            if (submitBtn) {
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        };
+    });
+}
+
+// Charger et afficher les annonces depuis Firestore
+async function loadItems(categoryFilter = "", searchKeyword = "") {
+    const grid = document.getElementById('items-grid');
+    if (!grid) return;
+
+    grid.innerHTML = '<p class="text-slate-400 text-center py-8 col-span-full text-sm">Chargement des annonces...</p>';
+
+    try {
+        const querySnapshot = await getDocs(collection(db, "items"));
+        grid.innerHTML = "";
+
+        if (querySnapshot.empty) {
+            grid.innerHTML = '<p class="text-slate-400 text-center py-8 col-span-full text-sm">Aucune annonce pour le moment.</p>';
+            return;
+        }
+
+        querySnapshot.forEach((docSnap) => {
+            const item = docSnap.data();
+
+            if (categoryFilter && item.category !== categoryFilter) return;
+            if (searchKeyword && !item.title.toLowerCase().includes(searchKeyword.toLowerCase())) return;
+
+            const card = document.createElement('div');
+            card.className = "bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 flex flex-col justify-between";
+            card.innerHTML = `
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Titre de l'objet</label>
-                    <input type="text" id="itemTitle" required placeholder="Ex: Table ancienne en bois" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">Catégorie</label>
-                        <select id="itemCategory" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
-                            <option value="Meubles">Meubles</option>
-                            <option value="Décoration">Décoration</option>
-                            <option value="Électronique">Électronique</option>
-                            <option value="Vêtements">Vêtements</option>
-                            <option value="Autre">Autre</option>
-                        </select>
+                    <img src="${item.image || 'https://via.placeholder.com/300'}" alt="${item.title}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-slate-900 text-base">${item.title}</h3>
+                            <span class="bg-amber-50 text-amber-700 text-xs font-extrabold px-2.5 py-1 rounded-lg">${item.price} DT</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-2">${item.category} • <span class="font-semibold">${item.condition}</span></p>
+                        <p class="text-xs text-slate-600 line-clamp-2">${item.description || 'Aucune description.'}</p>
                     </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">État</label>
-                        <select id="itemCondition" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
-                            <option value="Neuf">Neuf</option>
-                            <option value="Très bon état">Très bon état</option>
-                            <option value="Bon état">Bon état</option>
-                            <option value="À restaurer">À restaurer</option>
-                        </select>
-                    </div>
                 </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Prix (DT)</label>
-                    <input type="number" id="itemPrice" required placeholder="Ex: 150" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
+                <div class="p-4 pt-0 text-xs text-slate-400 border-t border-slate-50 mt-2 flex justify-between items-center">
+                    <span>Par : ${item.userEmail || 'Anonyme'}</span>
                 </div>
+            `;
+            grid.appendChild(card);
+        });
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Description</label>
-                    <textarea id="itemDescription" rows="3" placeholder="Décrivez votre objet..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500"></textarea>
-                </div>
+        if (grid.innerHTML === "") {
+            grid.innerHTML = '<p class="text-slate-400 text-center py-8 col-span-full text-sm">Aucun résultat trouvé.</p>';
+        }
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Photo (Appareil photo ou Galerie)</label>
-                    <input type="file" id="itemImageFile" accept="image/*" capture="environment" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
-                </div>
+    } catch (error) {
+        console.error("Erreur de chargement:", error);
+        grid.innerHTML = '<p class="text-red-400 text-center py-8 col-span-full text-sm">Erreur lors du chargement des annonces.</p>';
+    }
+}
 
-                <button type="submit" class="w-full bg-amber-600 text-white font-bold py-3 rounded-xl hover:bg-amber-700 transition shadow-md shadow-amber-600/20">Publier l'annonce</button>
-            </form>
-        </div>
-    </div>
+window.performSearch = function() {
+    const keyword = document.getElementById('searchInput').value;
+    const category = document.getElementById('categorySelect').value;
+    loadItems(category, keyword);
+};
 
-    <!-- MODALE D'AUTHENTIFICATION (Connexion / Inscription) -->
-    <div id="authModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-sm rounded-3xl shadow-xl overflow-hidden">
-            <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-                <h3 class="font-bold text-slate-900">Connexion / Inscription</h3>
-                <button onclick="closeAuthModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold px-2">&times;</button>
-            </div>
-            
-            <form id="authForm" class="p-5 space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Adresse e-mail</label>
-                    <input type="email" id="authEmail" required placeholder="nom@exemple.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">Mot de passe</label>
-                    <input type="password" id="authPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
-                </div>
-
-                <button type="submit" class="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition">Se connecter / S'inscrire</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Lien vers ton fichier JavaScript séparé -->
-    <script type="module" src="app.js"></script>
-</body>
-</html>
+// Lancer le chargement au démarrage
+loadItems();
