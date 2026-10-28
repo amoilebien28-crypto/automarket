@@ -30,25 +30,93 @@
     <!-- الرأس (Header) -->
     <header class="bg-white border-b border-slate-100 sticky top-0 z-40 shadow-xs">
         <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center space-x-2 space-x-reverse">
+            <div class="flex items-center space-x-2 space-x-reverse cursor-pointer" onclick="switchView('home')">
                 <span class="text-2xl">🏺</span>
                 <span class="font-black text-slate-900 text-lg tracking-tight" data-fr="BrocanteMarket" data-ar="سوق العتيق">سوق العتيق</span>
             </div>
 
-            <!-- منطقة الأزرار في الأعلى (تسجيل الدخول أو الحساب) -->
-            <div id="auth-nav-container" class="flex items-center space-x-2 space-x-reverse">
-                <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-700 transition">إنشاء حساب</button>
-                <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition">دخول</button>
+            <div class="flex items-center space-x-2 space-x-reverse">
+                <!-- زر البيع البارز في الأول -->
+                <button onclick="openSellModal()" class="bg-gradient-to-r from-amber-600 to-amber-500 text-white px-4 py-2.5 rounded-2xl font-bold text-sm shadow-md shadow-amber-500/20 hover:from-amber-700 hover:to-amber-600 active:scale-95 transition flex items-center space-x-1.5 space-x-reverse">
+                    <span class="text-lg leading-none">+</span>
+                    <span id="btnSellText">بيع</span>
+                </button>
+
+                <!-- منطقة الحساب وتسجيل الدخول -->
+                <div id="auth-nav-container" class="flex items-center space-x-2 space-x-reverse">
+                    <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-100 text-amber-800 px-3 py-2 rounded-xl text-xs font-bold hover:bg-amber-200 transition">إنشاء حساب</button>
+                    <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition">دخول</button>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- المحتوى الرئيسي -->
-    <main class="max-w-4xl w-full mx-auto px-4 py-6 flex-grow space-y-6">
-        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 text-center space-y-3">
-            <h1 id="welcomeTitle" class="text-xl font-black text-slate-900">مرحباً بكم في سوق العتيق</h1>
-            <p id="welcomeDesc" class="text-sm text-slate-500">قم بتسجيل الدخول أو أنشئ حساباً لبدء استخدام التطبيق.</p>
-            <button onclick="changeLanguagePrompt()" class="text-xs text-amber-600 font-bold underline hover:text-amber-700 pt-2 block mx-auto">تغيير اللغة / Changer de langue</button>
+    <!-- المحتوى الرئيسي (الصفحة الرئيسية) -->
+    <main id="homeView" class="max-w-4xl w-full mx-auto px-4 py-6 flex-grow space-y-6">
+        
+        <!-- شريط البحث والفلاتر -->
+        <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 space-y-3">
+            <input type="text" id="searchInput" placeholder="ابحث عن أي شيء..." oninput="performSearch()" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition">
+            
+            <div class="flex gap-2">
+                <select id="categorySelect" onchange="performSearch()" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 transition">
+                    <option value="">جميع الفئات / Toutes les catégories</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- فئات سريعة للتصفح -->
+        <div>
+            <h2 id="quickCatTitle" class="text-sm font-bold text-slate-500 mb-3 uppercase tracking-wider">التصنيفات</h2>
+            <div id="quickCategories" class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+                <button onclick="filterByCategory('')" class="bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap shadow-sm">الكل / Tout</button>
+            </div>
+        </div>
+
+        <!-- قائمة الإعلانات المعروضة -->
+        <section>
+            <h2 id="recentAdsTitle" class="text-lg font-black text-slate-900 mb-4">الإعلانات الحديثة</h2>
+            <div id="items-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <p class="text-slate-400 text-center py-8 col-span-full text-sm">جاري تحميل الإعلانات...</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- لوحة التحكم الإدارية (مخفية افتراضياً) -->
+    <main id="adminView" class="max-w-4xl w-full mx-auto px-4 py-6 flex-grow hidden space-y-6">
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 space-y-6">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-4">
+                <div>
+                    <h1 class="text-xl font-black text-slate-900">لوحة التحكم (Admin)</h1>
+                    <p class="text-xs text-slate-500">إدارة الفئات ومراقبة محتوى الموقع.</p>
+                </div>
+                <button onclick="switchView('home')" class="bg-slate-100 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-200 transition">العودة للموقع</button>
+            </div>
+
+            <!-- إضافة فئة جديدة -->
+            <div class="space-y-4">
+                <h3 class="font-bold text-slate-800 text-sm">إضافة فئة جديدة</h3>
+                <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
+                    <input type="text" id="newCategoryName" required placeholder="مثال: أثاث، إلكترونيات..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-amber-500">
+                    <button type="submit" class="bg-amber-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-amber-700 transition whitespace-nowrap">إضافة</button>
+                </form>
+            </div>
+
+            <!-- إحصائيات سريعة -->
+            <div class="pt-4 border-t border-slate-100 space-y-3">
+                <h3 class="font-bold text-slate-800 text-sm">إحصائيات الموقع</h3>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                        <p class="text-xs text-slate-500">إجمالي الإعلانات</p>
+                        <p id="adminTotalItems" class="text-xl font-black text-slate-900">0</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                        <p class="text-xs text-slate-500">الفئات النشطة</p>
+                        <p id="adminTotalCats" class="text-xl font-black text-slate-900">0</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -57,7 +125,59 @@
         &copy; 2026 سوق العتيق - جميع الحقوق محفوظة.
     </footer>
 
-    <!-- نافذة التسجيل أو الدخول (Modal) -->
+    <!-- نافذة نشر إعلان (بيع) -->
+    <div id="sellModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-xl overflow-hidden max-h-[90vh] flex flex-col">
+            <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 class="font-bold text-slate-900 text-sm">نشر إعلان جديد (بيع)</h3>
+                <button onclick="closeSellModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold px-2">&times;</button>
+            </div>
+            
+            <form id="sellForm" onsubmit="handlePublishItem(event)" class="p-5 overflow-y-auto space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">عنوان الغرض</label>
+                    <input type="text" id="itemTitle" required placeholder="مثال: طاولة خشبية قديمة" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">الفئة</label>
+                        <select id="itemCategory" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
+                            <!-- يتم تعبئتها ديناميكياً -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">الحالة</label>
+                        <select id="itemCondition" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
+                            <option value="Neuf / جديد">جديد (Neuf)</option>
+                            <option value="Très bon état / بحالة ممتازة">بحالة ممتازة</option>
+                            <option value="Bon état / بحالة جيدة">بحالة جيدة</option>
+                            <option value="À restaurer / للترميم">للترميم</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">السعر (دينار تونسي DT)</label>
+                    <input type="number" id="itemPrice" required placeholder="مثال: 150" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">الوصف</label>
+                    <textarea id="itemDescription" rows="3" placeholder="اكتب تفاصيل الغرض هنا..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">صورة الغرض (الكاميرا أو المعرض)</label>
+                    <input type="file" id="itemImageFile" accept="image/*" capture="environment" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                </div>
+
+                <button type="submit" class="w-full bg-amber-600 text-white font-bold py-3 rounded-xl hover:bg-amber-700 transition shadow-md shadow-amber-600/20 text-sm">نشر الإعلان الآن</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة تسجيل الدخول / إنشاء حساب / كود الإدارة -->
     <div id="authModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl shadow-xl overflow-hidden">
             <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -67,19 +187,23 @@
             
             <form id="authForm" onsubmit="handleAuthSubmit(event)" class="p-5 space-y-4">
                 <div>
-                    <label id="labelEmail" class="block text-xs font-bold text-slate-700 mb-1">البريد الإلكتروني</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">البريد الإلكتروني</label>
                     <input type="email" id="authEmail" required placeholder="nom@exemple.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
                 </div>
 
                 <div>
-                    <label id="labelPass" class="block text-xs font-bold text-slate-700 mb-1">الرقم السري (كلمة المرور)</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">كلمة المرور (الرقم السري)</label>
                     <input type="password" id="authPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
                 </div>
 
-                <!-- حقل تأكيد كلمة المرور يظهر فقط عند التسجيل -->
                 <div id="confirmPassContainer">
-                    <label id="labelConfirmPass" class="block text-xs font-bold text-slate-700 mb-1">إعادة الرقم السري (تأكيد)</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">إعادة كلمة المرور (تأكيد)</label>
                     <input type="password" id="authPasswordConfirm" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+
+                <div class="pt-2 border-t border-slate-100">
+                    <label class="block text-xs font-bold text-amber-700 mb-1">كود الإدارة الخاص (اختياري)</label>
+                    <input type="password" id="adminCodeInput" placeholder="أدخل كود الأدمن إن وجد..." class="w-full bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-amber-500">
                 </div>
 
                 <button type="submit" id="btnSubmitAuth" class="w-full bg-amber-600 text-white font-bold py-3 rounded-xl hover:bg-amber-700 transition shadow-md shadow-amber-600/20 text-sm">تسجيل حساب جديد</button>
@@ -91,10 +215,11 @@
         </div>
     </div>
 
-    <!-- الشيفرة البرمجية والربط مع Firebase -->
+    <!-- الشيفرة البرمجية والربط بـ Firebase -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAk9Dg4ns0QoWCl3QyoNwTxiQ9Xz5WFUAQ",
@@ -107,9 +232,12 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
+        const SECRET_ADMIN_CODE = "1234"; // كود الأدارة السري
+        let categoriesList = ["أثاث / Meubles", "ديكور / Décoration", "إلكترونيات / Électronique", "ملابس / Vêtements", "أخرى / Autre"];
         window.currentLang = localStorage.getItem('brocante_lang') || '';
-        let isLoginMode = false; // افتراضياً وضع التسجيل (Inscription)
+        let isLoginMode = false;
 
         window.setLanguage = function(lang) {
             window.currentLang = lang;
@@ -130,20 +258,20 @@
                 html.setAttribute('dir', 'rtl');
                 html.setAttribute('lang', 'ar');
                 document.getElementById('pageTitle').innerText = "سوق العتيق - بيع وشراء بين الأفراد";
-                document.getElementById('welcomeTitle').innerText = "مرحباً بكم في سوق العتيق";
-                document.getElementById('welcomeDesc').innerText = "قم بتسجيل الدخول أو أنشئ حساباً لبدء استخدام التطبيق.";
+                document.getElementById('btnSellText').innerText = "بيع";
                 document.getElementById('btnSignupTop').innerText = "إنشاء حساب";
                 document.getElementById('btnLoginTop').innerText = "دخول";
-                updateAuthModalTexts();
+                document.getElementById('quickCatTitle').innerText = "التصنيفات";
+                document.getElementById('recentAdsTitle').innerText = "الإعلانات الحديثة";
             } else {
                 html.setAttribute('dir', 'ltr');
                 html.setAttribute('lang', 'fr');
                 document.getElementById('pageTitle').innerText = "Brocante Market - Achat et Vente entre particuliers";
-                document.getElementById('welcomeTitle').innerText = "Bienvenue sur Brocante Market";
-                document.getElementById('welcomeDesc').innerText = "Connecte-toi ou crée un compte pour commencer à profiter de l'application.";
+                document.getElementById('btnSellText').innerText = "Vendre";
                 document.getElementById('btnSignupTop').innerText = "S'inscrire";
                 document.getElementById('btnLoginTop').innerText = "Connexion";
-                updateAuthModalTexts();
+                document.getElementById('quickCatTitle').innerText = "Catégories";
+                document.getElementById('recentAdsTitle').innerText = "Annonces récentes";
             }
         }
 
@@ -153,7 +281,22 @@
             } else {
                 applyTranslations();
             }
+            updateCategoryDropdowns();
+            loadItems();
         });
+
+        window.switchView = function(viewName) {
+            const home = document.getElementById('homeView');
+            const admin = document.getElementById('adminView');
+            if(viewName === 'admin') {
+                home.classList.add('hidden');
+                admin.classList.remove('hidden');
+                loadAdminStats();
+            } else {
+                admin.classList.add('hidden');
+                home.classList.remove('hidden');
+            }
+        };
 
         window.openAuthModal = function(mode) {
             isLoginMode = (mode === 'login');
@@ -163,6 +306,19 @@
 
         window.closeAuthModal = function() {
             document.getElementById('authModal').classList.add('hidden');
+        };
+
+        window.openSellModal = function() {
+            if (!auth.currentUser) {
+                alert(window.currentLang === 'ar' ? "يرجى تسجيل الدخول أولاً لنشر إعلان." : "Veuillez vous connecter pour publier une annonce.");
+                openAuthModal('login');
+                return;
+            }
+            document.getElementById('sellModal').classList.remove('hidden');
+        };
+
+        window.closeSellModal = function() {
+            document.getElementById('sellModal').classList.add('hidden');
         };
 
         window.toggleAuthMode = function() {
@@ -180,27 +336,27 @@
             if (isLoginMode) {
                 confirmContainer.classList.add('hidden');
                 titleEl.innerText = isAr ? "تسجيل الدخول" : "Connexion";
-                submitBtn.innerText = isAr ? "تسجيل الدخول" : "Se connecter";
-                switchBtn.innerText = isAr ? "ليس لديك حساب؟ انقر هنا لإنشاء حساب جديد" : "Pas de compte ? S'inscrire ici";
+                submitBtn.innerText = isAr ? "دخول" : "Se connecter";
+                switchBtn.innerText = isAr ? "ليس لديك حساب؟ انقر هنا لإنشاء حساب" : "Pas de compte ? S'inscrire";
             } else {
                 confirmContainer.classList.remove('hidden');
-                titleEl.innerText = isAr ? "إنشاء حساب جديد (Inscription)" : "Créer un compte (Inscription)";
+                titleEl.innerText = isAr ? "إنشاء حساب جديد" : "Créer un compte";
                 submitBtn.innerText = isAr ? "تأكيد التسجيل" : "S'inscrire";
-                switchBtn.innerText = isAr ? "لديك حساب بالفعل؟ سجل دخولك هنا" : "Déjà un compte ? Se connecter";
+                switchBtn.innerText = isAr ? "لديك حساب بالفعل؟ سجل دخولك" : "Déjà un compte ? Se connecter";
             }
         }
 
-        // تنفيذ عملية التسجيل أو الدخول عبر Firebase
         window.handleAuthSubmit = async function(e) {
             e.preventDefault();
             const email = document.getElementById('authEmail').value;
             const password = document.getElementById('authPassword').value;
+            const adminCode = document.getElementById('adminCodeInput').value;
             const isAr = window.currentLang === 'ar';
 
             if (!isLoginMode) {
-                const passwordConfirm = document.getElementById('authPasswordConfirm').value;
-                if (password !== passwordConfirm) {
-                    alert(isAr ? "كلمات المرور غير متطابقة! يجيب إعادة إدخال الرقم السري بشكل صحيح." : "Les mots de passe ne correspondent pas !");
+                const passConfirm = document.getElementById('authPasswordConfirm').value;
+                if (password !== passConfirm) {
+                    alert(isAr ? "كلمات المرور غير متطابقة!" : "Les mots de passe ne correspondent pas !");
                     return;
                 }
             }
@@ -214,6 +370,11 @@
                     alert(isAr ? "تم إنشاء الحساب بنجاح!" : "Compte créé avec succès !");
                 }
                 closeAuthModal();
+
+                if (adminCode === SECRET_ADMIN_CODE) {
+                    alert(isAr ? "تم تفعيل صلاحيات المشرف (Admin)!" : "Accès administrateur accordé !");
+                    switchView('admin');
+                }
             } catch (err) {
                 alert((isAr ? "خطأ: " : "Erreur : ") + err.message);
             }
@@ -221,26 +382,166 @@
 
         window.handleLogout = async function() {
             await signOut(auth);
-            const isAr = window.currentLang === 'ar';
-            alert(isAr ? "تم تسجيل الخروج." : "Déconnecté avec succès.");
+            switchView('home');
+            alert(window.currentLang === 'ar' ? "تم تسجيل الخروج." : "Déconnecté avec succès.");
         };
 
-        // تحديث أزرار القائمة العلوية حسب حالة المستخدم
         onAuthStateChanged(auth, (user) => {
             const nav = document.getElementById('auth-nav-container');
             const isAr = window.currentLang === 'ar';
             if (user) {
                 nav.innerHTML = `
-                    <span class="text-xs font-medium text-slate-600 hidden sm:inline mr-2">${user.email}</span>
-                    <button onclick="handleLogout()" class="bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-300 transition">${isAr ? 'خروج' : 'Déconnexion'}</button>
+                    <button onclick="switchView('admin')" class="bg-amber-100 text-amber-800 px-3 py-2 rounded-xl text-xs font-bold hover:bg-amber-200 transition">Admin</button>
+                    <button onclick="handleLogout()" class="bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-300 transition">${isAr ? 'خروج' : 'Déco'}</button>
                 `;
             } else {
                 nav.innerHTML = `
-                    <button onclick="openAuthModal('signup')" class="bg-amber-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-700 transition">${isAr ? 'إنشاء حساب' : "S'inscrire"}</button>
+                    <button onclick="openAuthModal('signup')" class="bg-amber-100 text-amber-800 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-200 transition">${isAr ? 'إنشاء حساب' : "S'inscrire"}</button>
                     <button onclick="openAuthModal('login')" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition">${isAr ? 'دخول' : 'Connexion'}</button>
                 `;
             }
         });
+
+        // إدارة الفئات
+        function updateCategoryDropdowns() {
+            const selectSearch = document.getElementById('categorySelect');
+            const selectSell = document.getElementById('itemCategory');
+            const quickCats = document.getElementById('quickCategories');
+
+            let searchOpts = `<option value="">${window.currentLang === 'ar' ? 'جميع الفئات' : 'Toutes les catégories'}</option>`;
+            let sellOpts = '';
+            let quickHTML = `<button onclick="filterByCategory('')" class="bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap shadow-sm">${window.currentLang === 'ar' ? 'الكل' : 'Tout'}</button>`;
+
+            categoriesList.forEach(cat => {
+                searchOpts += `<option value="${cat}">${cat}</option>`;
+                sellOpts += `<option value="${cat}">${cat}</option>`;
+                quickHTML += `<button onclick="filterByCategory('${cat}')" class="bg-white text-slate-700 border border-slate-200 px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap hover:bg-slate-50 transition">${cat}</button>`;
+            });
+
+            selectSearch.innerHTML = searchOpts;
+            selectSell.innerHTML = sellOpts;
+            quickCats.innerHTML = quickHTML;
+        }
+
+        window.filterByCategory = function(cat) {
+            document.getElementById('categorySelect').value = cat;
+            performSearch();
+        };
+
+        window.handleAddCategory = function(e) {
+            e.preventDefault();
+            const newCat = document.getElementById('newCategoryName').value.trim();
+            if(newCat && !categoriesList.includes(newCat)) {
+                categoriesList.push(newCat);
+                updateCategoryDropdowns();
+                document.getElementById('newCategoryName').value = '';
+                alert(window.currentLang === 'ar' ? "تمت إضافة الفئة بنجاح!" : "Catégorie ajoutée avec succès !");
+                loadAdminStats();
+            }
+        };
+
+        // نشر إعلان جديد بالصور
+        window.handlePublishItem = async function(e) {
+            e.preventDefault();
+            if (!auth.currentUser) return;
+
+            const title = document.getElementById('itemTitle').value;
+            const category = document.getElementById('itemCategory').value;
+            const condition = document.getElementById('itemCondition').value;
+            const price = document.getElementById('itemPrice').value;
+            const description = document.getElementById('itemDescription').value;
+            const imageInput = document.getElementById('itemImageFile');
+
+            if (!imageInput.files || imageInput.files.length === 0) {
+                alert(window.currentLang === 'ar' ? "يرجى اختيار صورة الغرض." : "Veuillez ajouter une photo.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.readAsDataURL(imageInput.files[0]);
+            reader.onload = async function() {
+                try {
+                    await addDoc(collection(db, "items"), {
+                        title, category, condition,
+                        price: Number(price),
+                        description,
+                        image: reader.result,
+                        userEmail: auth.currentUser.email,
+                        createdAt: serverTimestamp()
+                    });
+                    alert(window.currentLang === 'ar' ? "تم نشر الإعلان بنجاح!" : "Annonce publiée avec succès !");
+                    document.getElementById('sellForm').reset();
+                    closeSellModal();
+                    loadItems();
+                } catch (err) {
+                    alert("Erreur : " + err.message);
+                }
+            };
+        };
+
+        // عرض الإعلانات
+        async function loadItems(categoryFilter = "", keyword = "") {
+            const grid = document.getElementById('items-grid');
+            grid.innerHTML = `<p class="text-slate-400 text-center py-8 col-span-full text-sm">${window.currentLang === 'ar' ? 'جاري التحميل...' : 'Chargement...'}</p>`;
+
+            try {
+                const snapshot = await getDocs(collection(db, "items"));
+                grid.innerHTML = "";
+
+                if (snapshot.empty) {
+                    grid.innerHTML = `<p class="text-slate-400 text-center py-8 col-span-full text-sm">${window.currentLang === 'ar' ? 'لا توجد إعلانات حالياً.' : 'Aucune annonce pour le moment.'}</p>`;
+                    return;
+                }
+
+                snapshot.forEach(docSnap => {
+                    const item = docSnap.data();
+                    if (categoryFilter && item.category !== categoryFilter) return;
+                    if (keyword && !item.title.toLowerCase().includes(keyword.toLowerCase())) return;
+
+                    const card = document.createElement('div');
+                    card.className = "bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 flex flex-col justify-between";
+                    card.innerHTML = `
+                        <div>
+                            <img src="${item.image}" alt="${item.title}" class="w-full h-48 object-cover">
+                            <div class="p-4">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="font-bold text-slate-900 text-base">${item.title}</h3>
+                                    <span class="bg-amber-50 text-amber-700 text-xs font-extrabold px-2.5 py-1 rounded-lg">${item.price} DT</span>
+                                </div>
+                                <p class="text-xs text-slate-500 mb-2">${item.category} • <span class="font-semibold">${item.condition}</span></p>
+                                <p class="text-xs text-slate-600 line-clamp-2">${item.description || 'Aucune description.'}</p>
+                            </div>
+                        </div>
+                        <div class="p-4 pt-0 text-xs text-slate-400 border-t border-slate-50 mt-2 flex justify-between items-center">
+                            <span>Par : ${item.userEmail || 'Anonyme'}</span>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                if (grid.innerHTML === "") {
+                    grid.innerHTML = `<p class="text-slate-400 text-center py-8 col-span-full text-sm">${window.currentLang === 'ar' ? 'لا توجد نتائج مطابقة.' : 'Aucun résultat trouvé.'}</p>`;
+                }
+            } catch (err) {
+                grid.innerHTML = `<p class="text-red-400 text-center py-8 col-span-full text-sm">Erreur de chargement.</p>`;
+            }
+        }
+
+        window.performSearch = function() {
+            const keyword = document.getElementById('searchInput').value;
+            const category = document.getElementById('categorySelect').value;
+            loadItems(category, keyword);
+        };
+
+        async function loadAdminStats() {
+            document.getElementById('adminTotalCats').innerText = categoriesList.length;
+            try {
+                const snapshot = await getDocs(collection(db, "items"));
+                document.getElementById('adminTotalItems').innerText = snapshot.size;
+            } catch(e) {
+                document.getElementById('adminTotalItems').innerText = "0";
+            }
+        }
     </script>
 </body>
 </html>
