@@ -406,7 +406,7 @@
             }
         }
 
-        // معاينة الصور بشكل فوري وسليم
+        // دالة تصغير وصقل حجم الصور تلقائياً (تجنباً للحجم الكبير جداً)
         window.previewImages = function(e) {
             const files = e.target.files;
             const container = document.getElementById('imagePreviewContainer');
@@ -416,19 +416,46 @@
             if (!files || files.length === 0) return;
 
             const maxFiles = Math.min(files.length, 4);
-            let loadedCount = 0;
 
             for (let i = 0; i < maxFiles; i++) {
                 const file = files[i];
                 const reader = new FileReader();
                 reader.onload = function(uploadEvent) {
-                    selectedImagesBase64.push(uploadEvent.target.result);
-                    loadedCount++;
+                    const img = new Image();
+                    img.src = uploadEvent.target.result;
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 800; // الحد الأقصى للعرض لكي تبقى الصورة خفيفة وصغيرة الحجم
+                        const MAX_HEIGHT = 800;
+                        let width = img.width;
+                        let height = img.height;
 
-                    const div = document.createElement('div');
-                    div.className = "h-16 bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative shadow-xs";
-                    div.innerHTML = `<img src="${uploadEvent.target.result}" class="w-full h-full object-cover">`;
-                    container.appendChild(div);
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // ضغط الصورة بجودة معقولة (0.7) لتكون خفيفة وسريعة النشر
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                        selectedImagesBase64.push(compressedDataUrl);
+
+                        const div = document.createElement('div');
+                        div.className = "h-16 bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative shadow-xs";
+                        div.innerHTML = `<img src="${compressedDataUrl}" class="w-full h-full object-cover">`;
+                        container.appendChild(div);
+                    };
                 };
                 reader.readAsDataURL(file);
             }
@@ -552,7 +579,6 @@
             }
         };
 
-        // نشر الإعلان بشكل آمن وسريع دون تعليق
         window.handlePublishItem = async function(e) {
             e.preventDefault();
             if (!auth.currentUser) return;
