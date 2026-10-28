@@ -406,7 +406,6 @@
             }
         }
 
-        // دالة تصغير وصقل حجم الصور تلقائياً (تجنباً للحجم الكبير جداً)
         window.previewImages = function(e) {
             const files = e.target.files;
             const container = document.getElementById('imagePreviewContainer');
@@ -425,7 +424,7 @@
                     img.src = uploadEvent.target.result;
                     img.onload = function() {
                         const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 800; // الحد الأقصى للعرض لكي تبقى الصورة خفيفة وصغيرة الحجم
+                        const MAX_WIDTH = 800;
                         const MAX_HEIGHT = 800;
                         let width = img.width;
                         let height = img.height;
@@ -447,7 +446,6 @@
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, width, height);
 
-                        // ضغط الصورة بجودة معقولة (0.7) لتكون خفيفة وسريعة النشر
                         const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
                         selectedImagesBase64.push(compressedDataUrl);
 
@@ -474,24 +472,26 @@
                 }
             }
 
-            if (!isLoginMode) {
-                const passConfirm = document.getElementById('authPasswordConfirm').value;
-                if (password !== passConfirm) {
-                    alert(isAr ? "كلمات المرور غير متطابقة!" : "Les mots de passe ne correspondent pas !");
-                    return;
-                }
-            }
-
             try {
                 if (isLoginMode) {
                     await signInWithEmailAndPassword(auth, email, password);
                 } else {
+                    const passConfirm = document.getElementById('authPasswordConfirm').value;
+                    if (password !== passConfirm) {
+                        alert(isAr ? "كلمات المرور غير متطابقة!" : "Les mots de passe ne correspondent pas !");
+                        return;
+                    }
                     try {
                         await createUserWithEmailAndPassword(auth, email, password);
                     } catch (regErr) {
-                        await signInWithEmailAndPassword(auth, email, password);
+                        if (regErr.code === 'auth/email-already-in-use') {
+                            await signInWithEmailAndPassword(auth, email, password);
+                        } else {
+                            throw regErr;
+                        }
                     }
                 }
+                
                 alert(isAr ? "تم تسجيل الدخول بنجاح!" : "Connexion réussie !");
                 closeAuthModal();
 
@@ -501,7 +501,7 @@
                     switchView('home');
                 }
             } catch (err) {
-                alert((isAr ? "خطأ: " : "Erreur : ") + err.message);
+                alert((isAr ? "خطأ في المصادقة: " : "Erreur d'authentification : ") + err.message);
             }
         };
 
