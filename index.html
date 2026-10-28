@@ -55,6 +55,65 @@
         <span id="toastText">تم بنجاح</span>
     </div>
 
+    <!-- نافذة تفاصيل الإعلان (Modal Details) عند النقر على أي إعلان -->
+    <div id="itemDetailsModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
+            <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 id="modalItemTitleHeader" class="font-bold text-slate-900 text-sm sm:text-base truncate">تفاصيل الإعلان</h3>
+                <button onclick="closeDetailsModal()" class="w-8 h-8 rounded-full bg-slate-200/60 text-slate-500 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
+            </div>
+            <div class="p-5 overflow-y-auto space-y-5">
+                <!-- معرض الصور -->
+                <div>
+                    <div id="modalMainImageContainer" class="w-full h-64 sm:h-80 bg-slate-100 rounded-2xl overflow-hidden shadow-sm border border-slate-200">
+                        <img id="modalMainImage" src="" class="w-full h-full object-cover">
+                    </div>
+                    <!-- الصور المصغرة الإضافية -->
+                    <div id="modalThumbnails" class="flex gap-2 mt-3 overflow-x-auto pb-1"></div>
+                </div>
+
+                <!-- معلومات الإعلان الأساسية -->
+                <div class="space-y-3">
+                    <div class="flex flex-wrap justify-between items-start gap-2">
+                        <h2 id="modalItemTitle" class="text-xl font-black text-slate-900"></h2>
+                        <span id="modalItemPrice" class="bg-slate-900 text-white text-sm font-black px-4 py-2 rounded-xl"></span>
+                    </div>
+                    <div class="flex flex-wrap gap-2 text-xs font-bold">
+                        <span id="modalItemCategory" class="bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1.5 rounded-xl"></span>
+                        <span id="modalItemState" class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl"></span>
+                        <span id="modalItemCondition" class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl"></span>
+                    </div>
+                </div>
+
+                <!-- الوصف التفصيلي -->
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-1">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">وصف الغرض</h4>
+                    <p id="modalItemDescription" class="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line"></p>
+                </div>
+
+                <!-- زر الاتصال بالبائع -->
+                <div class="pt-2">
+                    <a id="modalCallBtn" href="#" class="w-full bg-amber-600 text-white font-bold py-3.5 rounded-2xl hover:bg-amber-700 transition shadow-md flex items-center justify-center gap-2 text-sm">
+                        <span>📞 الاتصال بالبائع مباشرة</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة اختيار الفئات عند الضغط على "ماذا تريد أن تشتري اليوم؟" -->
+    <div id="buyCategoriesModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
+            <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                <h3 class="font-bold text-slate-900 text-sm sm:text-base">اختر القسم الذي تريد تصفحه 🛍️</h3>
+                <button onclick="closeBuyModal()" class="w-8 h-8 rounded-full bg-slate-200/60 text-slate-500 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
+            </div>
+            <div id="buyCategoriesGrid" class="p-5 overflow-y-auto grid grid-cols-2 gap-3">
+                <!-- يتم تعبئتها ديناميكياً بالأقسام -->
+            </div>
+        </div>
+    </div>
+
     <!-- نافذة اختيار اللغة عند البداية -->
     <div id="langModal" class="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden p-6 text-center space-y-6 border border-slate-100">
@@ -135,8 +194,8 @@
                     <p class="text-[11px] text-slate-300 font-medium">تصفح آلاف العروض والسلع في كل تونس.</p>
                 </div>
                 <div class="pt-0.5 relative z-10">
-                    <button onclick="scrollToAds()" class="bg-amber-600 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md hover:bg-amber-700 hover:scale-105 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
-                        <span>🔍 تصفح الإعلانات والأسعار</span>
+                    <button onclick="openBuyCategoriesModal()" class="bg-amber-600 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md hover:bg-amber-700 hover:scale-105 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
+                        <span>🔍 اختر القسم أو تصفح الكل</span>
                     </button>
                 </div>
             </div>
@@ -258,7 +317,7 @@
         <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية</p>
     </footer>
 
-    <!-- نافذة نشر إعلان (بيع) مع تجميع الصور حتى 5 صور بدون مسح القديم -->
+    <!-- نافذة نشر إعلان (بيع) مع اختيار مرن للصور ومعاينتها -->
     <div id="sellModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -310,8 +369,9 @@
                 </div>
 
                 <div class="space-y-2">
-                    <label class="block text-xs font-bold text-slate-700">صور الغرض (اختر حتى 5 صور متتالية)</label>
-                    <input type="file" id="itemImageFile" accept="image/*" capture="environment" multiple onchange="previewImages(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition cursor-pointer bg-slate-50 border border-slate-200 rounded-xl p-2">
+                    <label class="block text-xs font-bold text-slate-700">صور الغرض (اختر من المعرض أو التقط حتى 5 صور)</label>
+                    <!-- تم إزالة capture لتجنب فرض الكاميرا الأمامية/السلفي وجعل اختيار المعرض سهلاً -->
+                    <input type="file" id="itemImageFile" accept="image/*" multiple onchange="previewImages(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition cursor-pointer bg-slate-50 border border-slate-200 rounded-xl p-2">
                     
                     <!-- 5 خانات معاينة صور واضحة في الأسفل -->
                     <div id="imagePreviewContainer" class="grid grid-cols-5 gap-2 pt-1">
@@ -361,7 +421,7 @@
         </div>
     </div>
 
-    <!-- الكود البرمجى والمنطق المعدّل لتراكم الصور حتى 5 صور بدون مسح -->
+    <!-- الكود البرمجى والمنطق -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
@@ -393,7 +453,8 @@
         window.currentLang = localStorage.getItem('esouk_lang') || '';
         let explicitUsersCount = 1;
         let isLoginMode = false;
-        let selectedImagesBase64 = []; // مصفوفة لتخزين وتراكم الصور
+        let selectedImagesBase64 = [];
+        let allLoadedItems = []; // لتخزين الإعلانات مؤقتاً لعرض التفاصيل
 
         function showToast(message, icon = "✨") {
             const toast = document.getElementById('toastNotification');
@@ -407,6 +468,69 @@
 
         window.scrollToAds = function() {
             document.getElementById('adsSectionTarget').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        // فتح نافذة أقسام الشراء
+        window.openBuyCategoriesModal = function() {
+            const grid = document.getElementById('buyCategoriesGrid');
+            grid.innerHTML = `
+                <button onclick="selectBuyCategory('')" class="bg-gradient-to-r from-amber-600 to-amber-500 text-white p-4 rounded-2xl font-black text-xs sm:text-sm shadow-md hover:scale-105 transition col-span-2 flex items-center justify-center gap-2">
+                    <span>🌟 عرض كل الإعلانات (Tout)</span>
+                </button>
+            `;
+            categoriesList.forEach(cat => {
+                grid.innerHTML += `
+                    <button onclick="selectBuyCategory('${cat}')" class="bg-slate-50 border border-slate-200 text-slate-800 p-3.5 rounded-2xl font-bold text-xs hover:bg-amber-50 hover:border-amber-300 transition shadow-xs text-center truncate">
+                        📦 ${cat}
+                    </button>
+                `;
+            });
+            document.getElementById('buyCategoriesModal').classList.remove('hidden');
+        };
+
+        window.closeBuyModal = function() {
+            document.getElementById('buyCategoriesModal').classList.add('hidden');
+        };
+
+        window.selectBuyCategory = function(cat) {
+            closeBuyModal();
+            document.getElementById('categorySelect').value = cat;
+            performSearch();
+            scrollToAds();
+        };
+
+        // فتح نافذة تفاصيل الإعلان
+        window.openItemDetails = function(index) {
+            const item = allLoadedItems[index];
+            if (!item) return;
+
+            document.getElementById('modalItemTitle').innerText = item.title;
+            document.getElementById('modalItemTitleHeader').innerText = item.title;
+            document.getElementById('modalItemPrice').innerText = item.price + " DT";
+            document.getElementById('modalItemCategory').innerText = item.category;
+            document.getElementById('modalItemState').innerText = "📍 " + (item.state || 'تونس');
+            document.getElementById('modalItemCondition').innerText = "✨ " + (item.condition || '');
+            document.getElementById('modalItemDescription').innerText = item.description || 'لا يوجد وصف تفصيلي لهذا الغرض.';
+            document.getElementById('modalCallBtn').href = `tel:${item.phone || ''}`;
+
+            const images = (item.images && item.images.length > 0) ? item.images : [item.image];
+            document.getElementById('modalMainImage').src = images[0];
+
+            const thumbsContainer = document.getElementById('modalThumbnails');
+            thumbsContainer.innerHTML = "";
+            images.forEach((imgUrl, i) => {
+                thumbsContainer.innerHTML += `
+                    <div onclick="document.getElementById('modalMainImage').src='${imgUrl}'" class="w-16 h-16 rounded-xl border border-slate-200 overflow-hidden cursor-pointer shrink-0 hover:opacity-80 transition shadow-xs">
+                        <img src="${imgUrl}" class="w-full h-full object-cover">
+                    </div>
+                `;
+            });
+
+            document.getElementById('itemDetailsModal').classList.remove('hidden');
+        };
+
+        window.closeDetailsModal = function() {
+            document.getElementById('itemDetailsModal').classList.add('hidden');
         };
 
         window.setLanguage = function(lang) {
@@ -531,7 +655,7 @@
             }
         }
 
-        // دالة معاينة وتراكم الصور (تحافظ على الصور السابقة وتضيف الجديدة حتى 5 كحد أقصى)
+        // معاينة وتراكم حتى 5 صور بسلاسة بدون مشاكل كاميرا سلفي
         window.previewImages = function(e) {
             const files = e.target.files;
             if (!files || files.length === 0) return;
@@ -581,11 +705,9 @@
                 };
                 reader.readAsDataURL(file);
             }
-            // مسح حقل الـ input لكي يسمح بإضافة صور أخرى لاحقاً إن أردت
             e.target.value = "";
         };
 
-        // تحديث واجهة خانات الصور الـ 5
         function updateImagePreviewUI() {
             const container = document.getElementById('imagePreviewContainer');
             container.innerHTML = "";
@@ -608,7 +730,6 @@
             }
         }
 
-        // إمكانية حذف صورة معينة من القائمة قبل النشر
         window.removeImage = function(index) {
             selectedImagesBase64.splice(index, 1);
             updateImagePreviewUI();
@@ -818,6 +939,7 @@
             try {
                 const snapshot = await getDocs(collection(db, "items"));
                 grid.innerHTML = "";
+                allLoadedItems = [];
                 let count = 0;
 
                 if (snapshot.empty) {
@@ -832,9 +954,14 @@
                     if (stateFilter && item.state !== stateFilter) return;
                     if (keyword && !item.title.toLowerCase().includes(keyword.toLowerCase())) return;
 
+                    allLoadedItems.push(item);
+                    const currentIndex = allLoadedItems.length - 1;
                     count++;
+
                     const card = document.createElement('div');
-                    card.className = "bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md border border-slate-200/70 flex flex-col justify-between transition group";
+                    card.className = "bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-md border border-slate-200/70 flex flex-col justify-between transition group cursor-pointer";
+                    card.onclick = () => openItemDetails(currentIndex);
+
                     card.innerHTML = `
                         <div>
                             <div class="relative overflow-hidden h-52 bg-slate-100">
@@ -847,12 +974,12 @@
                                 </div>
                             </div>
                             <div class="p-4.5 space-y-2">
-                                <h3 class="font-black text-slate-900 text-base leading-snug">${item.title}</h3>
+                                <h3 class="font-black text-slate-900 text-base leading-snug truncate">${item.title}</h3>
                                 <p class="text-xs text-slate-400 font-semibold">${item.category} • <span class="text-amber-600">${item.condition || ''}</span></p>
                                 <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed">${item.description || 'بدون وصف.'}</p>
                             </div>
                         </div>
-                        <div class="p-4.5 pt-0 border-t border-slate-100 mt-2 flex justify-between items-center bg-slate-50/50">
+                        <div class="p-4.5 pt-0 border-t border-slate-100 mt-2 flex justify-between items-center bg-slate-50/50" onclick="event.stopPropagation()">
                             <span class="text-[11px] text-slate-400 truncate max-w-[120px]">👤 ${item.userEmail ? item.userEmail.split('@')[0] : 'بائع'}</span>
                             <a href="tel:${item.phone || ''}" class="bg-amber-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-700 transition shadow-sm flex items-center gap-1.5">
                                 <span>📞 اتصل</span>
