@@ -1,4 +1,4 @@
-// --- CONFIGURATION FIREBASE (Avec tes vraies clés de ton projet brocantemarketpro) ---
+// --- CONFIGURATION FIREBASE (Projet brocantemarketpro) ---
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-analytics.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
@@ -92,7 +92,7 @@ window.handleLogout = async function() {
     alert("Déconnecté avec succès.");
 };
 
-// --- GESTION DES ANNONCES (FIRESTORE) & APPAREIL PHOTO ---
+// --- GESTION DES ANNONCES (FIRESTORE) & APPAREIL PHOTO OPTIMISÉ ---
 const sellForm = document.getElementById('sellForm');
 if (sellForm) {
     sellForm.addEventListener('submit', async (e) => {
@@ -100,6 +100,7 @@ if (sellForm) {
 
         if (!auth.currentUser) {
             alert("Vous devez être connecté pour publier.");
+            openAuthModal();
             return;
         }
 
@@ -108,11 +109,21 @@ if (sellForm) {
         const condition = document.getElementById('itemCondition').value;
         const price = document.getElementById('itemPrice').value;
         const description = document.getElementById('itemDescription').value;
-        const imageFile = document.getElementById('itemImageFile').files[0];
+        const imageInput = document.getElementById('itemImageFile');
 
-        if (!imageFile) {
-            alert("Veuillez ajouter une photo de l'objet.");
+        if (!imageInput.files || imageInput.files.length === 0) {
+            alert("Veuillez ajouter une photo de l'objet avec l'appareil photo.");
             return;
+        }
+
+        const imageFile = imageInput.files[0];
+
+        // Indicateur visuel de chargement sur le bouton
+        const submitBtn = sellForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn ? submitBtn.innerText : "Publier";
+        if (submitBtn) {
+            submitBtn.innerText = "Publication en cours...";
+            submitBtn.disabled = true;
         }
 
         const reader = new FileReader();
@@ -135,9 +146,22 @@ if (sellForm) {
                 alert("Annonce publiée avec succès !");
                 sellForm.reset();
                 closeSellModal();
-                loadItems();
+                loadItems(); // Recharger la liste des annonces
             } catch (error) {
                 alert("Erreur lors de la publication : " + error.message);
+            } finally {
+                if (submitBtn) {
+                    submitBtn.innerText = originalBtnText;
+                    submitBtn.disabled = false;
+                }
+            }
+        };
+
+        reader.onerror = function () {
+            alert("Erreur lors de la lecture de la photo.");
+            if (submitBtn) {
+                submitBtn.innerText = originalBtnText;
+                submitBtn.disabled = false;
             }
         };
     });
