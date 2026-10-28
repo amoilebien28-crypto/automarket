@@ -8,7 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { -webkit-tap-highlight-color: transparent; }
-        /* خلفية ملونة متدرجة وجميلة جداً */
         .custom-bg {
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #fef3c7 100%);
         }
@@ -31,28 +30,30 @@
         </div>
     </div>
 
-    <!-- الرأس (Header) -->
-    <header class="bg-white/80 backdrop-blur-md border-b border-slate-200/60 sticky top-0 z-40 shadow-xs">
-        <div class="max-w-5xl mx-auto px-4 py-3.5 flex items-center justify-between">
-            <div class="flex items-center space-x-3 space-x-reverse cursor-pointer group" onclick="switchView('home')">
-                <div class="w-10 h-10 bg-amber-500 text-white rounded-2xl flex items-center justify-center text-xl shadow-md shadow-amber-500/20 group-hover:scale-105 transition">🏺</div>
-                <div>
-                    <span class="font-black text-slate-900 text-lg tracking-tight block leading-tight">Esouk<span class="text-amber-600">Tunisie</span></span>
-                    <span class="text-[10px] text-slate-400 font-medium tracking-wide block">السوق التونسي الشامل</span>
+    <!-- الرأس (Header) مقسم على سطرين لعدم التداخل على الهاتف -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-200/60 sticky top-0 z-40 shadow-xs">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <!-- السطر الأول: الشعار والاسم -->
+            <div class="flex items-center justify-between w-full sm:w-auto">
+                <div class="flex items-center space-x-3 space-x-reverse cursor-pointer group" onclick="switchView('home')">
+                    <div class="w-10 h-10 bg-amber-500 text-white rounded-2xl flex items-center justify-center text-xl shadow-md shadow-amber-500/20 group-hover:scale-105 transition">🏺</div>
+                    <div>
+                        <span class="font-black text-slate-900 text-lg tracking-tight block leading-tight">Esouk<span class="text-amber-600">Tunisie</span></span>
+                        <span class="text-[10px] text-slate-400 font-medium tracking-wide block">السوق التونسي الشامل</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="flex items-center space-x-2.5 space-x-reverse">
-                <!-- زر البيع الفخم -->
-                <button onclick="openSellModal()" class="bg-gradient-to-r from-amber-600 to-amber-500 text-white px-4.5 py-2.5 rounded-2xl font-bold text-xs sm:text-sm shadow-md shadow-amber-500/25 hover:from-amber-700 hover:to-amber-600 active:scale-95 transition flex items-center space-x-1.5 space-x-reverse">
+            <!-- السطر الثاني (أو بجانبه على الكمبيوتر): الأزرار مرتبة وغير متداخلة -->
+            <div class="flex items-center justify-end w-full sm:w-auto gap-2 overflow-x-auto pb-1 sm:pb-0">
+                <button onclick="openSellModal()" class="bg-gradient-to-r from-amber-600 to-amber-500 text-white px-3.5 py-2 rounded-xl font-bold text-xs shadow-md shadow-amber-500/25 hover:from-amber-700 hover:to-amber-600 active:scale-95 transition flex items-center space-x-1 space-x-reverse whitespace-nowrap">
                     <span class="text-base leading-none">+</span>
                     <span id="btnSellText">بيع غرض</span>
                 </button>
 
-                <!-- منطقة الحساب وتسجيل الدخول -->
-                <div id="auth-nav-container" class="flex items-center space-x-2 space-x-reverse">
-                    <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200/60 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition">إنشاء حساب</button>
-                    <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm">دخول</button>
+                <div id="auth-nav-container" class="flex items-center space-x-1.5 space-x-reverse">
+                    <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200/60 px-3 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap">إنشاء حساب</button>
+                    <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">دخول</button>
                 </div>
             </div>
         </div>
@@ -61,14 +62,10 @@
     <!-- المحتوى الرئيسي (الصفحة الرئيسية) -->
     <main id="homeView" class="max-w-5xl w-full mx-auto px-4 py-6 flex-grow space-y-6">
         
-        <!-- بانر الترحيب والشعار التوضيحي البارز -->
+        <!-- بانر الترحيب والشعار التوضيحي -->
         <div class="bg-white/90 backdrop-blur-sm p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/60 text-center space-y-3 relative overflow-hidden">
-            <div class="absolute -left-6 -bottom-6 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl pointer-events-none"></div>
-            <div class="absolute -right-6 -top-6 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl pointer-events-none"></div>
-            
             <h1 id="welcomeTitle" class="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">Esouk Tunisie - السوق التونسي</h1>
             <p id="welcomeDesc" class="text-xs sm:text-sm font-bold text-amber-700 max-w-2xl mx-auto bg-amber-50/80 py-2.5 px-4 rounded-2xl border border-amber-100">بيع وشراء: كل شيء جديد أو مستعمل في كامل تراب الجمهورية</p>
-            
             <div class="pt-2">
                 <button onclick="changeLanguagePrompt()" class="text-xs text-slate-400 font-semibold hover:text-amber-600 transition inline-flex items-center gap-1">
                     <span>🌐 تغيير اللغة / Changer de langue</span>
@@ -76,10 +73,10 @@
             </div>
         </div>
 
-        <!-- شريط البحث والفلاتر (متطور وسهل) -->
+        <!-- شريط البحث والفلاتر -->
         <div class="bg-white/90 backdrop-blur-sm p-4 sm:p-5 rounded-3xl shadow-sm border border-slate-200/60 space-y-3">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div class="sm:col-span-1">
+                <div>
                     <input type="text" id="searchInput" placeholder="ابحث عما تريد..." oninput="performSearch()" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
                 </div>
                 <div>
@@ -95,7 +92,7 @@
             </div>
         </div>
 
-        <!-- فئات سريعة للتصفح السريع -->
+        <!-- فئات سريعة -->
         <div>
             <h2 id="quickCatTitle" class="text-xs font-bold text-slate-400 mb-3 uppercase tracking-wider px-1">التصنيفات السريعة</h2>
             <div id="quickCategories" class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
@@ -103,7 +100,7 @@
             </div>
         </div>
 
-        <!-- قائمة الإعلانات المعروضة -->
+        <!-- قائمة الإعلانات -->
         <section class="space-y-4">
             <div class="flex justify-between items-center px-1">
                 <h2 id="recentAdsTitle" class="text-base sm:text-lg font-black text-slate-900">الإعلانات الحديثة</h2>
@@ -115,25 +112,24 @@
                 </div>
             </div>
         </section>
-
     </main>
 
-    <!-- لوحة التحكم الإدارية (مخفية افتراضياً) -->
+    <!-- لوحة التحكم الإدارية الخاصة بالأدمن فقط -->
     <main id="adminView" class="max-w-5xl w-full mx-auto px-4 py-6 flex-grow hidden space-y-6">
         <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/60 space-y-6">
             <div class="flex justify-between items-center border-b border-slate-100 pb-4">
                 <div>
-                    <h1 class="text-lg sm:text-xl font-black text-slate-900">لوحة التحكم (Admin)</h1>
-                    <p class="text-xs text-slate-500">إدارة الفئات ومراقبة محتوى منصة Esouk Tunisie.</p>
+                    <h1 class="text-lg sm:text-xl font-black text-slate-900">لوحة تحكم الأدمن (Admin Dashboard)</h1>
+                    <p class="text-xs text-slate-500">مرحباً بك بصفتك مدير النظام. يمكنك إدارة الفئات والمحتوى هنا.</p>
                 </div>
-                <button onclick="switchView('home')" class="bg-slate-100 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-200 transition">العودة للموقع</button>
+                <button onclick="handleLogout()" class="bg-red-50 text-red-600 px-4 py-2 rounded-xl text-xs font-bold hover:bg-red-100 transition">تسجيل الخروج</button>
             </div>
 
             <!-- إضافة فئة جديدة -->
             <div class="space-y-3">
                 <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إضافة فئة جديدة للتطبيق</h3>
                 <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
-                    <input type="text" id="newCategoryName" required placeholder="مثال: عقارات، سيارات، خدمات..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500">
+                    <input type="text" id="newCategoryName" required placeholder="مثال: عقارات، سيارات..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500">
                     <button type="submit" class="bg-amber-600 text-white px-6 py-3 rounded-xl text-xs sm:text-sm font-bold hover:bg-amber-700 transition whitespace-nowrap shadow-sm">إضافة</button>
                 </form>
             </div>
@@ -143,7 +139,7 @@
                 <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إحصائيات المنصة</h3>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-100">
-                        <p class="text-xs text-slate-400 font-medium">إجمالي الإعلانات النشطة</p>
+                        <p class="text-xs text-slate-400 font-medium">إجمالي الإعلانات</p>
                         <p id="adminTotalItems" class="text-xl sm:text-2xl font-black text-slate-900 mt-1">0</p>
                     </div>
                     <div class="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-100">
@@ -161,7 +157,7 @@
         <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية</p>
     </footer>
 
-    <!-- نافذة نشر إعلان (بيع) -->
+    <!-- نافذة نشر إعلان (بيع) مع مربعات معاينة الصور -->
     <div id="sellModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -185,7 +181,7 @@
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1.5">الولاية (Gouvernorat)</label>
                         <select id="itemState" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
-                            <!-- تعبئة ديناميكية لولايات تونس -->
+                            <!-- تعبئة ديناميكية -->
                         </select>
                     </div>
                 </div>
@@ -208,25 +204,34 @@
 
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">رقم الهاتف للاتصال بك (Téléphone)</label>
-                    <input type="tel" id="itemPhone" required placeholder="مثال: 98123456 أو +216..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition" dir="ltr">
+                    <input type="tel" id="itemPhone" required placeholder="مثال: 98123456" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition" dir="ltr">
                 </div>
 
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">وصف تفصيلي</label>
-                    <textarea id="itemDescription" rows="3" placeholder="أكتب تفاصيل الغرض، مميزاته، وسبب البيع..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition"></textarea>
+                    <textarea id="itemDescription" rows="3" placeholder="أكتب تفاصيل الغرض..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition"></textarea>
                 </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1.5">صورة الغرض (التقاط بالكاميرا أو اختر من المعرض)</label>
-                    <input type="file" id="itemImageFile" accept="image/*" capture="environment" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition cursor-pointer bg-slate-50 border border-slate-200 rounded-xl p-2">
+                <!-- خانة التقاط الصورة مع 4 مربعات معاينة -->
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-slate-700">صور الغرض (اختر أو القِط حتى 4 صور)</label>
+                    <input type="file" id="itemImageFile" accept="image/*" capture="environment" multiple onchange="previewImages(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition cursor-pointer bg-slate-50 border border-slate-200 rounded-xl p-2">
+                    
+                    <!-- 4 مربعات معاينة الصور الصغيرة -->
+                    <div id="imagePreviewContainer" class="grid grid-cols-4 gap-2 pt-1">
+                        <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">1</div>
+                        <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">2</div>
+                        <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">3</div>
+                        <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">4</div>
+                    </div>
                 </div>
 
-                <button type="submit" class="w-full bg-gradient-to-r from-amber-600 to-amber-500 text-white font-bold py-3.5 rounded-2xl hover:from-amber-700 hover:to-amber-600 transition shadow-md shadow-amber-600/20 text-sm">نشر الإعلان الآن في Esouk Tunisie</button>
+                <button type="submit" class="w-full bg-gradient-to-r from-amber-600 to-amber-500 text-white font-bold py-3.5 rounded-2xl hover:from-amber-700 hover:to-amber-600 transition shadow-md text-sm">نشر الإعلان الآن</button>
             </form>
         </div>
     </div>
 
-    <!-- نافذة تسجيل الدخول / إنشاء حساب / كود الإدارة -->
+    <!-- نافذة تسجيل الدخول / إنشاء حساب (بدون إظهار كود الأدمن) -->
     <div id="authModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -250,11 +255,6 @@
                     <input type="password" id="authPasswordConfirm" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition" dir="ltr">
                 </div>
 
-                <div class="pt-2 border-t border-slate-100">
-                    <label class="block text-xs font-bold text-amber-700 mb-1.5">كود الإدارة الخاص (اختياري للأدمن)</label>
-                    <input type="password" id="adminCodeInput" placeholder="أدخل كود الأدمن إن وجد..." class="w-full bg-amber-50/60 border border-amber-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 transition" dir="ltr">
-                </div>
-
                 <button type="submit" id="btnSubmitAuth" class="w-full bg-slate-900 text-white font-bold py-3.5 rounded-2xl hover:bg-slate-800 transition shadow-md text-sm">تسجيل حساب جديد</button>
                 
                 <div class="text-center pt-1">
@@ -264,7 +264,7 @@
         </div>
     </div>
 
-    <!-- الشيفرة البرمجية والربط بـ Firebase والتطبيق -->
+    <!-- الكود البرمجى والمنطق -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
@@ -283,18 +283,19 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        const SECRET_ADMIN_CODE = "1234"; 
+        // البريد الإلكتروني الرسمي الخاص بك كأدمن (الدخول المباشر لوحة التحكم)
+        const ADMIN_EMAIL = "mouradters@admin.tn"; 
 
-        // الولايات التونسية الـ 24 كاملة
         const tunisiaStates = [
             "تونس", "أريانة", "بن عروس", "منوبة", "نابل", "زغوان", "بنزرت", "باجة", 
             "جندوبة", "الكاف", "سليانة", "سوسة", "منستير", "مهدية", "صفاقس", "قيروان", 
-            "قصرين", "سيدي بوزيد", "قابس", "مدنين (جربة إلخ)", "تطاوين", "قفصة", "توزر", "قبلي"
+            "قصرين", "سيدي بوزيد", "قابس", "مدنين", "تطاوين", "قفصة", "توزر", "قبلي"
         ];
 
         let categoriesList = ["أثاث وتحف (Meubles)", "إلكترونيات وهواتف (Électronique)", "أجهزة منزلية (Électroménager)", "ملابس وأزياء (Vêtements)", "سيارات ووسائل نقل", "أخرى / Divers"];
         window.currentLang = localStorage.getItem('esouk_lang') || '';
         let isLoginMode = false;
+        let selectedImagesBase64 = [];
 
         window.setLanguage = function(lang) {
             window.currentLang = lang;
@@ -407,11 +408,31 @@
             }
         }
 
+        // معاينة الصور في المربعات الأربعة
+        window.previewImages = function(e) {
+            const files = e.target.files;
+            const container = document.getElementById('imagePreviewContainer');
+            container.innerHTML = "";
+            selectedImagesBase64 = [];
+
+            const maxFiles = Math.min(files.length, 4);
+            for (let i = 0; i < maxFiles; i++) {
+                const reader = new FileReader();
+                reader.readAsDataURL(files[i]);
+                reader.onload = function(uploadEvent) {
+                    selectedImagesBase64.push(uploadEvent.target.result);
+                    const div = document.createElement('div');
+                    div.className = "h-16 bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative shadow-xs";
+                    div.innerHTML = `<img src="${uploadEvent.target.result}" class="w-full h-full object-cover">`;
+                    container.appendChild(div);
+                }
+            }
+        };
+
         window.handleAuthSubmit = async function(e) {
             e.preventDefault();
-            const email = document.getElementById('authEmail').value;
+            const email = document.getElementById('authEmail').value.trim();
             const password = document.getElementById('authPassword').value;
-            const adminCode = document.getElementById('adminCodeInput').value;
             const isAr = window.currentLang === 'ar';
 
             if (!isLoginMode) {
@@ -425,16 +446,17 @@
             try {
                 if (isLoginMode) {
                     await signInWithEmailAndPassword(auth, email, password);
-                    alert(isAr ? "تم تسجيل الدخول بنجاح!" : "Connexion réussie !");
                 } else {
                     await createUserWithEmailAndPassword(auth, email, password);
-                    alert(isAr ? "تم إنشاء الحساب بنجاح!" : "Compte créé avec succès !");
                 }
+                alert(isAr ? "تم تسجيل الدخول بنجاح!" : "Connexion réussie !");
                 closeAuthModal();
 
-                if (adminCode === SECRET_ADMIN_CODE) {
-                    alert(isAr ? "مرحباً بك أيها المشرف (Admin)!" : "Accès administrateur accordé !");
+                // توجيه الأدمن تلقائياً لوحة التحكم، والمستخدم العادي للموقع
+                if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
                     switchView('admin');
+                } else {
+                    switchView('home');
                 }
             } catch (err) {
                 alert((isAr ? "خطأ: " : "Erreur : ") + err.message);
@@ -451,19 +473,21 @@
             const nav = document.getElementById('auth-nav-container');
             const isAr = window.currentLang === 'ar';
             if (user) {
+                if (user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+                    switchView('admin');
+                }
                 nav.innerHTML = `
-                    <button onclick="switchView('admin')" class="bg-amber-100 text-amber-800 px-3 py-2 rounded-xl text-xs font-bold hover:bg-amber-200 transition">Admin</button>
-                    <button onclick="handleLogout()" class="bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs font-bold hover:bg-slate-300 transition">${isAr ? 'خروج' : 'Déco'}</button>
+                    <span class="text-xs font-medium text-slate-600 hidden sm:inline mr-1 truncate max-w-[100px]">${user.email}</span>
+                    <button onclick="handleLogout()" class="bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-xs font-bold hover:bg-slate-300 transition whitespace-nowrap">${isAr ? 'خروج' : 'Déco'}</button>
                 `;
             } else {
                 nav.innerHTML = `
-                    <button onclick="openAuthModal('signup')" class="bg-amber-50 text-amber-800 border border-amber-200/60 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition">${isAr ? 'إنشاء حساب' : "S'inscrire"}</button>
-                    <button onclick="openAuthModal('login')" class="bg-slate-900 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm">${isAr ? 'دخول' : 'Connexion'}</button>
+                    <button onclick="openAuthModal('signup')" class="bg-amber-50 text-amber-800 border border-amber-200/60 px-3 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap">${isAr ? 'إنشاء حساب' : "S'inscrire"}</button>
+                    <button onclick="openAuthModal('login')" class="bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">${isAr ? 'دخول' : 'Connexion'}</button>
                 `;
             }
         });
 
-        // تعبئة الفئات والولايات
         function populateDropdowns() {
             const selectSearch = document.getElementById('categorySelect');
             const selectSell = document.getElementById('itemCategory');
@@ -513,7 +537,6 @@
             }
         };
 
-        // نشر إعلان جديد بالصور والولاية ورقم الهاتف
         window.handlePublishItem = async function(e) {
             e.preventDefault();
             if (!auth.currentUser) return;
@@ -525,37 +548,39 @@
             const price = document.getElementById('itemPrice').value;
             const phone = document.getElementById('itemPhone').value;
             const description = document.getElementById('itemDescription').value;
-            const imageInput = document.getElementById('itemImageFile');
 
-            if (!imageInput.files || imageInput.files.length === 0) {
-                alert(window.currentLang === 'ar' ? "يرجى اختيار صورة الغرض." : "Veuillez ajouter une photo.");
+            if (selectedImagesBase64.length === 0) {
+                alert(window.currentLang === 'ar' ? "يرجى اختيار صورة واحدة على الأقل." : "Veuillez ajouter une photo.");
                 return;
             }
 
-            const reader = new FileReader();
-            reader.readAsDataURL(imageInput.files[0]);
-            reader.onload = async function() {
-                try {
-                    await addDoc(collection(db, "items"), {
-                        title, category, state, condition,
-                        price: Number(price),
-                        phone,
-                        description,
-                        image: reader.result,
-                        userEmail: auth.currentUser.email,
-                        createdAt: serverTimestamp()
-                    });
-                    alert(window.currentLang === 'ar' ? "تم نشر إعلانك بنجاح على Esouk Tunisie!" : "Annonce publiée avec succès !");
-                    document.getElementById('sellForm').reset();
-                    closeSellModal();
-                    loadItems();
-                } catch (err) {
-                    alert("Erreur : " + err.message);
-                }
-            };
+            try {
+                await addDoc(collection(db, "items"), {
+                    title, category, state, condition,
+                    price: Number(price),
+                    phone,
+                    description,
+                    image: selectedImagesBase64[0], // حفظ الصورة الأولى الرئيسية
+                    images: selectedImagesBase64,
+                    userEmail: auth.currentUser.email,
+                    createdAt: serverTimestamp()
+                });
+                alert(window.currentLang === 'ar' ? "تم نشر إعلانك بنجاح على Esouk Tunisie!" : "Annonce publiée avec succès !");
+                document.getElementById('sellForm'].reset();
+                selectedImagesBase64 = [];
+                document.getElementById('imagePreviewContainer').innerHTML = `
+                    <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">1</div>
+                    <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">2</div>
+                    <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">3</div>
+                    <div class="h-16 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">4</div>
+                `;
+                closeSellModal();
+                loadItems();
+            } catch (err) {
+                alert("Erreur : " + err.message);
+            }
         };
 
-        // عرض الإعلانات بتصميم فائق الجمال
         async function loadItems(categoryFilter = "", keyword = "", stateFilter = "") {
             const grid = document.getElementById('items-grid');
             const countBadge = document.getElementById('itemsCountBadge');
