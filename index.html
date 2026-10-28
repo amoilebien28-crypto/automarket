@@ -332,7 +332,6 @@
                 <div id="adminCategoriesList" class="flex flex-wrap gap-2 pt-2"></div>
             </div>
 
-            <!-- قسم إدارة قائمة البائعين ومعاينة ما يبيعونه -->
             <div class="pt-4 border-t border-slate-100 space-y-3">
                 <h3 class="font-bold text-slate-800 text-xs sm:text-sm">قائمة البائعين وسلعهم (Liste des Vendeurs)</h3>
                 <div id="adminVendorsListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -362,7 +361,7 @@
         <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية</p>
     </footer>
 
-    <!-- نافذة نشر إعلان (بيع) -->
+    <!-- نافذة نشر إعلان (بيع) مع أزرار منفصلة للكاميرا والمعرض -->
     <div id="sellModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -413,10 +412,25 @@
                     <textarea id="itemDescription" rows="3" placeholder="أكتب تفاصيل الغرض..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition"></textarea>
                 </div>
 
+                <!-- قسم اختيار الصور: أزرار منفصلة للكاميرا والمعرض -->
                 <div class="space-y-2">
-                    <label class="block text-xs font-bold text-slate-700">صور الغرض (اختر من المعرض أو التقط حتى 5 صور)</label>
-                    <input type="file" id="itemImageFile" accept="image/*" multiple onchange="previewImages(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition cursor-pointer bg-slate-50 border border-slate-200 rounded-xl p-2">
+                    <label class="block text-xs font-bold text-slate-700">صور الغرض (حتى 5 صور)</label>
                     
+                    <!-- حقول مخفية للتشغيل -->
+                    <input type="file" id="cameraInput" accept="image/*" capture="environment" onchange="previewImages(event)" class="hidden">
+                    <input type="file" id="galleryInput" accept="image/*" multiple onchange="previewImages(event)" class="hidden">
+
+                    <!-- أزرار واضحة لالتقاط الصور أو فتح المعرض -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="document.getElementById('cameraInput').click()" class="bg-slate-900 text-white py-3 px-4 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm flex items-center justify-center gap-2">
+                            <span>📸 التقاط بالكاميرا</span>
+                        </button>
+                        <button type="button" onclick="document.getElementById('galleryInput').click()" class="bg-amber-600 text-white py-3 px-4 rounded-xl text-xs font-bold hover:bg-amber-700 transition shadow-sm flex items-center justify-center gap-2">
+                            <span>🖼️ اختيار من المعرض</span>
+                        </button>
+                    </div>
+                    
+                    <!-- 5 خانات معاينة صور واضحة -->
                     <div id="imagePreviewContainer" class="grid grid-cols-5 gap-2 pt-1">
                         <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">1</div>
                         <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">2</div>
@@ -514,12 +528,10 @@
             document.getElementById('adsSectionTarget').scrollIntoView({ behavior: 'smooth' });
         };
 
-        // تحميل الفئات من Firestore لضمان عدم ضياعها أبداً
         async function fetchCategories() {
             try {
                 const snapshot = await getDocs(collection(db, "categories"));
                 if (snapshot.empty) {
-                    // فئات افتراضية أولية إذا كانت القاعدة فارغة
                     const defaultCats = ["أثاث وتحف (Meubles)", "إلكترونيات وهواتف (Électronique)", "أجهزة منزلية (Électroménager)", "ملابس وأزياء (Vêtements)", "سيارات ووسائل نقل", "أخرى / Divers"];
                     categoriesList = defaultCats;
                     for (let cat of defaultCats) {
@@ -566,7 +578,6 @@
             scrollToAds();
         };
 
-        // فتح نافذة تفاصيل الإعلان
         window.openItemDetails = async function(index) {
             const item = allLoadedItems[index];
             if (!item) return;
@@ -605,7 +616,6 @@
             currentOpenItemId = null;
         };
 
-        // إدارة التعليقات
         async function loadItemComments(itemId) {
             const container = document.getElementById('commentsListContainer');
             container.innerHTML = `<p class="text-xs text-slate-400">جاري تحميل التعليقات...</p>`;
@@ -665,7 +675,6 @@
             }
         };
 
-        // فضاء إعلاناتي للمستخدم العادي
         window.openMyAdsModal = async function() {
             if (!auth.currentUser) return;
             const container = document.getElementById('myAdsListContainer');
@@ -845,7 +854,7 @@
             }
         }
 
-        // معاينة وتراكم الصور حتى 5 صور بسلاسة
+        // دالة معالجة وتراكم الصور (من الكاميرا أو المعرض حتى 5 صور)
         window.previewImages = function(e) {
             const files = e.target.files;
             if (!files || files.length === 0) return;
@@ -1035,7 +1044,6 @@
             performSearch();
         };
 
-        // إضافة فئة جديدة مباشرة لقاعدة البيانات
         window.handleAddCategory = async function(e) {
             e.preventDefault();
             const newCat = document.getElementById('newCategoryName').value.trim();
@@ -1216,7 +1224,6 @@
             loadItems(category, keyword, state);
         };
 
-        // لوحة تحكم الأدمن المحدثة مع قائمة البائعين وسلعهم
         async function loadAdminDashboard() {
             document.getElementById('adminTotalCats').innerText = categoriesList.length;
             document.getElementById('adminTotalUsers').innerText = explicitUsersCount;
@@ -1258,7 +1265,6 @@
                     }
                     vendorsMap[email].push({ id, ...item });
 
-                    // صف الإعلان للأدمن
                     const row = document.createElement('div');
                     row.className = "bg-slate-50 border border-slate-200/80 p-3 rounded-2xl flex items-center justify-between gap-3 text-xs";
                     row.innerHTML = `
@@ -1274,7 +1280,6 @@
                     adminItemsContainer.appendChild(row);
                 });
 
-                // تعبئة قائمة البائعين
                 vendorsContainer.innerHTML = "";
                 Object.keys(vendorsMap).forEach(email => {
                     const itemsList = vendorsMap[email];
@@ -1296,7 +1301,6 @@
             }
         }
 
-        // عرض سلع بائع معين عند النقر عليه في لوحة الأدمن
         window.showVendorItems = function(email, itemsList) {
             const section = document.getElementById('adminVendorItemsSection');
             const titleHeader = document.getElementById('adminVendorTitleHeader');
