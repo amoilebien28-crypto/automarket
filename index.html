@@ -7,7 +7,7 @@
     <!-- SEO Meta Tags Ultra-Optimisés pour Google -->
     <title id="pageTitle">Souk El Bacha - Brocante El Pacha | سوق الباشا للبيع والشراء في تونس</title>
     <meta name="description" content="Souk El Bacha (Brocante El Pacha) - السوق التونسي الأول للبيع والشراء. تصفح آلاف الإعلانات في 24 ولاية تونسية: تليفزيونات، أثاث، سيارات، هواتف، وتحف أصلية.">
-    <meta name="keywords" content="Souk El Bacha, Brocante El Pacha, سوق الباشا, بيع والشراء تونس, إعلانات تونس, موقع تسوق تونسي, occasion tunisie, vente achat tunisie">
+    <meta name="keywords" content="Souk El Bacha, Brocante El Pacha, سوق الباشا, بيع وشراء تونس, إعلانات تونس, موقع تسوق تونسي, occasion tunisie, vente achat tunisie">
     <meta name="author" content="Souk El Bacha">
 
     <!-- Open Graph / Facebook & WhatsApp SEO -->
@@ -19,7 +19,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { -webkit-tap-highlight-color: transparent; }
-        /* خلفية فاتحة نظيفة وراقية ومريحة جداً للعين */
         .custom-light-bg {
             background-color: #f8fafc;
             background-image: radial-gradient(#e2e8f0 1px, transparent 1px), radial-gradient(#e2e8f0 1px, #f8fafc 1px);
@@ -70,12 +69,10 @@
     <!-- نافذة تفاصيل الإعلان -->
     <div id="itemDetailsModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
         <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col border border-slate-100">
-            
             <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50 shrink-0">
                 <h3 id="modalItemTitleHeader" class="font-bold text-slate-900 text-sm sm:text-base truncate">تفاصيل الإعلان</h3>
                 <button onclick="closeDetailsModal()" class="w-8 h-8 rounded-full bg-slate-200/70 text-slate-600 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
             </div>
-
             <div class="p-4 sm:p-6 overflow-y-auto space-y-5 flex-grow">
                 <div>
                     <div id="modalMainImageContainer" class="w-full h-60 sm:h-72 bg-slate-100 rounded-2xl overflow-hidden shadow-sm border border-slate-200">
@@ -83,7 +80,6 @@
                     </div>
                     <div id="modalThumbnails" class="flex gap-2 mt-3 overflow-x-auto pb-1"></div>
                 </div>
-
                 <div class="space-y-3">
                     <div class="flex flex-wrap justify-between items-start gap-2">
                         <h2 id="modalItemTitle" class="text-lg sm:text-xl font-black text-slate-900"></h2>
@@ -95,16 +91,13 @@
                         <span id="modalItemCondition" class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl"></span>
                     </div>
                 </div>
-
                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-1">
                     <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">وصف الغرض</h4>
                     <p id="modalItemDescription" class="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line"></p>
                 </div>
-
                 <div class="bg-amber-50/70 border border-amber-100 p-3.5 rounded-2xl flex items-center justify-between text-xs font-bold text-slate-800">
                     <span>👤 الناشر: <span id="modalItemSellerEmail" class="text-amber-800"></span></span>
                 </div>
-
                 <div class="pt-2 border-t border-slate-100 space-y-3">
                     <h4 class="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
                         <span>💬 التعليقات والأسئلة</span>
@@ -118,13 +111,11 @@
                     </form>
                 </div>
             </div>
-
             <div class="p-3.5 sm:p-4 bg-white border-t border-slate-100 shrink-0 shadow-lg">
                 <a id="modalCallBtn" href="#" class="w-full bg-amber-600 text-white font-bold py-3.5 rounded-2xl hover:bg-amber-700 transition shadow-md flex items-center justify-center gap-2 text-xs sm:text-sm">
                     <span>📞 الاتصال بالبائع مباشرة</span>
                 </a>
             </div>
-
         </div>
     </div>
 
@@ -167,18 +158,18 @@
         </div>
     </div>
 
-    <!-- الرأس (Header) المطور حسب طلبك: الأزرار متباعدة على الأطراف، الشعار على الجنب، والاسم في المنتصف -->
+    <!-- الرأس (Header) المطور والمعدل بدقة -->
     <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-6">
             
-            <!-- الطرف الأيمن (أو الأيسر حسب الاتجاه): زر تسجيل الدخول / حسابي -->
-            <div id="auth-nav-container" class="flex items-center gap-3">
-                <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200 px-4 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs">إنشاء حساب</button>
-                <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">دخول</button>
+            <!-- الطرف الأيمن: أزرار الدخول والتسجيل (متباعدة وجميلة) -->
+            <div id="auth-nav-container" class="flex items-center gap-4 shrink-0">
+                <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200 px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs">إنشاء حساب</button>
+                <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">دخول</button>
             </div>
 
-            <!-- المنتصف: اسم المنصة واللوغو على الجنب -->
-            <div class="flex items-center space-x-3 space-x-reverse cursor-pointer group mx-auto" onclick="switchView('home')">
+            <!-- المنتصف: اللوغو على اليمين مسافة عن اسم سوق الباشا -->
+            <div class="flex items-center space-x-4 space-x-reverse cursor-pointer group mx-auto" onclick="switchView('home')">
                 <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-2xl flex items-center justify-center text-xl shadow-md shadow-amber-500/20 group-hover:scale-105 transition shrink-0 font-black">🏛️</div>
                 <div class="text-right">
                     <span class="font-black text-slate-900 text-lg sm:text-xl tracking-tight block leading-tight">Souk El Bacha<span class="text-amber-600"> / سوق الباشا</span></span>
@@ -186,13 +177,13 @@
                 </div>
             </div>
 
-            <!-- مساحة فارغة صغيرة متوازنة مع الطرف الأيمن لضمان توسيط العنوان بدقة -->
-            <div class="hidden sm:block w-24"></div>
+            <!-- مساحة فارغة لضمان التوسيط الدقيق -->
+            <div class="hidden sm:block w-32 shrink-0"></div>
 
         </div>
     </header>
 
-    <!-- المحتوى الرئيسي بتخطيط الشاشة المزدوجة (Sidebar Filters + Central Grid) -->
+    <!-- المحتوى الرئيسي -->
     <main id="homeView" class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-grow space-y-6">
         
         <!-- الشريط الإعلاني المتحرك -->
@@ -209,9 +200,10 @@
             </div>
         </div>
 
-        <!-- البطاقتان الرئيسيتان (بيع وشراء) -->
+        <!-- البطاقتان الرئيسيتان: زر البيع على اليمين وزر الشراء على اليسار -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             
+            <!-- زر ماذا تريد أن تبيع (على اليمين) -->
             <div onclick="openSellModal()" class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 p-6 rounded-3xl shadow-lg text-center text-white space-y-3 border border-amber-400/40 relative overflow-hidden cursor-pointer hover:scale-[1.01] transition">
                 <div class="absolute -right-4 -bottom-4 text-8xl opacity-10 select-none font-black">🏷️</div>
                 <div class="relative z-10 space-y-1">
@@ -227,6 +219,7 @@
                 </div>
             </div>
 
+            <!-- زر ماذا تريد أن تشتري (على اليسار) -->
             <div onclick="openBuyCategoriesModal()" class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6 rounded-3xl shadow-lg text-center text-white space-y-3 border border-slate-700 relative overflow-hidden cursor-pointer hover:scale-[1.01] transition">
                 <div class="absolute -right-4 -bottom-4 text-8xl opacity-10 select-none">🛒</div>
                 <div class="relative z-10 space-y-1">
@@ -245,43 +238,44 @@
 
         <div id="adsSectionTarget"></div>
 
-        <!-- تخطيط الشاشة المزدوجة (شريط الفلاتر على اليسار + عرض الإعلانات في الوسط واليمين) -->
+        <!-- تخطيط الشاشة المزدوجة (فلاتر البحث المتقدم المحدثة والجميلة على اليسار) -->
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
             
-            <!-- الشريط الجانبي للفلاتر (Sidebar Filters) -->
-            <div class="lg:col-span-1 bg-white border border-slate-200 p-5 rounded-3xl shadow-sm space-y-5 sticky top-24">
-                <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+            <!-- الشريط الجانبي للفلاتر بتصميم أنيق وملون وظلال فخمة -->
+            <div class="lg:col-span-1 bg-gradient-to-b from-white via-slate-50 to-amber-50/30 border border-slate-200/80 p-5 rounded-3xl shadow-xl space-y-5 sticky top-24">
+                <div class="flex justify-between items-center border-b border-amber-200/60 pb-3">
                     <h3 class="font-black text-slate-900 text-sm flex items-center gap-2">
-                        <span>🎛️</span> فلاتر البحث المتقدم
+                        <span class="w-7 h-7 bg-amber-500 text-white rounded-xl flex items-center justify-center text-xs shadow-md">🎛️</span> 
+                        <span>فلاتر البحث المتقدم</span>
                     </h3>
-                    <button onclick="resetFilters()" class="text-[11px] text-amber-600 hover:underline font-bold">إعادة ضبط</button>
+                    <button onclick="resetFilters()" class="text-[11px] text-amber-700 hover:underline font-bold bg-amber-100/60 px-2.5 py-1 rounded-lg">إعادة ضبط</button>
                 </div>
 
                 <!-- البحث بالكلمة -->
                 <div class="space-y-1.5">
-                    <label class="block text-xs font-bold text-slate-700">بحث بالكلمة المفتاحية</label>
-                    <input type="text" id="searchInput" placeholder="تلفزيون، طاولة، هاتف..." oninput="performSearch()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:bg-white transition">
+                    <label class="block text-xs font-bold text-slate-800">بحث بالكلمة المفتاحية</label>
+                    <input type="text" id="searchInput" placeholder="تلفزيون، طاولة، هاتف..." oninput="performSearch()" class="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 shadow-sm transition">
                 </div>
 
                 <!-- الفئة -->
                 <div class="space-y-1.5">
-                    <label class="block text-xs font-bold text-slate-700">الفئة (Catégorie)</label>
-                    <select id="categorySelect" onchange="performSearch()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500 focus:bg-white transition">
+                    <label class="block text-xs font-bold text-slate-800">الفئة (Catégorie)</label>
+                    <select id="categorySelect" onchange="performSearch()" class="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500 shadow-sm transition">
                         <option value="">جميع الفئات / Tout</option>
                     </select>
                 </div>
 
                 <!-- الولاية -->
                 <div class="space-y-1.5">
-                    <label class="block text-xs font-bold text-slate-700">الولاية (Gouvernorat)</label>
-                    <select id="stateSelectFilter" onchange="performSearch()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500 focus:bg-white transition">
+                    <label class="block text-xs font-bold text-slate-800">الولاية (Gouvernorat)</label>
+                    <select id="stateSelectFilter" onchange="performSearch()" class="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500 shadow-sm transition">
                         <option value="">كل ولايات الجمهورية</option>
                     </select>
                 </div>
 
                 <!-- تغيير اللغة السريع -->
-                <div class="pt-3 border-t border-slate-100">
-                    <button onclick="changeLanguagePrompt()" class="w-full bg-slate-100 text-slate-700 hover:bg-slate-200 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2">
+                <div class="pt-3 border-t border-slate-200/60">
+                    <button onclick="changeLanguagePrompt()" class="w-full bg-slate-100 text-slate-700 hover:bg-slate-200 py-2.5 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2 shadow-xs">
                         <span>🌐 تغيير اللغة / Langue</span>
                     </button>
                 </div>
@@ -308,7 +302,6 @@
     <!-- لوحة تحكم الأدمن -->
     <main id="adminView" class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-grow hidden space-y-6">
         <div class="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-2xl border border-amber-500/30 space-y-6">
-            
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-4 gap-3">
                 <div>
                     <span class="bg-amber-400 text-slate-950 font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">لوحة القيادة الرسمية</span>
@@ -320,7 +313,6 @@
                     <button onclick="handleLogout()" class="bg-red-600 text-white font-bold px-4 py-2.5 rounded-xl text-xs hover:bg-red-700 transition shadow-md">خروج 🚪</button>
                 </div>
             </div>
-
             <div class="space-y-3">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">📊 إحصائيات المنصة العامة</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -338,12 +330,10 @@
                     </div>
                 </div>
             </div>
-
             <div class="space-y-2">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">🔍 بحث سريع في لوحة الأدمن</h3>
                 <input type="text" id="adminSearchInput" oninput="filterAdminContent()" placeholder="ابحث عن إعلان أو مستخدم..." class="w-full bg-slate-950 text-white placeholder-slate-500 border border-slate-800 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-400 transition">
             </div>
-
             <div class="pt-4 border-t border-slate-800 space-y-3">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">🏷️ إدارة فئات الموقع</h3>
                 <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
@@ -352,7 +342,6 @@
                 </form>
                 <div id="adminCategoriesList" class="flex flex-wrap gap-2 pt-2"></div>
             </div>
-
             <div class="pt-4 border-t border-slate-800 space-y-3">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">👥 قائمة المستخدمين المسجلين</h3>
                 <div id="adminUsersListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-60 overflow-y-auto pr-1">
@@ -366,7 +355,6 @@
                     <div id="adminUserItemsContainer" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
                 </div>
             </div>
-
             <div class="pt-4 border-t border-slate-800 space-y-3">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">🛍️ قائمة البائعين وسلعهم</h3>
                 <div id="adminVendorsListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-60 overflow-y-auto pr-1">
@@ -380,14 +368,12 @@
                     <div id="adminVendorItemsContainer" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
                 </div>
             </div>
-
             <div class="pt-4 border-t border-slate-800 space-y-3">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">📢 إدارة ومتابعة جميع إعلانات المنصة</h3>
                 <div id="adminItemsListContainer" class="space-y-2 max-h-96 overflow-y-auto pr-1">
                     <p class="text-xs text-slate-400">جاري تحميل الإعلانات...</p>
                 </div>
             </div>
-
         </div>
     </main>
 
@@ -404,13 +390,11 @@
                 <h3 class="font-bold text-slate-900 text-sm sm:text-base">نشر إعلان جديد في سوق الباشا (Vendre)</h3>
                 <button onclick="closeSellModal()" class="w-8 h-8 rounded-full bg-slate-200/70 text-slate-600 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
             </div>
-            
             <form id="sellForm" onsubmit="handlePublishItem(event)" class="p-5 overflow-y-auto space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">عنوان الإعلان أو الغرض</label>
                     <input type="text" id="itemTitle" required placeholder="مثال: تلفزيون سامسونج، طاولة خشبية..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:bg-white transition">
                 </div>
-
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1.5">الفئة (Catégorie)</label>
@@ -421,7 +405,6 @@
                         <select id="itemState" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs text-slate-900 focus:outline-none focus:border-amber-500 focus:bg-white transition"></select>
                     </div>
                 </div>
-
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1.5">الحالة (État)</label>
@@ -437,23 +420,18 @@
                         <input type="number" id="itemPrice" required placeholder="150" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:bg-white transition">
                     </div>
                 </div>
-
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">رقم الهاتف للاتصال بك (Téléphone)</label>
                     <input type="tel" id="itemPhone" required placeholder="98123456" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:bg-white transition" dir="ltr">
                 </div>
-
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">وصف تفصيلي</label>
                     <textarea id="itemDescription" rows="3" placeholder="أكتب تفاصيل الغرض..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:bg-white transition"></textarea>
                 </div>
-
                 <div class="space-y-2">
                     <label class="block text-xs font-bold text-slate-700">صور الغرض (حتى 5 صور)</label>
-                    
                     <input type="file" id="cameraInput" accept="image/*" capture="environment" onchange="previewImages(event)" class="hidden">
                     <input type="file" id="galleryInput" accept="image/*" multiple onchange="previewImages(event)" class="hidden">
-
                     <div class="grid grid-cols-2 gap-2">
                         <button type="button" onclick="document.getElementById('cameraInput').click()" class="bg-slate-900 text-white py-3 px-4 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm flex items-center justify-center gap-2">
                             <span>📸 التقاط بالكاميرا</span>
@@ -462,7 +440,6 @@
                             <span>🖼️ اختيار من المعرض</span>
                         </button>
                     </div>
-                    
                     <div id="imagePreviewContainer" class="grid grid-cols-5 gap-2 pt-1">
                         <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">1</div>
                         <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">2</div>
@@ -471,7 +448,6 @@
                         <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">5</div>
                     </div>
                 </div>
-
                 <button type="submit" id="submitPublishBtn" class="w-full bg-gradient-to-r from-amber-600 to-amber-500 text-white font-bold py-3.5 rounded-2xl hover:from-amber-700 hover:to-amber-600 transition shadow-md text-sm">نشر الإعلان الآن</button>
             </form>
         </div>
@@ -484,25 +460,20 @@
                 <h3 id="modalAuthTitle" class="font-bold text-slate-900 text-sm">إنشاء حساب جديد</h3>
                 <button onclick="closeAuthModal()" class="w-8 h-8 rounded-full bg-slate-200/70 text-slate-600 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
             </div>
-            
             <form id="authForm" onsubmit="handleAuthSubmit(event)" class="p-5 space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">البريد الإلكتروني (E-mail)</label>
                     <input type="email" id="authEmail" required placeholder="nom@exemple.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 transition" dir="ltr">
                 </div>
-
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">كلمة المرور (الرقم السري)</label>
                     <input type="password" id="authPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 transition" dir="ltr">
                 </div>
-
                 <div id="confirmPassContainer">
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">إعادة كلمة المرور (تأكيد)</label>
                     <input type="password" id="authPasswordConfirm" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 transition" dir="ltr">
                 </div>
-
                 <button type="submit" id="btnSubmitAuth" class="w-full bg-slate-900 text-white font-bold py-3.5 rounded-2xl hover:bg-slate-800 transition shadow-md text-sm">تسجيل حساب جديد</button>
-                
                 <div class="text-center pt-1">
                     <button type="button" id="switchAuthModeBtn" onclick="toggleAuthMode()" class="text-xs text-slate-500 hover:text-amber-600 transition underline font-medium">لديك حساب بالفعل؟ سجل دخولك هنا</button>
                 </div>
@@ -1023,14 +994,16 @@
                     switchView('admin');
                 }
                 nav.innerHTML = `
-                    <button onclick="openMyAdsModal()" class="bg-amber-50 text-amber-800 border border-amber-200 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs">📦 إعلاناتي</button>
-                    <span class="text-xs font-medium text-slate-700 hidden sm:inline mr-1 truncate max-w-[100px]">${user.email}</span>
-                    <button onclick="handleLogout()" class="bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-slate-300 transition whitespace-nowrap">${isAr ? 'خروج' : 'Déco'}</button>
+                    <button onclick="openMyAdsModal()" class="bg-amber-50 text-amber-800 border border-amber-200 px-4 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs flex items-center gap-1.5">
+                        <span>📦</span> <span>إعلاناتي</span>
+                    </button>
+                    <span class="text-xs font-medium text-slate-700 hidden md:inline truncate max-w-[140px]" title="${user.email}">${user.email}</span>
+                    <button onclick="handleLogout()" class="bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-300 transition whitespace-nowrap">${isAr ? 'خروج' : 'Déco'}</button>
                 `;
             } else {
                 nav.innerHTML = `
-                    <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200 px-4 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs">${isAr ? 'إنشاء حساب' : "S'inscrire"}</button>
-                    <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">${isAr ? 'دخول' : 'Connexion'}</button>
+                    <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200 px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs">${isAr ? 'إنشاء حساب' : "S'inscrire"}</button>
+                    <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">${isAr ? 'دخول' : 'Connexion'}</button>
                 `;
             }
         });
