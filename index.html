@@ -126,7 +126,7 @@
         </div>
     </div>
 
-    <!-- نافذة اختيار الفئات عند الضغط على "ماذا تريد أن تشتري اليوم؟" -->
+    <!-- نافذة اختيار الفئات عند الضغط على الكارت بالكامل -->
     <div id="buyCategoriesModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -202,8 +202,11 @@
             </div>
         </div>
 
+        <!-- البطاقتان الرئيسيتان قابلة للنقر بالكامل (Card Clickable) -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-            <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 p-5 rounded-3xl shadow-lg text-center text-white space-y-2.5 border border-amber-400/40 relative overflow-hidden">
+            
+            <!-- بطاقة البائع الكبيرة قابلة للنقر في أي مكان -->
+            <div onclick="openSellModal()" class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 p-5 rounded-3xl shadow-lg text-center text-white space-y-2.5 border border-amber-400/40 relative overflow-hidden cursor-pointer hover:scale-[1.01] transition">
                 <div class="absolute -right-4 -bottom-4 text-7xl opacity-10 select-none">🏷️</div>
                 <div class="relative z-10 space-y-1">
                     <span class="bg-white/25 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">قسم البائعين</span>
@@ -211,14 +214,15 @@
                     <p class="text-[11px] text-amber-100 font-medium">انشر بضاعتك وصِل إلى آلاف المشترين.</p>
                 </div>
                 <div class="pt-0.5 relative z-10">
-                    <button onclick="openSellModal()" class="bg-slate-900 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md hover:bg-slate-800 hover:scale-105 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
+                    <div class="bg-slate-900 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md inline-flex items-center justify-center space-x-2 space-x-reverse mx-auto">
                         <span class="text-sm leading-none text-amber-400">+</span>
                         <span>اضغط هنا لتنشر إعلانك الآن</span>
-                    </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-5 rounded-3xl shadow-lg text-center text-white space-y-2.5 border border-slate-700 relative overflow-hidden">
+            <!-- بطاقة المشتري الكبيرة قابلة للنقر في أي مكان -->
+            <div onclick="openBuyCategoriesModal()" class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-5 rounded-3xl shadow-lg text-center text-white space-y-2.5 border border-slate-700 relative overflow-hidden cursor-pointer hover:scale-[1.01] transition">
                 <div class="absolute -right-4 -bottom-4 text-7xl opacity-10 select-none">🛒</div>
                 <div class="relative z-10 space-y-1">
                     <span class="bg-amber-500/30 text-amber-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">قسم المشترين</span>
@@ -226,11 +230,12 @@
                     <p class="text-[11px] text-slate-300 font-medium">تصفح آلاف العروض والسلع في كل تونس.</p>
                 </div>
                 <div class="pt-0.5 relative z-10">
-                    <button onclick="openBuyCategoriesModal()" class="bg-amber-600 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md hover:bg-amber-700 hover:scale-105 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
+                    <div class="bg-amber-600 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md inline-flex items-center justify-center space-x-2 space-x-reverse mx-auto">
                         <span>🔍 اختر القسم أو تصفح الكل</span>
-                    </button>
+                    </div>
                 </div>
             </div>
+
         </div>
 
         <div class="text-center py-1">
@@ -294,11 +299,10 @@
         </section>
     </main>
 
-    <!-- لوحة تحكم الأدمن (خلفية أبرد وأنيقة جداً + ميزات البحث والإحصائيات والتنبيه) -->
+    <!-- لوحة تحكم الأدمن -->
     <main id="adminView" class="max-w-5xl w-full mx-auto px-4 py-6 flex-grow hidden space-y-6">
         <div class="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-2xl border border-amber-500/30 space-y-6">
             
-            <!-- رأس لوحة الأدمن -->
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-600 pb-4 gap-3">
                 <div>
                     <span class="bg-amber-400 text-slate-950 font-black text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider">لوحة القيادة الرسمية</span>
@@ -311,7 +315,6 @@
                 </div>
             </div>
 
-            <!-- إحصائيات المنصة ببطاقات ملونة وبارزة -->
             <div class="space-y-3">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">📊 إحصائيات المنصة العامة</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -330,13 +333,11 @@
                 </div>
             </div>
 
-            <!-- شريط البحث السريع داخل لوحة الأدمن -->
             <div class="space-y-2">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">🔍 بحث سريع في لوحة الأدمن</h3>
                 <input type="text" id="adminSearchInput" oninput="filterAdminContent()" placeholder="ابحث عن إعلان أو مستخدم بالبريد أو العنوان..." class="w-full bg-slate-700/80 text-white placeholder-slate-300 border border-slate-600 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-400 transition">
             </div>
 
-            <!-- إدارة فئات الموقع -->
             <div class="pt-4 border-t border-slate-600 space-y-3">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">🏷️ إدارة فئات الموقع (محفوظة بقاعدة البيانات)</h3>
                 <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
@@ -346,7 +347,6 @@
                 <div id="adminCategoriesList" class="flex flex-wrap gap-2 pt-2"></div>
             </div>
 
-            <!-- قائمة المستخدمين المسجلين -->
             <div class="pt-4 border-t border-slate-600 space-y-3">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">👥 قائمة المستخدمين المسجلين (Liste des Utilisateurs)</h3>
                 <div id="adminUsersListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-60 overflow-y-auto pr-1">
@@ -361,7 +361,6 @@
                 </div>
             </div>
 
-            <!-- قائمة البائعين وسلعهم -->
             <div class="pt-4 border-t border-slate-600 space-y-3">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">🛍️ قائمة البائعين وسلعهم (Liste des Vendeurs)</h3>
                 <div id="adminVendorsListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-60 overflow-y-auto pr-1">
@@ -376,7 +375,6 @@
                 </div>
             </div>
 
-            <!-- إدارة ومتابعة جميع الإعلانات -->
             <div class="pt-4 border-t border-slate-600 space-y-3">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">📢 إدارة ومتابعة جميع إعلانات المنصة</h3>
                 <div id="adminItemsListContainer" class="space-y-2 max-h-96 overflow-y-auto pr-1">
@@ -1252,7 +1250,6 @@
             loadItems(category, keyword, state);
         };
 
-        // لوحة تحكم الأدمن مع شريط البحث والميزات الجديدة
         async function loadAdminDashboard() {
             document.getElementById('adminTotalCats').innerText = categoriesList.length;
             document.getElementById('adminTotalUsers').innerText = explicitUsersCount;
@@ -1353,7 +1350,6 @@
             }
         }
 
-        // دالة البحث السريع داخل لوحة الأدمن
         window.filterAdminContent = function() {
             const queryText = document.getElementById('adminSearchInput').value.toLowerCase();
             const rows = document.querySelectorAll('.admin-item-row');
@@ -1367,7 +1363,6 @@
             });
         };
 
-        // زر إرسال إشعار عام
         window.broadcastNotification = function() {
             const msg = prompt("أدخل نص الإشعار العام الذي تريد إرساله للمستخدمين:");
             if(msg) {
@@ -1421,7 +1416,7 @@
                 itemRow.innerHTML = `
                     <div class="flex items-center space-x-2 space-x-reverse truncate">
                         <img src="${item.image}" class="w-8 h-8 object-cover rounded-lg shrink-0 border border-slate-500">
-                        <span class="font-bold truncate">${item.title} (${item.price} DT)</span>
+                        <span class="font-bold tunish truncate">${item.title} (${item.price} DT)</span>
                     </div>
                     <span class="text-amber-300 text-[11px] font-semibold">${item.category}</span>
                 `;
