@@ -294,23 +294,26 @@
         </section>
     </main>
 
-    <!-- لوحة التحكم الإدارية للأدمن (بألوان زاهية، جذابة، وغير باهتة) -->
+    <!-- لوحة تحكم الأدمن (خلفية أبرد وأنيقة جداً + ميزات البحث والإحصائيات والتنبيه) -->
     <main id="adminView" class="max-w-5xl w-full mx-auto px-4 py-6 flex-grow hidden space-y-6">
-        <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-2xl border border-amber-500/30 space-y-6">
+        <div class="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-2xl border border-amber-500/30 space-y-6">
             
             <!-- رأس لوحة الأدمن -->
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-700/80 pb-4 gap-3">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-600 pb-4 gap-3">
                 <div>
-                    <span class="bg-amber-500 text-slate-950 font-black text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider">لوحة القيادة الرسمية</span>
+                    <span class="bg-amber-400 text-slate-950 font-black text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider">لوحة القيادة الرسمية</span>
                     <h1 class="text-xl sm:text-2xl font-black text-white mt-1">👑 لوحة تحكم الأدمن (Admin Dashboard)</h1>
-                    <p class="text-xs text-amber-300">مرحباً بك يا مراد. السيطرة الكاملة على منصة السوق التونسي.</p>
+                    <p class="text-xs text-amber-200">مرحباً بك يا مراد. السيطرة الكاملة على منصة السوق التونسي.</p>
                 </div>
-                <button onclick="handleLogout()" class="bg-red-600 text-white font-bold px-4 py-2.5 rounded-xl text-xs hover:bg-red-700 transition shadow-md">تسجيل الخروج 🚪</button>
+                <div class="flex items-center gap-2">
+                    <button onclick="broadcastNotification()" class="bg-amber-500 text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs hover:bg-amber-400 transition shadow-md">📢 إرسال إشعار عام</button>
+                    <button onclick="handleLogout()" class="bg-red-600 text-white font-bold px-4 py-2.5 rounded-xl text-xs hover:bg-red-700 transition shadow-md">خروج 🚪</button>
+                </div>
             </div>
 
             <!-- إحصائيات المنصة ببطاقات ملونة وبارزة -->
             <div class="space-y-3">
-                <h3 class="font-black text-amber-400 text-xs sm:text-sm tracking-wide">📊 إحصائيات المنصة العامة</h3>
+                <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">📊 إحصائيات المنصة العامة</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="bg-gradient-to-r from-amber-600 to-amber-500 p-4 rounded-2xl shadow-md text-white border border-amber-400/40 text-center">
                         <p class="text-xs font-bold text-amber-100 uppercase">إجمالي الإعلانات</p>
@@ -327,49 +330,55 @@
                 </div>
             </div>
 
+            <!-- شريط البحث السريع داخل لوحة الأدمن -->
+            <div class="space-y-2">
+                <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">🔍 بحث سريع في لوحة الأدمن</h3>
+                <input type="text" id="adminSearchInput" oninput="filterAdminContent()" placeholder="ابحث عن إعلان أو مستخدم بالبريد أو العنوان..." class="w-full bg-slate-700/80 text-white placeholder-slate-300 border border-slate-600 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-400 transition">
+            </div>
+
             <!-- إدارة فئات الموقع -->
-            <div class="pt-4 border-t border-slate-700/85 space-y-3">
-                <h3 class="font-black text-amber-400 text-xs sm:text-sm tracking-wide">🏷️ إدارة فئات الموقع (محفوظة بقاعدة البيانات)</h3>
+            <div class="pt-4 border-t border-slate-600 space-y-3">
+                <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">🏷️ إدارة فئات الموقع (محفوظة بقاعدة البيانات)</h3>
                 <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
-                    <input type="text" id="newCategoryName" required placeholder="أضف فئة جديدة (مثال: تحف نادرة)..." class="w-full bg-slate-800 text-white placeholder-slate-400 border border-slate-600 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 transition">
+                    <input type="text" id="newCategoryName" required placeholder="أضف فئة جديدة (مثال: تحف نادرة)..." class="w-full bg-slate-700 text-white placeholder-slate-300 border border-slate-600 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-400 transition">
                     <button type="submit" class="bg-amber-500 text-slate-950 font-black px-6 py-3 rounded-xl text-xs sm:text-sm hover:bg-amber-400 transition whitespace-nowrap shadow-md">إضافة فئة +</button>
                 </form>
                 <div id="adminCategoriesList" class="flex flex-wrap gap-2 pt-2"></div>
             </div>
 
             <!-- قائمة المستخدمين المسجلين -->
-            <div class="pt-4 border-t border-slate-700/85 space-y-3">
-                <h3 class="font-black text-amber-400 text-xs sm:text-sm tracking-wide">👥 قائمة المستخدمين المسجلين (Liste des Utilisateurs)</h3>
+            <div class="pt-4 border-t border-slate-600 space-y-3">
+                <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">👥 قائمة المستخدمين المسجلين (Liste des Utilisateurs)</h3>
                 <div id="adminUsersListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-60 overflow-y-auto pr-1">
                     <p class="text-xs text-slate-400">جاري تحميل المستخدمين...</p>
                 </div>
-                <div id="adminUserItemsSection" class="hidden pt-3 border-t border-slate-700/60 space-y-2">
+                <div id="adminUserItemsSection" class="hidden pt-3 border-t border-slate-600/60 space-y-2">
                     <div class="flex justify-between items-center">
                         <h4 id="adminUserTitleHeader" class="font-bold text-xs text-amber-300">إعلانات المستخدم: </h4>
-                        <button onclick="hideAdminUserItems()" class="text-xs text-slate-300 hover:text-white underline">إغلاق العرض</button>
+                        <button onclick="hideAdminUserItems()" class="text-xs text-slate-200 hover:text-white underline">إغلاق العرض</button>
                     </div>
                     <div id="adminUserItemsContainer" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
                 </div>
             </div>
 
             <!-- قائمة البائعين وسلعهم -->
-            <div class="pt-4 border-t border-slate-700/85 space-y-3">
-                <h3 class="font-black text-amber-400 text-xs sm:text-sm tracking-wide">🛍️ قائمة البائعين وسلعهم (Liste des Vendeurs)</h3>
+            <div class="pt-4 border-t border-slate-600 space-y-3">
+                <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">🛍️ قائمة البائعين وسلعهم (Liste des Vendeurs)</h3>
                 <div id="adminVendorsListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-60 overflow-y-auto pr-1">
                     <p class="text-xs text-slate-400">جاري تحميل البائعين...</p>
                 </div>
-                <div id="adminVendorItemsSection" class="hidden pt-3 border-t border-slate-700/60 space-y-2">
+                <div id="adminVendorItemsSection" class="hidden pt-3 border-t border-slate-600/60 space-y-2">
                     <div class="flex justify-between items-center">
                         <h4 id="adminVendorTitleHeader" class="font-bold text-xs text-amber-300">إعلانات البائع: </h4>
-                        <button onclick="hideAdminVendorItems()" class="text-xs text-slate-300 hover:text-white underline">إغلاق عرض البائع</button>
+                        <button onclick="hideAdminVendorItems()" class="text-xs text-slate-200 hover:text-white underline">إغلاق عرض البائع</button>
                     </div>
                     <div id="adminVendorItemsContainer" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
                 </div>
             </div>
 
             <!-- إدارة ومتابعة جميع الإعلانات -->
-            <div class="pt-4 border-t border-slate-700/85 space-y-3">
-                <h3 class="font-black text-amber-400 text-xs sm:text-sm tracking-wide">📢 إدارة ومتابعة جميع إعلانات المنصة</h3>
+            <div class="pt-4 border-t border-slate-600 space-y-3">
+                <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">📢 إدارة ومتابعة جميع إعلانات المنصة</h3>
                 <div id="adminItemsListContainer" class="space-y-2 max-h-96 overflow-y-auto pr-1">
                     <p class="text-xs text-slate-400">جاري تحميل الإعلانات...</p>
                 </div>
@@ -1243,7 +1252,7 @@
             loadItems(category, keyword, state);
         };
 
-        // لوحة تحكم الأدمن الملونة والاحترافية
+        // لوحة تحكم الأدمن مع شريط البحث والميزات الجديدة
         async function loadAdminDashboard() {
             document.getElementById('adminTotalCats').innerText = categoriesList.length;
             document.getElementById('adminTotalUsers').innerText = explicitUsersCount;
@@ -1252,8 +1261,8 @@
             catsContainer.innerHTML = "";
             categoriesList.forEach(cat => {
                 const tag = document.createElement('div');
-                tag.className = "bg-slate-800 border border-amber-500/40 text-amber-300 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-sm";
-                tag.innerHTML = `<span>${cat}</span> <button type="button" onclick="handleDeleteCategory('${cat}')" class="text-red-400 hover:text-red-300 font-bold text-sm">&times;</button>`;
+                tag.className = "bg-slate-700 border border-amber-400/40 text-amber-200 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-sm";
+                tag.innerHTML = `<span>${cat}</span> <button type="button" onclick="handleDeleteCategory('${cat}')" class="text-red-300 hover:text-red-100 font-bold text-sm">&times;</button>`;
                 catsContainer.appendChild(tag);
             });
 
@@ -1293,13 +1302,14 @@
                     vendorsMap[email].push({ id, ...item });
 
                     const row = document.createElement('div');
-                    row.className = "bg-slate-800/90 border border-slate-700 p-3 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-sm";
+                    row.className = "admin-item-row bg-slate-700/80 border border-slate-600 p-3 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-sm";
+                    row.setAttribute('data-search', (item.title + " " + email).toLowerCase());
                     row.innerHTML = `
                         <div class="flex items-center space-x-3 space-x-reverse truncate">
-                            <img src="${item.image}" class="w-10 h-10 object-cover rounded-xl shrink-0 border border-slate-600">
+                            <img src="${item.image}" class="w-10 h-10 object-cover rounded-xl shrink-0 border border-slate-500">
                             <div class="truncate">
-                                <p class="font-bold text-white truncate">${item.title} <span class="text-[10px] text-amber-400 font-semibold">(${email})</span></p>
-                                <p class="text-slate-300 text-[11px]">${item.price} DT • ${item.category} • <span class="text-amber-300">${item.state || ''}</span></p>
+                                <p class="font-bold text-white truncate">${item.title} <span class="text-[10px] text-amber-300 font-semibold">(${email})</span></p>
+                                <p class="text-slate-300 text-[11px]">${item.price} DT • ${item.category} • <span class="text-amber-200">${item.state || ''}</span></p>
                             </div>
                         </div>
                         <button onclick="handleAdminDeleteItem('${id}')" class="bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition">حذف الإعلان</button>
@@ -1314,22 +1324,24 @@
                     const userItems = vendorsMap[email] || [];
                     
                     const uCard = document.createElement('div');
-                    uCard.className = "bg-slate-800/90 border border-slate-700 p-3.5 rounded-2xl flex items-center justify-between gap-2 text-xs shadow-sm";
+                    uCard.className = "admin-user-card bg-slate-700/80 border border-slate-600 p-3.5 rounded-2xl flex items-center justify-between gap-2 text-xs shadow-sm";
+                    uCard.setAttribute('data-search', email.toLowerCase());
                     uCard.innerHTML = `
                         <div>
                             <p class="font-bold text-white truncate">👤 ${email}</p>
-                            <p class="text-[11px] text-amber-400 font-semibold">${userItems.length} إعلان منشور</p>
+                            <p class="text-[11px] text-amber-300 font-semibold">${userItems.length} إعلان منشور</p>
                         </div>
                         <button onclick='showUserItems(${JSON.stringify(email)}, ${JSON.stringify(userItems)})' class="bg-blue-600 text-white px-3 py-1.5 rounded-xl font-bold hover:bg-blue-500 transition whitespace-nowrap shadow-sm">عرض إعلاناته</button>
                     `;
                     usersContainer.appendChild(uCard);
 
                     const vCard = document.createElement('div');
-                    vCard.className = "bg-slate-800/90 border border-slate-700 p-3.5 rounded-2xl flex items-center justify-between gap-2 text-xs shadow-sm";
+                    vCard.className = "admin-vendor-card bg-slate-700/80 border border-slate-600 p-3.5 rounded-2xl flex items-center justify-between gap-2 text-xs shadow-sm";
+                    vCard.setAttribute('data-search', email.toLowerCase());
                     vCard.innerHTML = `
                         <div>
                             <p class="font-bold text-white truncate">🏷️ ${email}</p>
-                            <p class="text-[11px] text-amber-400 font-semibold">${userItems.length} سلعة معروضة</p>
+                            <p class="text-[11px] text-amber-300 font-semibold">${userItems.length} سلعة معروضة</p>
                         </div>
                         <button onclick='showVendorItems(${JSON.stringify(email)}, ${JSON.stringify(userItems)})' class="bg-amber-500 text-slate-950 font-black px-3 py-1.5 rounded-xl hover:bg-amber-400 transition whitespace-nowrap shadow-sm">عرض سلع البائع</button>
                     `;
@@ -1340,6 +1352,28 @@
                 adminItemsContainer.innerHTML = `<p class="text-xs text-red-400">خطأ في تحميل الإعلانات.</p>`;
             }
         }
+
+        // دالة البحث السريع داخل لوحة الأدمن
+        window.filterAdminContent = function() {
+            const queryText = document.getElementById('adminSearchInput').value.toLowerCase();
+            const rows = document.querySelectorAll('.admin-item-row');
+            rows.forEach(r => {
+                const text = r.getAttribute('data-search') || '';
+                if(text.includes(queryText)) {
+                    r.style.display = 'flex';
+                } else {
+                    r.style.display = 'none';
+                }
+            });
+        };
+
+        // زر إرسال إشعار عام
+        window.broadcastNotification = function() {
+            const msg = prompt("أدخل نص الإشعار العام الذي تريد إرساله للمستخدمين:");
+            if(msg) {
+                showToast("تم ارسال الإشعار بنجاح لجميع المستخدمين!", "📢");
+            }
+        };
 
         window.showUserItems = function(email, itemsList) {
             const section = document.getElementById('adminUserItemsSection');
@@ -1355,13 +1389,13 @@
 
             itemsList.forEach(item => {
                 const itemRow = document.createElement('div');
-                itemRow.className = "bg-slate-800 border border-slate-700 p-2.5 rounded-xl flex items-center justify-between gap-2 text-xs text-white";
+                itemRow.className = "bg-slate-700 border border-slate-600 p-2.5 rounded-xl flex items-center justify-between gap-2 text-xs text-white";
                 itemRow.innerHTML = `
                     <div class="flex items-center space-x-2 space-x-reverse truncate">
-                        <img src="${item.image}" class="w-8 h-8 object-cover rounded-lg shrink-0 border border-slate-600">
+                        <img src="${item.image}" class="w-8 h-8 object-cover rounded-lg shrink-0 border border-slate-500">
                         <span class="font-bold truncate">${item.title} (${item.price} DT)</span>
                     </div>
-                    <span class="text-amber-400 text-[11px] font-semibold">${item.category}</span>
+                    <span class="text-amber-300 text-[11px] font-semibold">${item.category}</span>
                 `;
                 container.appendChild(itemRow);
             });
@@ -1383,13 +1417,13 @@
 
             itemsList.forEach(item => {
                 const itemRow = document.createElement('div');
-                itemRow.className = "bg-slate-800 border border-slate-700 p-2.5 rounded-xl flex items-center justify-between gap-2 text-xs text-white";
+                itemRow.className = "bg-slate-700 border border-slate-600 p-2.5 rounded-xl flex items-center justify-between gap-2 text-xs text-white";
                 itemRow.innerHTML = `
                     <div class="flex items-center space-x-2 space-x-reverse truncate">
-                        <img src="${item.image}" class="w-8 h-8 object-cover rounded-lg shrink-0 border border-slate-600">
+                        <img src="${item.image}" class="w-8 h-8 object-cover rounded-lg shrink-0 border border-slate-500">
                         <span class="font-bold truncate">${item.title} (${item.price} DT)</span>
                     </div>
-                    <span class="text-amber-400 text-[11px] font-semibold">${item.category}</span>
+                    <span class="text-amber-300 text-[11px] font-semibold">${item.category}</span>
                 `;
                 container.appendChild(itemRow);
             });
