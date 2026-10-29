@@ -3,7 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">Esouk Tunisie - السوق التونسي للبيع والشراء</title>
+    
+    <!-- SEO Meta Tags Ultra-Optimisés pour Google -->
+    <title id="pageTitle">Souk El Bacha - Brocante El Pacha | سوق الباشا للبيع والشراء في تونس</title>
+    <meta name="description" content="Souk El Bacha (Brocante El Pacha) - السوق التونسي الأول للبيع والشراء. تصفح آلاف الإعلانات في 24 ولاية تونسية: تليفزيونات، أثاث، سيارات، هواتف، وتحف أصلية.">
+    <meta name="keywords" content="Souk El Bacha, Brocante El Pacha, سوق الباشا, بيع وشراء تونس, إعلانات تونس, موقع تسوق تونسي, occasion tunisie, vente achat tunisie">
+    <meta name="author" content="Souk El Bacha">
+
+    <!-- Open Graph / Facebook & WhatsApp SEO -->
+    <meta property="og:title" content="Souk El Bacha - Brocante El Pacha | سوق الباشا">
+    <meta property="og:description" content="المنصة الأولى للبيع والشراء في كامل تراب الجمهورية التونسية. انشر إعلانك مجاناً أو تصفح أحدث العروض.">
+    <meta property="og:type" content="website">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -126,7 +137,7 @@
         </div>
     </div>
 
-    <!-- نافذة اختيار الفئات عند الضغط على الكارت بالكامل -->
+    <!-- نافذة اختيار الفئات -->
     <div id="buyCategoriesModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -153,9 +164,9 @@
     <!-- نافذة اختيار اللغة عند البداية -->
     <div id="langModal" class="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden p-6 text-center space-y-6 border border-slate-100">
-            <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner">🛍️</div>
+            <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner">🏛️</div>
             <div>
-                <h2 class="text-xl font-black text-slate-900 mb-1">مرحباً بكم / Bienvenue</h2>
+                <h2 class="text-xl font-black text-slate-900 mb-1">Souk El Bacha / سوق الباشا</h2>
                 <p class="text-xs text-slate-500">اختر لغتك المفضلة / Choisissez votre langue</p>
             </div>
             <div class="grid grid-cols-2 gap-3">
@@ -177,10 +188,10 @@
             <div class="flex items-center justify-end w-full sm:w-auto order-1 sm:order-2">
                 <div class="flex items-center space-x-4 space-x-reverse cursor-pointer group" onclick="switchView('home')">
                     <div class="text-right pl-3">
-                        <span class="font-black text-slate-900 text-lg tracking-tight block leading-tight">Esouk<span class="text-amber-600">Tunisie</span></span>
-                        <span class="text-[10px] text-amber-800 font-extrabold tracking-wide block">السوق التونسي الشامل</span>
+                        <span class="font-black text-slate-900 text-lg tracking-tight block leading-tight">Souk El Bacha<span class="text-amber-600"> / سوق الباشا</span></span>
+                        <span class="text-[10px] text-amber-800 font-extrabold tracking-wide block">Brocante El Pacha Tunisie</span>
                     </div>
-                    <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-2xl flex items-center justify-center text-xl shadow-md shadow-amber-500/25 group-hover:scale-105 transition shrink-0">🛍️</div>
+                    <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-2xl flex items-center justify-center text-xl shadow-md shadow-amber-500/25 group-hover:scale-105 transition shrink-0">🏛️</div>
                 </div>
             </div>
 
@@ -192,8 +203,8 @@
         
         <div class="bg-white/90 backdrop-blur-sm px-5 py-3.5 rounded-2xl shadow-xs border border-slate-200/60 flex items-center justify-between gap-4">
             <div>
-                <h1 id="welcomeTitle" class="text-base sm:text-lg font-black text-slate-900 tracking-tight">Esouk Tunisie - السوق التونسي</h1>
-                <p id="welcomeDesc" class="text-[11px] font-bold text-amber-700">بيع وشراء في كامل تراب الجمهورية</p>
+                <h1 id="welcomeTitle" class="text-base sm:text-lg font-black text-slate-900 tracking-tight">Souk El Bacha - سوق الباشا</h1>
+                <p id="welcomeDesc" class="text-[11px] font-bold text-amber-700">سوق التحف، الأثاث، والسلع المميزة في تونس</p>
             </div>
             <div>
                 <button onclick="changeLanguagePrompt()" class="text-[11px] text-slate-400 font-semibold hover:text-amber-600 transition inline-flex items-center gap-1 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
@@ -202,16 +213,15 @@
             </div>
         </div>
 
-        <!-- البطاقتان الرئيسيتان قابلة للنقر بالكامل (Card Clickable) -->
+        <!-- البطاقتان الرئيسيتان قابلة للنقر بالكامل -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
             
-            <!-- بطاقة البائع الكبيرة قابلة للنقر في أي مكان -->
             <div onclick="openSellModal()" class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 p-5 rounded-3xl shadow-lg text-center text-white space-y-2.5 border border-amber-400/40 relative overflow-hidden cursor-pointer hover:scale-[1.01] transition">
                 <div class="absolute -right-4 -bottom-4 text-7xl opacity-10 select-none">🏷️</div>
                 <div class="relative z-10 space-y-1">
                     <span class="bg-white/25 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">قسم البائعين</span>
                     <h2 class="text-lg sm:text-xl font-black tracking-tight">ماذا تريد أن تبيع اليوم؟</h2>
-                    <p class="text-[11px] text-amber-100 font-medium">انشر بضاعتك وصِل إلى آلاف المشترين.</p>
+                    <p class="text-[11px] text-amber-100 font-medium">انشر بضاعتك في سوق الباشا وصِل إلى آلاف المشترين.</p>
                 </div>
                 <div class="pt-0.5 relative z-10">
                     <div class="bg-slate-900 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md inline-flex items-center justify-center space-x-2 space-x-reverse mx-auto">
@@ -221,13 +231,12 @@
                 </div>
             </div>
 
-            <!-- بطاقة المشتري الكبيرة قابلة للنقر في أي مكان -->
             <div onclick="openBuyCategoriesModal()" class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-5 rounded-3xl shadow-lg text-center text-white space-y-2.5 border border-slate-700 relative overflow-hidden cursor-pointer hover:scale-[1.01] transition">
                 <div class="absolute -right-4 -bottom-4 text-7xl opacity-10 select-none">🛒</div>
                 <div class="relative z-10 space-y-1">
                     <span class="bg-amber-500/30 text-amber-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">قسم المشترين</span>
                     <h2 class="text-lg sm:text-xl font-black tracking-tight">ماذا تريد أن تشتري اليوم؟</h2>
-                    <p class="text-[11px] text-slate-300 font-medium">تصفح آلاف العروض والسلع في كل تونس.</p>
+                    <p class="text-[11px] text-slate-300 font-medium">تصفح آلاف التحف، الأثاث، والسلع في كل تونس.</p>
                 </div>
                 <div class="pt-0.5 relative z-10">
                     <div class="bg-amber-600 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md inline-flex items-center justify-center space-x-2 space-x-reverse mx-auto">
@@ -240,7 +249,7 @@
 
         <div class="text-center py-1">
             <div onclick="scrollToAds()" class="inline-flex flex-col items-center cursor-pointer text-amber-700 hover:text-amber-800 transition animate-bounce-slow">
-                <span class="text-[11px] font-bold mb-0.5">انظر إلى الأسفل لمشاهدة أحدث الإعلانات 👇</span>
+                <span class="text-[11px] font-bold mb-0.5">انظر إلى الأسفل لمشاهدة أحدث إعلانات سوق الباشا 👇</span>
                 <span class="text-base">⌄</span>
             </div>
         </div>
@@ -248,7 +257,7 @@
         <div id="adsSectionTarget" class="bg-white/90 backdrop-blur-sm p-4 rounded-3xl shadow-sm border border-slate-200/60 space-y-3">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                    <input type="text" id="searchInput" placeholder="ابحث عما تريد..." oninput="performSearch()" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
+                    <input type="text" id="searchInput" placeholder="ابحث عما تريد (تلفزيون، أثاث...)..." oninput="performSearch()" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
                 </div>
                 <div>
                     <select id="categorySelect" onchange="performSearch()" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
@@ -264,17 +273,16 @@
         </div>
 
         <div class="bg-gradient-to-r from-amber-600 to-amber-700 text-white py-2 rounded-2xl shadow-xs overflow-hidden flex items-center">
-            <div class="bg-slate-900 text-amber-300 px-3 py-1 text-[11px] font-black tracking-wider uppercase shrink-0 z-10 ml-2 rounded-xl">⚡ تونس العريقة</div>
+            <div class="bg-slate-900 text-amber-300 px-3 py-1 text-[11px] font-black tracking-wider uppercase shrink-0 z-10 ml-2 rounded-xl">🏛️ سوق الباشا</div>
             <div class="marquee-container text-xs font-bold tracking-wide">
                 <div class="animate-marquee space-x-8 space-x-reverse px-4">
-                    <span>🔥 جديد السوق التونسي</span> &bull; 
+                    <span>🔥 جديد سوق الباشا</span> &bull; 
                     <span>🏺 أثاث وتحف تقليدية</span> &bull; 
-                    <span>📱 إلكترونيات وهواتف</span> &bull; 
+                    <span>📱 إلكترونيات وتلفزيونات</span> &bull; 
                     <span>🚗 سيارات ووسائل نقل</span> &bull; 
-                    <span>⭐ أفضل الأسعار في كافة الولايات</span> &bull; 
-                    <span>🔥 جديد السوق التونسي</span> &bull; 
-                    <span>🏺 أثاث وتحف تقليدية</span> &bull; 
-                    <span>📱 إلكترونيات وهواتف</span>
+                    <span>⭐ أفضل العروض في كافة الولايات</span> &bull; 
+                    <span>🔥 جديد سوق الباشا</span> &bull; 
+                    <span>🏺 أثاث وتحف تقليدية</span>
                 </div>
             </div>
         </div>
@@ -306,8 +314,8 @@
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-600 pb-4 gap-3">
                 <div>
                     <span class="bg-amber-400 text-slate-950 font-black text-[10px] px-2.5 py-1 rounded-full uppercase tracking-wider">لوحة القيادة الرسمية</span>
-                    <h1 class="text-xl sm:text-2xl font-black text-white mt-1">👑 لوحة تحكم الأدمن (Admin Dashboard)</h1>
-                    <p class="text-xs text-amber-200">مرحباً بك يا مراد. السيطرة الكاملة على منصة السوق التونسي.</p>
+                    <h1 class="text-xl sm:text-2xl font-black text-white mt-1">👑 لوحة تحكم سوق الباشا (Admin Dashboard)</h1>
+                    <p class="text-xs text-amber-200">مرحباً بك يا مراد. السيطرة الكاملة على منصة سوق الباشا.</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button onclick="broadcastNotification()" class="bg-amber-500 text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs hover:bg-amber-400 transition shadow-md">📢 إرسال إشعار عام</button>
@@ -387,7 +395,7 @@
 
     <!-- التذييل -->
     <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200/60 py-4 text-center text-xs text-slate-400 space-y-1">
-        <p class="font-bold text-slate-600">Esouk Tunisie &copy; 2026</p>
+        <p class="font-bold text-slate-600">Souk El Bacha (Brocante El Pacha) &copy; 2026</p>
         <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية</p>
     </footer>
 
@@ -395,14 +403,14 @@
     <div id="sellModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-                <h3 class="font-bold text-slate-900 text-sm sm:text-base">نشر إعلان جديد (بيع / Vendre)</h3>
+                <h3 class="font-bold text-slate-900 text-sm sm:text-base">نشر إعلان جديد في سوق الباشا (Vendre)</h3>
                 <button onclick="closeSellModal()" class="w-8 h-8 rounded-full bg-slate-200/60 text-slate-500 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
             </div>
             
             <form id="sellForm" onsubmit="handlePublishItem(event)" class="p-5 overflow-y-auto space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">عنوان الإعلان أو الغرض</label>
-                    <input type="text" id="itemTitle" required placeholder="مثال: طاولة خشبية تقليدية" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
+                    <input type="text" id="itemTitle" required placeholder="مثال: تلفزيون سامسونج، طاولة خشبية تقليدية..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -442,7 +450,6 @@
                     <textarea id="itemDescription" rows="3" placeholder="أكتب تفاصيل الغرض..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition"></textarea>
                 </div>
 
-                <!-- أزرار الكاميرا والمعرض المنفصلة -->
                 <div class="space-y-2">
                     <label class="block text-xs font-bold text-slate-700">صور الغرض (حتى 5 صور)</label>
                     
@@ -785,21 +792,21 @@
             if (isAr) {
                 html.setAttribute('dir', 'rtl');
                 html.setAttribute('lang', 'ar');
-                document.getElementById('pageTitle').innerText = "Esouk Tunisie - السوق التونسي للبيع والشراء";
+                document.getElementById('pageTitle').innerText = "Souk El Bacha - Brocante El Pacha | سوق الباشا للبيع والشراء";
                 document.getElementById('btnSignupTop').innerText = "إنشاء حساب";
                 document.getElementById('btnLoginTop').innerText = "دخول";
-                document.getElementById('welcomeTitle').innerText = "Esouk Tunisie - السوق التونسي";
-                document.getElementById('welcomeDesc').innerText = "بيع وشراء في كامل تراب الجمهورية";
+                document.getElementById('welcomeTitle').innerText = "Souk El Bacha - سوق الباشا";
+                document.getElementById('welcomeDesc').innerText = "سوق التحف، الأثاث، والسلع المميزة في تونس";
                 document.getElementById('quickCatTitle').innerText = "التصنيفات السريعة المتاحة";
                 document.getElementById('recentAdsTitle').innerText = "الإعلانات الحديثة";
             } else {
                 html.setAttribute('dir', 'ltr');
                 html.setAttribute('lang', 'fr');
-                document.getElementById('pageTitle').innerText = "Esouk Tunisie - Vente et Achat en Tunisie";
+                document.getElementById('pageTitle').innerText = "Souk El Bacha - Brocante El Pacha | Vente et Achat en Tunisie";
                 document.getElementById('btnSignupTop').innerText = "S'inscrire";
                 document.getElementById('btnLoginTop').innerText = "Connexion";
-                document.getElementById('welcomeTitle').innerText = "Esouk Tunisie - Marché en Tunisie";
-                document.getElementById('welcomeDesc').innerText = "Vente et Achat dans toute la Tunisie";
+                document.getElementById('welcomeTitle').innerText = "Souk El Bacha - Brocante El Pacha";
+                document.getElementById('welcomeDesc').innerText = "Vente et Achat d'objets, meubles et brocante en Tunisie";
                 document.getElementById('quickCatTitle').innerText = "Catégories Rapides Disponibles";
                 document.getElementById('recentAdsTitle').innerText = "Annonces Récentes";
             }
@@ -1239,7 +1246,7 @@
                     if(countBadge) countBadge.innerText = "0 إعلان";
                 }
             } catch (err) {
-                grid.innerHTML = `<div class="bg-white/80 p-8 rounded-3xl text-center col-span-full border border-red-100"><p class="text-red-400 text-xs sm:text-sm">حدث خطأ أثناء تحميل الإعلانات.</p></div>`;
+                grid.innerHTML = `<div class="bg-white/60 p-8 rounded-3xl text-center col-span-full border border-red-100"><p class="text-red-400 text-xs sm:text-sm">حدث خطأ أثناء تحميل الإعلانات.</p></div>`;
             }
         }
 
@@ -1416,7 +1423,7 @@
                 itemRow.innerHTML = `
                     <div class="flex items-center space-x-2 space-x-reverse truncate">
                         <img src="${item.image}" class="w-8 h-8 object-cover rounded-lg shrink-0 border border-slate-500">
-                        <span class="font-bold tunish truncate">${item.title} (${item.price} DT)</span>
+                        <span class="font-bold truncate">${item.title} (${item.price} DT)</span>
                     </div>
                     <span class="text-amber-300 text-[11px] font-semibold">${item.category}</span>
                 `;
