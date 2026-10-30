@@ -313,55 +313,60 @@
         </div>
     </main>
 
-    <!-- لوحة تحكم الأدمن -->
+    <!-- لوحة تحكم الأدمن (بألوان باهتة ومريحة جداً Soft Slate/Indigo بدلاً من الأسود القاتم) -->
     <main id="adminView" class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-grow hidden space-y-6">
-        <div class="bg-slate-900 text-white p-6 sm:p-8 rounded-3xl shadow-2xl border border-amber-500/30 space-y-6">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-4 gap-3">
+        <div class="bg-slate-800 text-slate-100 p-6 sm:p-8 rounded-3xl shadow-2xl border border-slate-700 space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-700 pb-4 gap-3">
                 <div>
-                    <span class="bg-amber-400 text-slate-950 font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">لوحة القيادة الرسمية</span>
+                    <span class="bg-amber-500 text-slate-950 font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">لوحة القيادة الرسمية</span>
                     <h1 class="text-xl sm:text-2xl font-black text-white mt-1">👑 لوحة تحكم سوق الباشا (Admin Dashboard)</h1>
-                    <p class="text-xs text-amber-200">مرحباً بك يا مراد. السيطرة الكاملة على منصة سوق الباشا.</p>
+                    <p class="text-xs text-amber-300">مرحباً بك يا مراد. التحكم الكامل بضغطة زر واحدة.</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="broadcastNotification()" class="bg-amber-500 text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs hover:bg-amber-400 transition shadow-md">📢 إرسال إشعار عام</button>
-                    <button onclick="handleLogout()" class="bg-red-600 text-white font-bold px-4 py-2.5 rounded-xl text-xs hover:bg-red-700 transition shadow-md">خروج 🚪</button>
+                    <!-- زر توليد الإعلانات الجديدة سحرياً -->
+                    <button onclick="forceRegenerateAds()" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black px-4 py-2.5 rounded-xl text-xs hover:from-amber-400 hover:to-amber-500 transition shadow-md">✨ توليد إعلانات جديدة</button>
+                    <button onclick="handleLogout()" class="bg-rose-600 text-white font-bold px-4 py-2.5 rounded-xl text-xs hover:bg-rose-700 transition shadow-md">خروج 🚪</button>
                 </div>
             </div>
+
             <div class="space-y-3">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">📊 إحصائيات المنصة العامة</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div class="bg-slate-950 p-4 rounded-2xl shadow-md text-white border border-slate-800 text-center">
+                    <div class="bg-slate-900/60 p-4 rounded-2xl shadow-sm text-white border border-slate-700 text-center">
                         <p class="text-xs font-bold text-slate-400 uppercase">إجمالي الإعلانات</p>
                         <p id="adminTotalItems" class="text-2xl sm:text-3xl font-black text-amber-400 mt-1">0</p>
                     </div>
-                    <div class="bg-slate-950 p-4 rounded-2xl shadow-md text-white border border-slate-800 text-center">
+                    <div class="bg-slate-900/60 p-4 rounded-2xl shadow-sm text-white border border-slate-700 text-center">
                         <p class="text-xs font-bold text-slate-400 uppercase">الفئات المتاحة</p>
-                        <p id="adminTotalCats" class="text-2xl sm:text-3xl font-black text-blue-400 mt-1">0</p>
+                        <p id="adminTotalCats" class="text-2xl sm:text-3xl font-black text-sky-400 mt-1">0</p>
                     </div>
-                    <div class="bg-slate-950 p-4 rounded-2xl shadow-md text-white border border-slate-800 text-center">
+                    <div class="bg-slate-900/60 p-4 rounded-2xl shadow-sm text-white border border-slate-700 text-center">
                         <p class="text-xs font-bold text-slate-400 uppercase">المستخدمون المسجلون</p>
                         <p id="adminTotalUsers" class="text-2xl sm:text-3xl font-black text-purple-400 mt-1">1</p>
                     </div>
                 </div>
             </div>
+
             <div class="space-y-2">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">🔍 بحث سريع في لوحة الأدمن</h3>
-                <input type="text" id="adminSearchInput" oninput="filterAdminContent()" placeholder="ابحث عن إعلان أو مستخدم..." class="w-full bg-slate-950 text-white placeholder-slate-500 border border-slate-800 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-400 transition">
+                <input type="text" id="adminSearchInput" oninput="filterAdminContent()" placeholder="ابحث عن إعلان أو مستخدم..." class="w-full bg-slate-900/70 text-white placeholder-slate-400 border border-slate-700 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-400 transition">
             </div>
-            <div class="pt-4 border-t border-slate-800 space-y-3">
-                <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">🏷️ إدارة فئات الموقع</h3>
+
+            <div class="pt-4 border-t border-slate-700 space-y-3">
+                <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">🏷️ إدارة فئات الموقع الشاملة</h3>
                 <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
-                    <input type="text" id="newCategoryName" required placeholder="أضف فئة جديدة..." class="w-full bg-slate-950 text-white placeholder-slate-500 border border-slate-800 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-400 transition">
+                    <input type="text" id="newCategoryName" required placeholder="أضف فئة جديدة..." class="w-full bg-slate-900/70 text-white placeholder-slate-400 border border-slate-700 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-400 transition">
                     <button type="submit" class="bg-amber-500 text-slate-950 font-black px-6 py-3 rounded-xl text-xs sm:text-sm hover:bg-amber-400 transition whitespace-nowrap shadow-md">إضافة فئة +</button>
                 </form>
                 <div id="adminCategoriesList" class="flex flex-wrap gap-2 pt-2"></div>
             </div>
-            <div class="pt-4 border-t border-slate-800 space-y-3">
+
+            <div class="pt-4 border-t border-slate-700 space-y-3">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">👥 قائمة المستخدمين المسجلين</h3>
                 <div id="adminUsersListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-60 overflow-y-auto pr-1">
                     <p class="text-xs text-slate-400">جاري تحميل المستخدمين...</p>
                 </div>
-                <div id="adminUserItemsSection" class="hidden pt-3 border-t border-slate-800 space-y-2">
+                <div id="adminUserItemsSection" class="hidden pt-3 border-t border-slate-700 space-y-2">
                     <div class="flex justify-between items-center">
                         <h4 id="adminUserTitleHeader" class="font-bold text-xs text-amber-300">إعلانات المستخدم: </h4>
                         <button onclick="hideAdminUserItems()" class="text-xs text-slate-400 hover:text-white underline">إغلاق العرض</button>
@@ -369,20 +374,8 @@
                     <div id="adminUserItemsContainer" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
                 </div>
             </div>
-            <div class="pt-4 border-t border-slate-800 space-y-3">
-                <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">🛍️ قائمة البائعين وسلعهم</h3>
-                <div id="adminVendorsListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-60 overflow-y-auto pr-1">
-                    <p class="text-xs text-slate-400">جاري تحميل البائعين...</p>
-                </div>
-                <div id="adminVendorItemsSection" class="hidden pt-3 border-t border-slate-800 space-y-2">
-                    <div class="flex justify-between items-center">
-                        <h4 id="adminVendorTitleHeader" class="font-bold text-xs text-amber-300">إعلانات البائع: </h4>
-                        <button onclick="hideAdminVendorItems()" class="text-xs text-slate-400 hover:text-white underline">إغلاق العرض</button>
-                    </div>
-                    <div id="adminVendorItemsContainer" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
-                </div>
-            </div>
-            <div class="pt-4 border-t border-slate-800 space-y-3">
+
+            <div class="pt-4 border-t border-slate-700 space-y-3">
                 <h3 class="font-black text-amber-300 text-xs sm:text-sm tracking-wide">📢 إدارة ومتابعة جميع إعلانات المنصة</h3>
                 <div id="adminItemsListContainer" class="space-y-2 max-h-96 overflow-y-auto pr-1">
                     <p class="text-xs text-slate-400">جاري تحميل الإعلانات...</p>
@@ -553,7 +546,6 @@
             performSearch();
         };
 
-        // قائمة الفئات الشاملة والواسعة لتشمل كل ما يباع ويشترى في تونس
         async function fetchCategories() {
             try {
                 const snapshot = await getDocs(collection(db, "categories"));
@@ -595,7 +587,32 @@
             }
         }
 
-        // سكريبت التعبئة التلقائية لإعلانات متنوعة وشاملة لكل الفئات
+        // دالة توليد وضخ إعلانات جديدة في السوق كلما ضغطت على الزر في الأدمن
+        window.forceRegenerateAds = async function() {
+            if(confirm("هل تريد إضافة دفعة جديدة ومتنوعة من الإعلانات التونسية للسوق؟")) {
+                try {
+                    const extraAds = [
+                        { title: "سيارة مرسيدس سي 200 بحالة ممتازة", category: "سيارات ووسائل نقل (Voitures)", state: "تونس", condition: "بحالة ممتازة (Très bon état)", price: 42000, phone: "98223344", description: "سيارة فاخرة، صيانة كاملة بالوكالة.", image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=600", userEmail: "vendeur.tunis@esouk.tn" },
+                        { title: "شقة مفروشة للكراء أو للبيع في سوسة", category: "عقارات ومنازل (Immobilier)", state: "سوسة", condition: "جديد تماماً (Neuf)", price: 150000, phone: "22445566", description: "شقة مطلة على البحر مباشرة، تحتوي على تجهيزات عصرية.", image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600", userEmail: "immobilier.sousse@esouk.tn" },
+                        { title: "آيفون 14 برو ماكس مستعمل كالجديد", category: "هواتف ولوحات رقمية (Téléphones)", state: "صفاقس", condition: "بحالة ممتازة (Très bon état)", price: 2900, phone: "55889900", description: "الذاكرة 512 جيجا، صحة البطارية 90%.", image: "https://images.unsplash.com/photo-1678685888221-cda773a3dcdb?w=600", userEmail: "phone.sfax@esouk.tn" },
+                        { title: "مجموعة أطباق فخارية دجربية تقليدية", category: "أثاث وتحف (Meubles & Déco)", state: "مدنين", condition: "جديد (Neuf)", price: 180, phone: "99112233", description: "صناعة يدوية دجربية أصلية للتحفة والديكور.", image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600", userEmail: "djerba.art@esouk.tn" }
+                    ];
+
+                    for (let ad of extraAds) {
+                        await addDoc(collection(db, "items"), {
+                            ...ad,
+                            createdAt: serverTimestamp()
+                        });
+                    }
+                    showToast("تم توليد وضخ إعلانات جديدة بنجاح!", "🚀");
+                    loadAdminDashboard();
+                    loadItems();
+                } catch(e) {
+                    showToast("حدث خطأ أثناء توليد الإعلانات.", "❌");
+                }
+            }
+        };
+
         async function seedInitialTunisianAds() {
             try {
                 const snapshot = await getDocs(collection(db, "items"));
