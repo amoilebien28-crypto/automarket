@@ -172,7 +172,7 @@
 
             <div class="hidden lg:flex items-center gap-2.5 bg-gradient-to-r from-amber-50 to-amber-100/60 border border-amber-200/80 px-3.5 py-1.5 rounded-2xl shadow-sm">
                 <span class="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-[10px] shadow-xs">✨</span>
-                <span class="text-xs font-bold text-amber-900">مرحباً بك في المنصة الأولى للبيع والشراء في تونس![cite: 1]</span>
+                <span class="text-xs font-bold text-amber-900">مرحباً بك في المنصة الأولى للبيع والشراء في تونس[span_0](start_span)[span_0](end_span)!</span>
             </div>
 
             <div id="auth-nav-container" class="flex items-center gap-2 shrink-0">
@@ -191,7 +191,7 @@
             <div class="bg-slate-900 text-amber-300 px-4 py-1 text-xs tracking-wider uppercase shrink-0 z-10 ml-2 rounded-xl shadow-xs">🏛️ سوق الباشا</div>
             <div class="marquee-container text-xs tracking-wide">
                 <div class="animate-marquee space-x-8 space-x-reverse px-4">
-                    <span>🔥 جديد سوق الباشا في كافة الولايات الـ 24</span> &bull;[cite: 1]
+                    <span>🔥 جديد سوق الباشا في كافة الولايات الـ 24</span> &bull;[span_1](start_span)[span_1](end_span)
                     <span>🚗 سيارات، شاحنات ودراجات نارية</span> &bull; 
                     <span>🏠 عقارات، منازل وأراضي بناء</span> &bull; 
                     <span>📱 هواتف، لوحات رقمية وإلكترونيات</span> &bull; 
@@ -323,7 +323,6 @@
                     <p class="text-xs text-amber-700 font-semibold">مرحباً بك يا مراد. التحكم الكامل بضغطة زر واحدة.</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <!-- زر توليد الإعلانات الكثيرة والجديدة -->
                     <button onclick="forceRegenerateAds()" class="bg-amber-600 text-white font-black px-4 py-2.5 rounded-xl text-xs hover:bg-amber-700 transition shadow-md">✨ ضخ 10+ إعلانات جديدة</button>
                     <button onclick="handleLogout()" class="bg-rose-600 text-white font-bold px-4 py-2.5 rounded-xl text-xs hover:bg-rose-700 transition shadow-md">خروج 🚪</button>
                 </div>
@@ -353,7 +352,7 @@
             </div>
 
             <div class="pt-4 border-t border-slate-300 space-y-3">
-                <h3 class="font-black text-slate-800 text-xs sm:text-sm tracking-wide">🏷️ إدارة فئات الموقع الشاملة</h3>
+                <h3 class="font-black text-slate-800 text-xs sm:text-sm tracking-wide">🏷️ إدارة فئات الموقع الشاملة (30 فئة أساسية)</h3>
                 <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
                     <input type="text" id="newCategoryName" required placeholder="أضف فئة جديدة..." class="w-full bg-white text-slate-900 placeholder-slate-400 border border-slate-300 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 transition shadow-xs">
                     <button type="submit" class="bg-amber-600 text-white font-black px-6 py-3 rounded-xl text-xs sm:text-sm hover:bg-amber-700 transition whitespace-nowrap shadow-md">إضافة فئة +</button>
@@ -387,7 +386,7 @@
     <!-- التذييل -->
     <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 space-y-1 shadow-sm">
         <p class="font-bold text-slate-700">Souk El Bacha (Brocante El Pacha) &copy; 2026</p>
-        <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية[cite: 1]</p>
+        <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية[span_2](start_span)[span_2](end_span)</p>
     </footer>
 
     <!-- نافذة نشر إعلان -->
@@ -546,25 +545,46 @@
             performSearch();
         };
 
+        // دالة جلب وإضافة الفئات الـ 30 الشاملة
         async function fetchCategories() {
             try {
                 const snapshot = await getDocs(collection(db, "categories"));
+                const comprehensiveCats = [
+                    "سيارات ووسائل نقل (Voitures & Véhicules)",
+                    "قطع غيار وإكسسوارات السيارات (Pièces auto)",
+                    "عقارات ومنازل (Immobilier)",
+                    "أراضي ومحلات تجارية (Terrains & Locaux)",
+                    "هواتف ذكية ولوازمها (Téléphones)",
+                    "لوحات رقمية وأجهزة لوحية (Tablettes)",
+                    "حواسيب وإعلامية (Informatique)",
+                    "شاشات وتلفزيونات وأجهزة صوتية (TV & Son)",
+                    "أجهزة منزلية كبرى (Électroménager)",
+                    "أجهزة منزلية صغرى ومطابخ (Petit électro)",
+                    "أثاث وديكور المنزل (Meubles & Déco)",
+                    "أسرّة وغرف نوم (Chambres à coucher)",
+                    "تحف، فخار وعقود تقليدية (Artisanat)",
+                    "زرابي وتجهيز مفروشات (Tapis & Linge)",
+                    "ملابس وأزياء رجالية (Vêtements Homme)",
+                    "ملابس وأزياء نسائية (Vêtements Femme)",
+                    "ملابس وأحذية أطفال (Vêtements Enfants)",
+                    "أحذية وحقائب يد (Chaussures & Sacs)",
+                    "مستحضرات تجميل وعطور (Beauté & Parfums)",
+                    "ساعات ومجوهرات وإكسسوارات (Montres & Bijoux)",
+                    "معدات وأدوات حرفية وبناء (Outillage)",
+                    "معدات فلاحية وحدائق (Agriculture)",
+                    "ألعاب وأجهزة ترفيهية (Jeux & Jouets)",
+                    "معدات رياضية ولياقة بدنية (Sports)",
+                    "كتب، روايات وأدوات مدرسية (Livres)",
+                    "حيوانات وطيور ومستلزماتها (Animaux)",
+                    "خدمات ومهن حرة (Services)",
+                    "عروض شغل ووظائف (Emplois)",
+                    "مستلزمات الحفلات والأفراح (Événements)",
+                    "أخرى / متنوعة (Divers)"
+                ];
+
                 if (snapshot.empty) {
-                    const defaultCats = [
-                        "سيارات ووسائل نقل (Voitures)",
-                        "عقارات ومنازل (Immobilier)",
-                        "أراضي ومحلات (Terrains & Locaux)",
-                        "هواتف ولوحات رقمية (Téléphones)",
-                        "إعلامية وإلكترونيات (Informatique)",
-                        "أثاث وتحف (Meubles & Déco)",
-                        "أجهزة منزلية (Électroménager)",
-                        "ملابس وأزياء (Vêtements & Mode)",
-                        "خدمات ومهن (Services)",
-                        "حيوانات وطيور (Animaux)",
-                        "أخرى / Divers"
-                    ];
-                    categoriesList = defaultCats;
-                    for (let cat of defaultCats) {
+                    categoriesList = comprehensiveCats;
+                    for (let cat of comprehensiveCats) {
                         await addDoc(collection(db, "categories"), { name: cat });
                     }
                 } else {
@@ -575,30 +595,25 @@
                 }
                 populateDropdowns();
             } catch (e) {
-                categoriesList = [
-                    "سيارات ووسائل نقل (Voitures)",
-                    "عقارات ومنازل (Immobilier)",
-                    "هواتف ولوحات رقمية (Téléphones)",
-                    "أثاث وتحف (Meubles & Déco)",
-                    "أجهزة منزلية (Électroménager)",
-                    "أخرى / Divers"
-                ];
+                categoriesList = ["سيارات ووسائل نقل (Voitures)", "عقارات ومنازل (Immobilier)", "هواتف ولوحات رقمية (Téléphones)", "أثاث وتحف (Meubles)", "أخرى / Divers"];
                 populateDropdowns();
             }
         }
 
-        // زر توليد وضخ إعلانات جديدة في السوق فورا عند الضغط عليه في لوحة الأدمن
+        // دالة توليد وضخ إعلانات جديدة في السوق
         window.forceRegenerateAds = async function() {
             try {
                 const extraAds = [
-                    { title: "سيارة مرسيدس سي 200 بحالة ممتازة", category: "سيارات ووسائل نقل (Voitures)", state: "تونس", condition: "بحالة ممتازة (Très bon état)", price: 42000, phone: "98223344", description: "سيارة فاخرة، صيانة كاملة بالوكالة.", image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=600", userEmail: "vendeur.tunis@esouk.tn" },
+                    { title: "سيارة مرسيدس سي 200 بحالة ممتازة", category: "سيارات ووسائل نقل (Voitures & Véhicules)", state: "تونس", condition: "بحالة ممتازة (Très bon état)", price: 42000, phone: "98223344", description: "سيارة فاخرة، صيانة كاملة بالوكالة.", image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=600", userEmail: "vendeur.tunis@esouk.tn" },
                     { title: "شقة مفروشة للكراء أو للبيع في سوسة", category: "عقارات ومنازل (Immobilier)", state: "سوسة", condition: "جديد تماماً (Neuf)", price: 150000, phone: "22445566", description: "شقة مطلة على البحر مباشرة، تحتوي على تجهيزات عصرية.", image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600", userEmail: "immobilier.sousse@esouk.tn" },
-                    { title: "آيفون 14 برو ماكس مستعمل كالجديد", category: "هواتف ولوحات رقمية (Téléphones)", state: "صفاقس", condition: "بحالة ممتازة (Très bon état)", price: 2900, phone: "55889900", description: "الذاكرة 512 جيجا، صحة البطارية 90%.", image: "https://images.unsplash.com/photo-1678685888221-cda773a3dcdb?w=600", userEmail: "phone.sfax@esouk.tn" },
-                    { title: "مجموعة أطباق فخارية دجربية تقليدية", category: "أثاث وتحف (Meubles & Déco)", state: "مدنين", condition: "جديد (Neuf)", price: 180, phone: "99112233", description: "صناعة يدوية دجربية أصلية للتحفة والديكور.", image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600", userEmail: "djerba.art@esouk.tn" },
-                    { title: "شاحنة إيسوزو ديماكس صالحة للعمل الشاق", category: "سيارات ووسائل نقل (Voitures)", state: "قابس", condition: "بحالة جيدة (Bon état)", price: 34000, phone: "98771122", description: "شاحنة دبل كابين قوية جدا ومجهزة.", image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600", userEmail: "transport.gabes@esouk.tn" },
-                    { title: "تلفزيون سامسونج سمارت 55 بوصة 4كي", category: "إعلامية وإلكترونيات (Informatique)", state: "تونس", condition: "جديد (Neuf)", price: 1450, phone: "20334455", description: "تلفزيون ذكي بالكرتونة والضمان.", image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=600", userEmail: "tech.store@esouk.tn" },
-                    { title: "أرض فلاحية مع بئر ماء في باجة", category: "أراضي ومحلات (Terrains & Locaux)", state: "باجة", condition: "بحالة جيدة (Bon état)", price: 65000, phone: "53221100", description: "مساحة هكتارين، تربة خصبة جدا مع رخصة حفر بئر.", image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600", userEmail: "terrains.beja@esouk.tn" },
-                    { title: "مجموعة ملابس تقليدية تونسية (برنوس)", category: "ملابس وأزياء (Vêtements & Mode)", state: "توزر", condition: "جديد تماماً (Neuf)", price: 300, phone: "97112244", description: "صناعة يدوية أصيلة من الصوف.", image: "https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=600", userEmail: "mode.tozeur@esouk.tn" }
+                    { title: "آيفون 14 برو ماكس مستعمل كالجديد", category: "هواتف ذكية ولوازمها (Téléphones)", state: "صفاقس", condition: "بحالة ممتازة (Très bon état)", price: 2900, phone: "55889900", description: "الذاكرة 512 جيجا، صحة البطارية 90%.", image: "https://images.unsplash.com/photo-1678685888221-cda773a3dcdb?w=600", userEmail: "phone.sfax@esouk.tn" },
+                    { title: "مجموعة أطباق فخارية دجربية تقليدية", category: "تحف، فخار وعقود تقليدية (Artisanat)", state: "مدنين", condition: "جديد (Neuf)", price: 180, phone: "99112233", description: "صناعة يدوية دجربية أصلية للتحفة والديكور.", image: "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600", userEmail: "djerba.art@esouk.tn" },
+                    { title: "شاحنة إيسوزو ديماكس صالحة للعمل الشاق", category: "سيارات ووسائل نقل (Voitures & Véhicules)", state: "قابس", condition: "بحالة جيدة (Bon état)", price: 34000, phone: "98771122", description: "شاحنة دبل كابين قوية جدا ومجهزة.", image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600", userEmail: "transport.gabes@esouk.tn" },
+                    { title: "تلفزيون سامسونج سمارت 55 بوصة 4كي", category: "شاشات وتلفزيونات وأجهزة صوتية (TV & Son)", state: "تونس", condition: "جديد (Neuf)", price: 1450, phone: "20334455", description: "تلفزيون ذكي بالكرتونة والضمان.", image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=600", userEmail: "tech.store@esouk.tn" },
+                    { title: "أرض فلاحية مع بئر ماء في باجة", category: "أراضي ومحلات تجارية (Terrains & Locaux)", state: "باجة", condition: "بحالة جيدة (Bon état)", price: 65000, phone: "53221100", description: "مساحة هكتارين، تربة خصبة جدا مع رخصة حفر بئر.", image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600", userEmail: "terrains.beja@esouk.tn" },
+                    { title: "مجموعة ملابس تقليدية تونسية (برنوس)", category: "ملابس وأزياء رجالية (Vêtements Homme)", state: "توزر", condition: "جديد تماماً (Neuf)", price: 300, phone: "97112244", description: "صناعة يدوية أصيلة من الصوف.", image: "https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=600", userEmail: "mode.tozeur@esouk.tn" },
+                    { title: "جهاز حاسوب محمول إتش بي كور إي 7", category: "حواسيب وإعلامية (Informatique &ordinateurs)", state: "أريانة", condition: "بحالة ممتازة (Très bon état)", price: 1850, phone: "23998877", description: "مناسب للألعاب والتصميم، رام 16 جيجا.", image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600", userEmail: "pc.ariana@esouk.tn" },
+                    { title: "دراجة هوائية رياضية احترافية", category: "معدات رياضية ولياقة بدنية (Sports)", state: "منستير", condition: "جديد (Neuf)", price: 650, phone: "92113355", description: "هيكل ألومنيوم خفيف، 21 سرعة.", image: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=600", userEmail: "sport.monastir@esouk.tn" }
                 ];
 
                 for (let ad of extraAds) {
@@ -607,7 +622,7 @@
                         createdAt: serverTimestamp()
                     });
                 }
-                showToast("تم توليد وضخ 8+ إعلانات جديدة بنجاح!", "🚀");
+                showToast("تم توليد وضخ 10+ إعلانات جديدة بنجاح!", "🚀");
                 loadAdminDashboard();
                 loadItems();
             } catch(e) {
@@ -620,11 +635,11 @@
                 const snapshot = await getDocs(collection(db, "items"));
                 if (snapshot.empty) {
                     const sampleAds = [
-                        { title: "سيارة فولكسفاغن بولو بحالة ممتازة", category: "سيارات ووسائل نقل (Voitures)", state: "تونس", condition: "بحالة ممتازة (Très bon état)", price: 28000, phone: "98112233", description: "سيارة اقتصادية، صيانة دورية منتظمة، وثائق خالصة.", image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600", userEmail: "auto.tunis@esouk.tn" },
+                        { title: "سيارة فولكسفاغن بولو بحالة ممتازة", category: "سيارات ووسائل نقل (Voitures & Véhicules)", state: "تونس", condition: "بحالة ممتازة (Très bon état)", price: 28000, phone: "98112233", description: "سيارة اقتصادية، صيانة دورية منتظمة، وثائق خالصة.", image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600", userEmail: "auto.tunis@esouk.tn" },
                         { title: "منزل أرضي للبيع في نابل قرب البحر", category: "عقارات ومنازل (Immobilier)", state: "نابل", condition: "بحالة جيدة (Bon état)", price: 185000, phone: "97445566", description: "منزل مساحة 180 متر مربع، يتكون من غرفتين وصالة وحديقة صغيرة.", image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600", userEmail: "immobilier.nabeul@esouk.tn" },
-                        { title: "أرض بناء صالحة للمشروع في سوسة", category: "أراضي ومحلات (Terrains & Locaux)", state: "سوسة", condition: "جديد تماماً (Neuf)", price: 95000, phone: "22334455", description: "قطعة أرض مساحة 400 متر مربع، شهادة ملكية فردية، قريبة من الطريق الرئيسي.", image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600", userEmail: "terrains.sousse@esouk.tn" },
-                        { title: "هاتف سامسونج جالاكسي إس 22 ألترا", category: "هواتف ولوحات رقمية (Téléphones)", state: "صفاقس", condition: "بحالة ممتازة (Très bon état)", price: 1650, phone: "55667788", description: "الذاكرة 256 جيجا مع العلبة والشاحن الأصلي، بدون أي خدش.", image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600", userEmail: "phone.sfax@esouk.tn" },
-                        { title: "حصان عربي أصيل للبيع في قفصة", category: "حيوانات وطيور (Animaux)", state: "قفصة", condition: "بحالة ممتازة (Très bon état)", price: 4500, phone: "99887766", description: "حصان مدرب، هادئ وصحي، مناسب للركوب والسباقات.", image: "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=600", userEmail: "animaux.gafsa@esouk.tn" },
+                        { title: "أرض بناء صالحة للمشروع في سوسة", category: "أراضي ومحلات تجارية (Terrains & Locaux)", state: "سوسة", condition: "جديد تماماً (Neuf)", price: 95000, phone: "22334455", description: "قطعة أرض مساحة 400 متر مربع، شهادة ملكية فردية، قريبة من الطريق الرئيسي.", image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600", userEmail: "terrains.sousse@esouk.tn" },
+                        { title: "هاتف سامسونج جالاكسي إس 22 ألترا", category: "هواتف ذكية ولوازمها (Téléphones)", state: "صفاقس", condition: "بحالة ممتازة (Très bon état)", price: 1650, phone: "55667788", description: "الذاكرة 256 جيجا مع العلبة والشاحن الأصلي، بدون أي خدش.", image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600", userEmail: "phone.sfax@esouk.tn" },
+                        { title: "حصان عربي أصيل للبيع في قفصة", category: "حيوانات وطيور ومستلزماتها (Animaux)", state: "قفصة", condition: "بحالة ممتازة (Très bon état)", price: 4500, phone: "99887766", description: "حصان مدرب، هادئ وصحي، مناسب للركوب والسباقات.", image: "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=600", userEmail: "animaux.gafsa@esouk.tn" },
                         { title: "غرفة نوم خشب زان متكاملة أصلية", category: "أثاث وتحف (Meubles & Déco)", state: "بنزرت", condition: "بحالة ممتازة (Très bon état)", price: 2200, phone: "24112233", description: "سرير مزدوج، خزانة كبيرة و2 طاولات سرير جانبية بحالة كالجديدة.", image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=600", userEmail: "meuble.bizerte@esouk.tn" }
                     ];
                     
@@ -1299,186 +1314,6 @@
             const category = document.getElementById('categorySelect').value;
             const state = document.getElementById('stateSelectFilter').value;
             loadItems(category, keyword, state);
-        };
-
-        async function loadAdminDashboard() {
-            document.getElementById('adminTotalCats').innerText = categoriesList.length;
-            document.getElementById('adminTotalUsers').innerText = explicitUsersCount;
-            
-            const catsContainer = document.getElementById('adminCategoriesList');
-            catsContainer.innerHTML = "";
-            categoriesList.forEach(cat => {
-                const tag = document.createElement('div');
-                tag.className = "bg-white border border-slate-300 text-slate-800 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-2 shadow-sm";
-                tag.innerHTML = `<span>${cat}</span> <button type="button" onclick="handleDeleteCategory('${cat}')" class="text-red-500 hover:text-red-700 font-bold text-sm">&times;</button>`;
-                catsContainer.appendChild(tag);
-            });
-
-            const adminItemsContainer = document.getElementById('adminItemsListContainer');
-            const vendorsContainer = document.getElementById('adminVendorsListContainer');
-            const usersContainer = document.getElementById('adminUsersListContainer');
-            
-            adminItemsContainer.innerHTML = `<p class="text-xs text-slate-500">جاري التحميل...</p>`;
-            vendorsContainer.innerHTML = `<p class="text-xs text-slate-500">جاري التحميل...</p>`;
-            usersContainer.innerHTML = `<p class="text-xs text-slate-500">جاري التحميل...</p>`;
-
-            try {
-                const snapshot = await getDocs(collection(db, "items"));
-                document.getElementById('adminTotalItems').innerText = snapshot.size;
-                adminItemsContainer.innerHTML = "";
-
-                let vendorsMap = {};
-                let uniqueUsersSet = new Set();
-
-                if (snapshot.empty) {
-                    adminItemsContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">لا توجد إعلانات منشورة حالياً.</p>`;
-                    vendorsContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">لا يوجد بائعون.</p>`;
-                    usersContainer.innerHTML = `<p class="text-xs text-slate-500 text-center py-4">لا توجد حسابات مسجلة.</p>`;
-                    return;
-                }
-
-                snapshot.forEach(docSnap => {
-                    const item = docSnap.data();
-                    const id = docSnap.id;
-                    const email = item.userEmail || "مجهول";
-
-                    uniqueUsersSet.add(email);
-
-                    if (!vendorsMap[email]) {
-                        vendorsMap[email] = [];
-                    }
-                    vendorsMap[email].push({ id, ...item });
-
-                    const row = document.createElement('div');
-                    row.className = "admin-item-row bg-white border border-slate-200 p-3 rounded-2xl flex items-center justify-between gap-3 text-xs shadow-xs text-slate-800";
-                    row.setAttribute('data-search', (item.title + " " + email).toLowerCase());
-                    row.innerHTML = `
-                        <div class="flex items-center space-x-3 space-x-reverse truncate">
-                            <img src="${item.image}" class="w-10 h-10 object-cover rounded-xl shrink-0 border border-slate-200">
-                            <div class="truncate">
-                                <p class="font-bold text-slate-900 truncate">${item.title} <span class="text-[10px] text-amber-700 font-semibold">(${email})</span></p>
-                                <p class="text-slate-500 text-[11px]">${item.price} DT • ${item.category} • <span class="text-amber-600">${item.state || ''}</span></p>
-                            </div>
-                        </div>
-                        <button onclick="handleAdminDeleteItem('${id}')" class="bg-red-50 text-red-600 border border-red-200 hover:bg-red-500 hover:text-white px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition">حذف الإعلان</button>
-                    `;
-                    adminItemsContainer.appendChild(row);
-                });
-
-                usersContainer.innerHTML = "";
-                vendorsContainer.innerHTML = "";
-
-                uniqueUsersSet.forEach(email => {
-                    const userItems = vendorsMap[email] || [];
-                    
-                    const uCard = document.createElement('div');
-                    uCard.className = "admin-user-card bg-white border border-slate-200 p-3.5 rounded-2xl flex items-center justify-between gap-2 text-xs shadow-xs text-slate-800";
-                    uCard.setAttribute('data-search', email.toLowerCase());
-                    uCard.innerHTML = `
-                        <div>
-                            <p class="font-bold text-slate-900 truncate">👤 ${email}</p>
-                            <p class="text-[11px] text-amber-700 font-semibold">${userItems.length} إعلان منشور</p>
-                        </div>
-                        <button onclick='showUserItems(${JSON.stringify(email)}, ${JSON.stringify(userItems)})' class="bg-sky-600 text-white px-3 py-1.5 rounded-xl font-bold hover:bg-sky-700 transition whitespace-nowrap shadow-sm">عرض إعلاناته</button>
-                    `;
-                    usersContainer.appendChild(uCard);
-
-                    const vCard = document.createElement('div');
-                    vCard.className = "admin-vendor-card bg-white border border-slate-200 p-3.5 rounded-2xl flex items-center justify-between gap-2 text-xs shadow-xs text-slate-800";
-                    vCard.setAttribute('data-search', email.toLowerCase());
-                    vCard.innerHTML = `
-                        <div>
-                            <p class="font-bold text-slate-900 truncate">🏷️ ${email}</p>
-                            <p class="text-[11px] text-amber-700 font-semibold">${userItems.length} سلعة معروضة</p>
-                        </div>
-                        <button onclick='showVendorItems(${JSON.stringify(email)}, ${JSON.stringify(userItems)})' class="bg-amber-600 text-white font-black px-3 py-1.5 rounded-xl hover:bg-amber-700 transition whitespace-nowrap shadow-sm">عرض سلع البائع</button>
-                    `;
-                    vendorsContainer.appendChild(vCard);
-                });
-
-            } catch(e) {
-                adminItemsContainer.innerHTML = `<p class="text-xs text-red-500">خطأ في تحميل الإعلانات.</p>`;
-            }
-        }
-
-        window.filterAdminContent = function() {
-            const queryText = document.getElementById('adminSearchInput').value.toLowerCase();
-            const rows = document.querySelectorAll('.admin-item-row');
-            rows.forEach(r => {
-                const text = r.getAttribute('data-search') || '';
-                if(text.includes(queryText)) {
-                    r.style.display = 'flex';
-                } else {
-                    r.style.display = 'none';
-                }
-            });
-        };
-
-        window.broadcastNotification = function() {
-            const msg = prompt("أدخل نص الإشعار العام الذي تريد إرساله للمستخدمين:");
-            if(msg) {
-                showToast("تم ارسال الإشعار بنجاح لجميع المستخدمين!", "📢");
-            }
-        };
-
-        window.showUserItems = function(email, itemsList) {
-            const section = document.getElementById('adminUserItemsSection');
-            const titleHeader = document.getElementById('adminUserTitleHeader');
-            const container = document.getElementById('adminUserItemsContainer');
-
-            titleHeader.innerText = `إعلانات المستخدم: ${email} (${itemsList.length} إعلان)`;
-            container.innerHTML = "";
-
-            if(itemsList.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-500 p-2">لا توجد إعلانات لهذا المستخدم.</p>`;
-            }
-
-            itemsList.forEach(item => {
-                const itemRow = document.createElement('div');
-                itemRow.className = "bg-white border border-slate-200 p-2.5 rounded-xl flex items-center justify-between gap-2 text-xs text-slate-800 shadow-xs";
-                itemRow.innerHTML = `
-                    <div class="flex items-center space-x-2 space-x-reverse truncate">
-                        <img src="${item.image}" class="w-8 h-8 object-cover rounded-lg shrink-0 border border-slate-200">
-                        <span class="font-bold truncate">${item.title} (${item.price} DT)</span>
-                    </div>
-                    <span class="text-amber-700 text-[11px] font-semibold">${item.category}</span>
-                `;
-                container.appendChild(itemRow);
-            });
-
-            section.classList.remove('hidden');
-        };
-
-        window.hideAdminUserItems = function() {
-            document.getElementById('adminUserItemsSection').classList.add('hidden');
-        };
-
-        window.showVendorItems = function(email, itemsList) {
-            const section = document.getElementById('adminVendorItemsSection');
-            const titleHeader = document.getElementById('adminVendorTitleHeader');
-            const container = document.getElementById('adminVendorItemsContainer');
-
-            titleHeader.innerText = `إعلانات البائع: ${email} (${itemsList.length} إعلان)`;
-            container.innerHTML = "";
-
-            itemsList.forEach(item => {
-                const itemRow = document.createElement('div');
-                itemRow.className = "bg-white border border-slate-200 p-2.5 rounded-xl flex items-center justify-between gap-2 text-xs text-slate-800 shadow-xs";
-                itemRow.innerHTML = `
-                    <div class="flex items-center space-x-2 space-x-reverse truncate">
-                        <img src="${item.image}" class="w-8 h-8 object-cover rounded-lg shrink-0 border border-slate-200">
-                        <span class="font-bold truncate">${item.title} (${item.price} DT)</span>
-                    </div>
-                    <span class="text-amber-700 text-[11px] font-semibold">${item.category}</span>
-                `;
-                container.appendChild(itemRow);
-            });
-
-            section.classList.remove('hidden');
-        };
-
-        window.hideAdminVendorItems = function() {
-            document.getElementById('adminVendorItemsSection').classList.add('hidden');
         };
     </script>
 </body>
