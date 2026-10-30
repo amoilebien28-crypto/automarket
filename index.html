@@ -172,7 +172,7 @@
 
             <div class="hidden lg:flex items-center gap-2.5 bg-gradient-to-r from-amber-50 to-amber-100/60 border border-amber-200/80 px-3.5 py-1.5 rounded-2xl shadow-sm">
                 <span class="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-[10px] shadow-xs">✨</span>
-                <span class="text-xs font-bold text-amber-900">مرحباً بك في المنصة الأولى للبيع والشراء في تونس[span_0](start_span)[span_0](end_span)!</span>
+                <span class="text-xs font-bold text-amber-900">مرحباً بك في المنصة الأولى للبيع والشراء في تونس![cite: 1]</span>
             </div>
 
             <div id="auth-nav-container" class="flex items-center gap-2 shrink-0">
@@ -191,7 +191,7 @@
             <div class="bg-slate-900 text-amber-300 px-4 py-1 text-xs tracking-wider uppercase shrink-0 z-10 ml-2 rounded-xl shadow-xs">🏛️ سوق الباشا</div>
             <div class="marquee-container text-xs tracking-wide">
                 <div class="animate-marquee space-x-8 space-x-reverse px-4">
-                    <span>🔥 جديد سوق الباشا في كافة الولايات الـ 24</span> &bull;[span_1](start_span)[span_1](end_span)
+                    <span>🔥 جديد سوق الباشا في كافة الولايات الـ 24</span> &bull;[cite: 1]
                     <span>🚗 سيارات، شاحنات ودراجات نارية</span> &bull; 
                     <span>🏠 عقارات، منازل وأراضي بناء</span> &bull; 
                     <span>📱 هواتف، لوحات رقمية وإلكترونيات</span> &bull; 
@@ -313,7 +313,7 @@
         </div>
     </main>
 
-    <!-- لوحة تحكم الأدمن (بألوان باهتة، أزرق بحري هادئ ومريح جداً Soft Navy/Slate) -->
+    <!-- لوحة تحكم الأدمن (أزرق بحري فاتح، باهت ونظيف جداً) -->
     <main id="adminView" class="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-grow hidden space-y-6">
         <div class="bg-slate-100 text-slate-800 p-6 sm:p-8 rounded-3xl shadow-xl border border-slate-300 space-y-6">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-300 pb-4 gap-3">
@@ -386,7 +386,7 @@
     <!-- التذييل -->
     <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 space-y-1 shadow-sm">
         <p class="font-bold text-slate-700">Souk El Bacha (Brocante El Pacha) &copy; 2026</p>
-        <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية[span_2](start_span)[span_2](end_span)</p>
+        <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية[cite: 1]</p>
     </footer>
 
     <!-- نافذة نشر إعلان -->
@@ -545,7 +545,6 @@
             performSearch();
         };
 
-        // دالة جلب وإضافة الفئات الـ 30 الشاملة
         async function fetchCategories() {
             try {
                 const snapshot = await getDocs(collection(db, "categories"));
@@ -600,7 +599,6 @@
             }
         }
 
-        // دالة توليد وضخ إعلانات جديدة في السوق
         window.forceRegenerateAds = async function() {
             try {
                 const extraAds = [
