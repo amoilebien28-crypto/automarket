@@ -170,8 +170,8 @@
     <main id="homeView" class="max-w-5xl w-full mx-auto px-4 py-4 flex-grow space-y-4">
         <div class="bg-white/90 backdrop-blur-sm px-5 py-3.5 rounded-2xl shadow-xs border border-slate-200/60 flex items-center justify-between gap-4">
             <div>
-                <h1 id="welcomeTitle" class="text-base sm:text-lg font-black text-slate-900 tracking-tight">Esouk Tunisie - السوق التونسي[span_0](start_span)[span_0](end_span)</h1>
-                <p id="welcomeDesc" class="text-[11px] font-bold text-amber-700">بيع وشراء في كامل تراب الجمهورية[span_1](start_span)[span_1](end_span)</p>
+                <h1 id="welcomeTitle" class="text-base sm:text-lg font-black text-slate-900 tracking-tight">Esouk Tunisie - السوق التونسي</h1>
+                <p id="welcomeDesc" class="text-[11px] font-bold text-amber-700">بيع وشراء في كامل تراب الجمهورية[cite: 1]</p>
             </div>
             <div>
                 <button onclick="changeLanguagePrompt()" class="text-[11px] text-slate-400 font-semibold hover:text-amber-600 transition inline-flex items-center gap-1 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
@@ -186,7 +186,7 @@
                 <div class="relative z-10 space-y-1">
                     <span class="bg-white/25 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">قسم البائعين</span>
                     <h2 class="text-lg sm:text-xl font-black tracking-tight">ماذا تريد أن تبيع اليوم؟</h2>
-                    <p class="text-[11px] text-amber-100 font-medium">انشر بضاعتك وصِل إلى آلاف المشترين[span_2](start_span)[span_2](end_span).</p>
+                    <p class="text-[11px] text-amber-100 font-medium">انشر بضاعتك وصِل إلى آلاف المشترين[cite: 2].</p>
                 </div>
                 <div class="pt-0.5 relative z-10">
                     <button onclick="openSellModal()" class="bg-slate-900 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md hover:bg-slate-800 hover:scale-105 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
@@ -201,7 +201,7 @@
                 <div class="relative z-10 space-y-1">
                     <span class="bg-amber-500/30 text-amber-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">قسم المشترين</span>
                     <h2 class="text-lg sm:text-xl font-black tracking-tight">ماذا تريد أن تشتري اليوم؟</h2>
-                    <p class="text-[11px] text-slate-300 font-medium">تصفح آلاف العروض والسلع في كل تونس[span_3](start_span)[span_3](end_span).</p>
+                    <p class="text-[11px] text-slate-300 font-medium">تصفح آلاف العروض والسلع في كل تونس[cite: 3].</p>
                 </div>
                 <div class="pt-0.5 relative z-10">
                     <button onclick="openBuyCategoriesModal()" class="bg-amber-600 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md hover:bg-amber-700 hover:scale-105 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
@@ -298,7 +298,7 @@
             </div>
 
             <div class="pt-4 border-t border-slate-300 space-y-3">
-                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">قائمة المستخدمين المسجلين (Liste des Utilisateurs)</h3>
+                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">قائمة المستخدمين والبائعين الموحدة (Liste des Utilisateurs / Vendeurs)</h3>
                 <div id="adminUsersListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <p class="text-xs text-slate-500">جاري تحميل المستخدمين...</p>
                 </div>
@@ -308,20 +308,6 @@
                         <button onclick="hideAdminUserItems()" class="text-xs text-slate-600 hover:text-slate-900 underline">إغلاق العرض</button>
                     </div>
                     <div id="adminUserItemsContainer" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
-                </div>
-            </div>
-
-            <div class="pt-4 border-t border-slate-300 space-y-3">
-                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">قائمة البائعين وسلعهم (Liste des Vendeurs)</h3>
-                <div id="adminVendorsListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <p class="text-xs text-slate-500">جاري تحميل البائعين...</p>
-                </div>
-                <div id="adminVendorItemsSection" class="hidden pt-3 border-t border-slate-300 space-y-2">
-                    <div class="flex justify-between items-center">
-                        <h4 id="adminVendorTitleHeader" class="font-bold text-xs text-amber-700">إعلانات البائع: </h4>
-                        <button onclick="hideAdminVendorItems()" class="text-xs text-slate-600 hover:text-slate-900 underline">إغلاق عرض البائع</button>
-                    </div>
-                    <div id="adminVendorItemsContainer" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
                 </div>
             </div>
 
@@ -336,8 +322,8 @@
 
     <!-- التذييل -->
     <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200/60 py-4 text-center text-xs text-slate-400 space-y-1">
-        <p class="font-bold text-slate-600">Esouk Tunisie &copy; 2026[span_4](start_span)[span_4](end_span)</p>
-        <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية[span_5](start_span)[span_5](end_span)</p>
+        <p class="font-bold text-slate-600">Esouk Tunisie &copy; 2026[cite: 4]</p>
+        <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية</p>
     </footer>
 
     <!-- نافذة نشر إعلان (بيع) -->
@@ -438,11 +424,11 @@
         </div>
     </div>
 
-    <!-- الكود البرمجى والمنطق الشامل (متضمنة دالة loadAdminDashboard كاملة وصحيحة) -->
+    <!-- الكود البرمجى والمنطق الشامل -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp, query, where } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, serverTimestamp, query, where, orderBy } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAk9Dg4ns0QoWCl3QyoNwTxiQ9Xz5WFUAQ",
@@ -798,8 +784,8 @@
                 document.getElementById('pageTitle').innerText = "Esouk Tunisie - السوق التونسي للبيع والشراء";
                 document.getElementById('btnSignupTop').innerText = "إنشاء حساب";
                 document.getElementById('btnLoginTop').innerText = "دخول";
-                document.getElementById('welcomeTitle').innerText = "Esouk Tunisie - السوق التونسي[span_6](start_span)[span_6](end_span)";
-                document.getElementById('welcomeDesc').innerText = "بيع وشراء في كامل تراب الجمهورية[span_7](start_span)[span_7](end_span)";
+                document.getElementById('welcomeTitle').innerText = "Esouk Tunisie - السوق التونسي";
+                document.getElementById('welcomeDesc').innerText = "بيع وشراء في كامل تراب الجمهورية";
                 document.getElementById('quickCatTitle').innerText = "التصنيفات السريعة المتاحة";
                 document.getElementById('recentAdsTitle').innerText = "الإعلانات الحديثة";
             } else {
@@ -1005,7 +991,7 @@
                     }
                 }
                 
-                showToast(isAr ? "تم تسجيل الدخول بنجاح!" : "Connexion réussie !", "🎉");
+                showToast(isAr ? "تم تسجيل الدخول بنجاح!" : "Connexion réussية !", "🎉");
                 closeAuthModal();
 
                 if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
@@ -1190,7 +1176,8 @@
             grid.innerHTML = `<div class="bg-white/60 p-8 rounded-3xl text-center col-span-full border border-slate-200/60"><p class="text-slate-400 text-xs sm:text-sm font-medium">جاري التحميل...</p></div>`;
 
             try {
-                const snapshot = await getDocs(collection(db, "items"));
+                const qItems = query(collection(db, "items"), orderBy("createdAt", "desc"));
+                const snapshot = await getDocs(qItems);
                 grid.innerHTML = "";
                 allLoadedItems = [];
                 let count = 0;
@@ -1261,7 +1248,6 @@
             loadItems(category, keyword, state);
         };
 
-        // تم ربط وتضمين دالة loadAdminDashboard وكل ملحقاتها بشكل صحيح نهائياً لضمان عدم ظهور خطأ is not defined
         window.loadAdminDashboard = async function() {
             document.getElementById('adminTotalCats').innerText = categoriesList.length;
             document.getElementById('adminTotalUsers').innerText = explicitUsersCount;
@@ -1276,11 +1262,9 @@
             });
 
             const adminItemsContainer = document.getElementById('adminItemsListContainer');
-            const vendorsContainer = document.getElementById('adminVendorsListContainer');
             const usersContainer = document.getElementById('adminUsersListContainer');
             
             adminItemsContainer.innerHTML = `<p class="text-xs text-slate-400">جاري التحميل...</p>`;
-            vendorsContainer.innerHTML = `<p class="text-xs text-slate-400">جاري التحميل...</p>`;
             usersContainer.innerHTML = `<p class="text-xs text-slate-400">جاري التحميل...</p>`;
 
             try {
@@ -1293,7 +1277,6 @@
 
                 if (snapshot.empty) {
                     adminItemsContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">لا توجد إعلانات منشورة حالياً.</p>`;
-                    vendorsContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">لا يوجد بائعون.</p>`;
                     usersContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">لا توجد حسابات مسجلة.</p>`;
                     return;
                 }
@@ -1326,7 +1309,6 @@
                 });
 
                 usersContainer.innerHTML = "";
-                vendorsContainer.innerHTML = "";
 
                 uniqueUsersSet.forEach(email => {
                     const userItems = vendorsMap[email] || [];
@@ -1335,23 +1317,12 @@
                     uCard.className = "bg-slate-50 border border-slate-200 p-3.5 rounded-2xl flex items-center justify-between gap-2 text-xs";
                     uCard.innerHTML = `
                         <div>
-                            <p class="font-bold text-slate-900 truncate">👤 ${email}</p>
-                            <p class="text-[11px] text-slate-500 font-semibold">${userItems.length} إعلان منشور</p>
+                            <p class="font-bold text-slate-900 truncate">👤🏷️ ${email}</p>
+                            <p class="text-[11px] text-slate-500 font-semibold">${userItems.length} إعلان / سلعة معروضة</p>
                         </div>
-                        <button onclick='showUserItems(${JSON.stringify(email)}, ${JSON.stringify(userItems)})' class="bg-amber-600 text-white px-3 py-1.5 rounded-xl font-bold hover:bg-amber-700 transition whitespace-nowrap">عرض إعلاناته</button>
+                        <button onclick='showUserItems(${JSON.stringify(email)}, ${JSON.stringify(userItems)})' class="bg-amber-600 text-white px-3.5 py-1.5 rounded-xl font-bold hover:bg-amber-700 transition whitespace-nowrap">عرض إعلاناته</button>
                     `;
                     usersContainer.appendChild(uCard);
-
-                    const vCard = document.createElement('div');
-                    vCard.className = "bg-slate-50 border border-slate-200 p-3.5 rounded-2xl flex items-center justify-between gap-2 text-xs";
-                    vCard.innerHTML = `
-                        <div>
-                            <p class="font-bold text-slate-900 truncate">🏷️ ${email}</p>
-                            <p class="text-[11px] text-amber-700 font-semibold">${userItems.length} سلعة معروضة</p>
-                        </div>
-                        <button onclick='showVendorItems(${JSON.stringify(email)}, ${JSON.stringify(userItems)})' class="bg-slate-900 text-white px-3 py-1.5 rounded-xl font-bold hover:bg-slate-800 transition whitespace-nowrap">عرض سلع البائع</button>
-                    `;
-                    vendorsContainer.appendChild(vCard);
                 });
 
             } catch(e) {
@@ -1389,34 +1360,6 @@
 
         window.hideAdminUserItems = function() {
             document.getElementById('adminUserItemsSection').classList.add('hidden');
-        };
-
-        window.showVendorItems = function(email, itemsList) {
-            const section = document.getElementById('adminVendorItemsSection');
-            const titleHeader = document.getElementById('adminVendorTitleHeader');
-            const container = document.getElementById('adminVendorItemsContainer');
-
-            titleHeader.innerText = `إعلانات البائع: ${email} (${itemsList.length} إعلان)`;
-            container.innerHTML = "";
-
-            itemsList.forEach(item => {
-                const itemRow = document.createElement('div');
-                itemRow.className = "bg-white border border-slate-200 p-2.5 rounded-xl flex items-center justify-between gap-2 text-xs";
-                itemRow.innerHTML = `
-                    <div class="flex items-center space-x-2 space-x-reverse truncate">
-                        <img src="${item.image}" class="w-8 h-8 object-cover rounded-lg shrink-0">
-                        <span class="font-bold text-slate-800 truncate">${item.title} (${item.price} DT)</span>
-                    </div>
-                    <span class="text-amber-700 text-[11px] font-semibold">${item.category}</span>
-                `;
-                container.appendChild(itemRow);
-            });
-
-            section.classList.remove('hidden');
-        };
-
-        window.hideAdminVendorItems = function() {
-            document.getElementById('adminVendorItemsSection').classList.add('hidden');
         };
     </script>
 </body>
