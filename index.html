@@ -158,31 +158,29 @@
         </div>
     </div>
 
-    <!-- الرأس (Header) -->
+    <!-- الرأس (Header) المصلح والمتجاوب كلياً مع الهواتف -->
     <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-6">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
             
-            <!-- اللوغو واسم سوق الباشا على اليمين -->
-            <div class="flex items-center space-x-4 space-x-reverse cursor-pointer group shrink-0" onclick="switchView('home')">
-                <div class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-2xl flex items-center justify-center text-xl shadow-md shadow-amber-500/20 group-hover:scale-105 transition shrink-0 font-black">🏛️</div>
+            <!-- اللوغو واسم سوق الباشا -->
+            <div class="flex items-center space-x-3 space-x-reverse cursor-pointer group shrink-0" onclick="switchView('home')">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-2xl flex items-center justify-center text-lg sm:text-xl shadow-md shadow-amber-500/20 group-hover:scale-105 transition shrink-0 font-black">🏛️</div>
                 <div class="text-right">
-                    <span class="font-black text-slate-900 text-lg sm:text-xl tracking-tight block leading-tight">Souk El Bacha<span class="text-amber-600"> / سوق الباشا</span></span>
-                    <span class="text-[11px] text-amber-800 font-extrabold tracking-wider block">Brocante El Pacha Tunisie</span>
+                    <span class="font-black text-slate-900 text-sm sm:text-xl tracking-tight block leading-tight">Souk El Bacha<span class="text-amber-600"> / سوق الباشا</span></span>
+                    <span class="text-[10px] sm:text-[11px] text-amber-800 font-extrabold tracking-wider block">Brocante El Pacha Tunisie</span>
                 </div>
             </div>
 
-            <!-- رسالة الترحيب في المنتصف -->
-            <div class="hidden md:flex items-center gap-2.5 bg-gradient-to-r from-amber-50 to-amber-100/60 border border-amber-200/80 px-4 py-2 rounded-2xl shadow-sm">
-                <span class="w-6 h-6 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs shadow-xs">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                </span>
+            <!-- رسالة الترحيب (تظهر على الشاشات الكبيرة) -->
+            <div class="hidden lg:flex items-center gap-2.5 bg-gradient-to-r from-amber-50 to-amber-100/60 border border-amber-200/80 px-3.5 py-1.5 rounded-2xl shadow-sm">
+                <span class="w-5 h-5 bg-amber-500 text-white rounded-full flex items-center justify-center text-[10px] shadow-xs">✨</span>
                 <span class="text-xs font-bold text-amber-900">مرحباً بك في المنصة الأولى للبيع والشراء في تونس!</span>
             </div>
 
-            <!-- أزرار الحساب والإيميل على اليسار -->
-            <div id="auth-nav-container" class="flex items-center gap-3 shrink-0">
-                <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200 px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs">إنشاء حساب</button>
-                <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">دخول</button>
+            <!-- أزرار الحساب والدخول (متجاوبة تماماً ولا تخرج عن الشاشة) -->
+            <div id="auth-nav-container" class="flex items-center gap-2 shrink-0">
+                <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200 px-3 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs">إنشاء حساب</button>
+                <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-4 sm:px-6 py-2 rounded-xl text-[11px] sm:text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">دخول</button>
             </div>
 
         </div>
@@ -241,7 +239,7 @@
 
         <div id="adsSectionTarget"></div>
 
-        <!-- تخطيط الشاشة المزدوجة (فلاتر البحث مع زر القطع الصغير ✕ مدمج داخل الحقول وفي حقل الكلمة المفتاحية أيضاً) -->
+        <!-- تخطيط الشاشة المزدوجة (فلاتر البحث مع أزرار الإزالة الفردية ✕) -->
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
             
             <!-- نافذة فلاتر البحث المتقدم الفاخرة -->
@@ -258,7 +256,7 @@
                     <button onclick="resetFilters()" class="text-[11px] text-amber-700 hover:text-amber-900 font-bold bg-amber-100/70 hover:bg-amber-200 px-3 py-1.5 rounded-xl transition shadow-xs">إعادة ضبط الكل</button>
                 </div>
 
-                <!-- البحث بالكلمة المفتاحية مع زر القطع الصغير (✕) بداخله -->
+                <!-- البحث بالكلمة المفتاحية مع زر الإزالة (✕) -->
                 <div class="space-y-1.5 relative z-10">
                     <label class="block text-xs font-bold text-slate-800">كلمة مفتاحية</label>
                     <div class="relative flex items-center">
@@ -266,12 +264,11 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                         </span>
                         <input type="text" id="searchInput" placeholder="تلفزيون، طاولة، هاتف..." oninput="performSearch()" class="w-full bg-slate-50/90 border border-slate-200 rounded-2xl pr-10 pl-8 py-3 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 focus:bg-white shadow-sm transition">
-                        <!-- زر القطع الصغير للكلمة المفتاحية -->
                         <button type="button" onclick="clearSpecificFilter('searchInput')" class="absolute left-2.5 text-slate-400 hover:text-red-600 text-xs font-bold px-1.5 py-0.5 rounded-full transition" title="إزالة الكلمة">✕</button>
                     </div>
                 </div>
 
-                <!-- الفئة مع زر القطع الصغير (✕) داخل الخانة -->
+                <!-- الفئة مع زر الإزالة (✕) -->
                 <div class="space-y-1.5 relative z-10">
                     <label class="block text-xs font-bold text-slate-800">الفئة (Catégorie)</label>
                     <div class="relative flex items-center">
@@ -281,12 +278,11 @@
                         <select id="categorySelect" onchange="performSearch()" class="w-full bg-slate-50/90 border border-slate-200 rounded-2xl pr-10 pl-8 py-3 text-xs text-slate-900 focus:outline-none focus:border-amber-500 focus:bg-white shadow-sm transition cursor-pointer">
                             <option value="">جميع الفئات / Tout</option>
                         </select>
-                        <!-- زر القطع الصغير (✕) داخل نافذة الفئة -->
                         <button type="button" onclick="clearSpecificFilter('categorySelect')" class="absolute left-2.5 text-slate-400 hover:text-red-600 text-xs font-bold px-1.5 py-0.5 rounded-full transition bg-white/80 shadow-xs" title="إلغاء اختيار الفئة">✕</button>
                     </div>
                 </div>
 
-                <!-- الولاية مع زر القطع الصغير (✕) داخل الخانة -->
+                <!-- الولاية مع زر الإزالة (✕) -->
                 <div class="space-y-1.5 relative z-10">
                     <label class="block text-xs font-bold text-slate-800">الولاية (Gouvernorat)</label>
                     <div class="relative flex items-center">
@@ -296,7 +292,6 @@
                         <select id="stateSelectFilter" onchange="performSearch()" class="w-full bg-slate-50/90 border border-slate-200 rounded-2xl pr-10 pl-8 py-3 text-xs text-slate-900 focus:outline-none focus:border-amber-500 focus:bg-white shadow-sm transition cursor-pointer">
                             <option value="">كل ولايات الجمهورية</option>
                         </select>
-                        <!-- زر القطع الصغير (✕) داخل نافذة الولاية -->
                         <button type="button" onclick="clearSpecificFilter('stateSelectFilter')" class="absolute left-2.5 text-slate-400 hover:text-red-600 text-xs font-bold px-1.5 py-0.5 rounded-full transition bg-white/80 shadow-xs" title="إلغاء اختيار الولاية">✕</button>
                     </div>
                 </div>
@@ -1027,17 +1022,16 @@
                     switchView('admin');
                 }
                 nav.innerHTML = `
-                    <button onclick="openMyAdsModal()" class="bg-amber-50 text-amber-800 border border-amber-200 px-4 py-2 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                        <span>إعلاناتي</span>
+                    <button onclick="openMyAdsModal()" class="bg-amber-50 text-amber-800 border border-amber-200 px-3 py-2 rounded-xl text-[11px] font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs flex items-center gap-1">
+                        <span>📦</span> <span>إعلاناتي</span>
                     </button>
-                    <span class="text-xs font-medium text-slate-700 hidden md:inline truncate max-w-[130px]" title="${user.email}">${user.email}</span>
-                    <button onclick="handleLogout()" class="bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold hover:bg-slate-300 transition whitespace-nowrap">${isAr ? 'خروج' : 'Déco'}</button>
+                    <span class="text-[11px] font-medium text-slate-700 hidden lg:inline truncate max-w-[100px]" title="${user.email}">${user.email}</span>
+                    <button onclick="handleLogout()" class="bg-slate-200 text-slate-700 px-3 py-2 rounded-xl text-[11px] font-bold hover:bg-slate-300 transition whitespace-nowrap">${isAr ? 'خروج' : 'Déco'}</button>
                 `;
             } else {
                 nav.innerHTML = `
-                    <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200 px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs">${isAr ? 'إنشاء حساب' : "S'inscrire"}</button>
-                    <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">${isAr ? 'دخول' : 'Connexion'}</button>
+                    <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200 px-3 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs">${isAr ? 'إنشاء حساب' : "S'inscrire"}</button>
+                    <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-4 sm:px-6 py-2 rounded-xl text-[11px] sm:text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">${isAr ? 'دخول' : 'Connexion'}</button>
                 `;
             }
         });
