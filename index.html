@@ -49,33 +49,26 @@
 </head>
 <body class="custom-bg text-slate-900 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-white">
 
-    <!-- رسالة التنبيه الصغيرة المصغرة -->
+    <!-- رسالة التنبيه الصغيرة -->
     <div id="toastNotification" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-5 py-2.5 rounded-2xl shadow-xl text-xs font-bold border border-slate-700 flex items-center gap-2">
         <span id="toastIcon">✨</span>
         <span id="toastText">تم بنجاح</span>
     </div>
 
-    <!-- نافذة تفاصيل الإعلان المحسنة مع زر اتصال ثابت وقسم تعليقات -->
+    <!-- نافذة تفاصيل الإعلان -->
     <div id="itemDetailsModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
         <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col border border-slate-100">
-            
-            <!-- رأس النافذة -->
             <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50 shrink-0">
                 <h3 id="modalItemTitleHeader" class="font-bold text-slate-900 text-sm sm:text-base truncate">تفاصيل الإعلان</h3>
                 <button onclick="closeDetailsModal()" class="w-8 h-8 rounded-full bg-slate-200/60 text-slate-500 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
             </div>
-
-            <!-- المحتوى القابل للتمرير (Scrollable Content) -->
             <div class="p-4 sm:p-6 overflow-y-auto space-y-5 flex-grow">
-                <!-- معرض الصور -->
                 <div>
                     <div id="modalMainImageContainer" class="w-full h-60 sm:h-72 bg-slate-100 rounded-2xl overflow-hidden shadow-sm border border-slate-200">
                         <img id="modalMainImage" src="" class="w-full h-full object-cover">
                     </div>
                     <div id="modalThumbnails" class="flex gap-2 mt-3 overflow-x-auto pb-1"></div>
                 </div>
-
-                <!-- معلومات الإعلان الأساسية -->
                 <div class="space-y-3">
                     <div class="flex flex-wrap justify-between items-start gap-2">
                         <h2 id="modalItemTitle" class="text-lg sm:text-xl font-black text-slate-900"></h2>
@@ -87,46 +80,35 @@
                         <span id="modalItemCondition" class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl"></span>
                     </div>
                 </div>
-
-                <!-- الوصف التفصيلي -->
                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-1">
                     <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">وصف الغرض</h4>
                     <p id="modalItemDescription" class="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line"></p>
                 </div>
-
-                <!-- معلومات البائع -->
                 <div class="bg-amber-50/60 border border-amber-100 p-3.5 rounded-2xl flex items-center justify-between text-xs font-bold text-slate-700">
                     <span>👤 الناشر: <span id="modalItemSellerEmail" class="text-amber-800"></span></span>
                 </div>
-
-                <!-- قسم التعليقات (Commentaires) -->
                 <div class="pt-2 border-t border-slate-100 space-y-3">
                     <h4 class="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
                         <span>💬 التعليقات والأسئلة</span>
                     </h4>
-                    
                     <div id="commentsListContainer" class="space-y-2 max-h-40 overflow-y-auto pr-1">
                         <p class="text-xs text-slate-400 italic">لا توجد تعليقات حتى الآن. كن أول من يسأل البائع!</p>
                     </div>
-
                     <form onsubmit="handlePostComment(event)" class="flex gap-2 pt-1">
                         <input type="text" id="commentInputText" required placeholder="اكتب تعليقاً أو استفساراً للبائع..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-amber-500 focus:bg-white transition">
                         <button type="submit" class="bg-slate-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-800 transition shrink-0">إرسال</button>
                     </form>
                 </div>
             </div>
-
-            <!-- شريط الاتصال الثابت في الأسفل -->
             <div class="p-3.5 sm:p-4 bg-white border-t border-slate-100 shrink-0 shadow-lg">
                 <a id="modalCallBtn" href="#" class="w-full bg-amber-600 text-white font-bold py-3.5 rounded-2xl hover:bg-amber-700 transition shadow-md flex items-center justify-center gap-2 text-xs sm:text-sm">
                     <span>📞 الاتصال بالبائع مباشرة</span>
                 </a>
             </div>
-
         </div>
     </div>
 
-    <!-- نافذة اختيار الفئات عند الضغط على "ماذا تريد أن تشتري اليوم؟" -->
+    <!-- نافذة اختيار الفئات -->
     <div id="buyCategoriesModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -137,7 +119,7 @@
         </div>
     </div>
 
-    <!-- نافذة فضاء إعلاناتي للمستخدم -->
+    <!-- نافذة إعلاناتي الشخصية -->
     <div id="myAdsModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -160,7 +142,7 @@
             </div>
             <div class="grid grid-cols-2 gap-3">
                 <button type="button" onclick="setLanguage('fr')" class="bg-slate-100 text-slate-800 font-bold py-3.5 rounded-2xl hover:bg-amber-600 hover:text-white transition shadow-sm text-sm cursor-pointer">Français</button>
-                <button type="button" onclick="setLanguage('ar')" class="bg-slate-900 text-white font-black py-3.5 rounded-2xl hover:bg-amber-600 transition shadow-sm text-sm cursor-pointer">العربية</button>
+                <button type="button" onclick="setLanguage('ar')" class="bg-slate-900 text-white font-bold py-3.5 rounded-2xl hover:bg-amber-600 transition shadow-sm text-sm cursor-pointer">العربية</button>
             </div>
         </div>
     </div>
@@ -168,12 +150,10 @@
     <!-- الرأس (Header) -->
     <header class="bg-slate-100/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 shadow-xs">
         <div class="max-w-5xl mx-auto px-4 py-2.5 flex flex-col sm:flex-row items-center justify-between gap-3">
-            
             <div id="auth-nav-container" class="flex items-center space-x-2 space-x-reverse order-2 sm:order-1">
                 <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200/80 px-3.5 py-1.5 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs">إنشاء حساب</button>
                 <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-4 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">دخول</button>
             </div>
-
             <div class="flex items-center justify-end w-full sm:w-auto order-1 sm:order-2">
                 <div class="flex items-center space-x-4 space-x-reverse cursor-pointer group" onclick="switchView('home')">
                     <div class="text-right pl-3">
@@ -183,17 +163,15 @@
                     <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-2xl flex items-center justify-center text-xl shadow-md shadow-amber-500/25 group-hover:scale-105 transition shrink-0">🛍️</div>
                 </div>
             </div>
-
         </div>
     </header>
 
     <!-- المحتوى الرئيسي -->
     <main id="homeView" class="max-w-5xl w-full mx-auto px-4 py-4 flex-grow space-y-4">
-        
         <div class="bg-white/90 backdrop-blur-sm px-5 py-3.5 rounded-2xl shadow-xs border border-slate-200/60 flex items-center justify-between gap-4">
             <div>
-                <h1 id="welcomeTitle" class="text-base sm:text-lg font-black text-slate-900 tracking-tight">Esouk Tunisie - السوق التونسي[cite: 1]</h1>
-                <p id="welcomeDesc" class="text-[11px] font-bold text-amber-700">بيع وشراء في كامل تراب الجمهورية[cite: 1]</p>
+                <h1 id="welcomeTitle" class="text-base sm:text-lg font-black text-slate-900 tracking-tight">Esouk Tunisie - السوق التونسي[span_0](start_span)[span_0](end_span)</h1>
+                <p id="welcomeDesc" class="text-[11px] font-bold text-amber-700">بيع وشراء في كامل تراب الجمهورية[span_1](start_span)[span_1](end_span)</p>
             </div>
             <div>
                 <button onclick="changeLanguagePrompt()" class="text-[11px] text-slate-400 font-semibold hover:text-amber-600 transition inline-flex items-center gap-1 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
@@ -208,7 +186,7 @@
                 <div class="relative z-10 space-y-1">
                     <span class="bg-white/25 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">قسم البائعين</span>
                     <h2 class="text-lg sm:text-xl font-black tracking-tight">ماذا تريد أن تبيع اليوم؟</h2>
-                    <p class="text-[11px] text-amber-100 font-medium">انشر بضاعتك وصِل إلى آلاف المشترين[cite: 1].</p>
+                    <p class="text-[11px] text-amber-100 font-medium">انشر بضاعتك وصِل إلى آلاف المشترين[span_2](start_span)[span_2](end_span).</p>
                 </div>
                 <div class="pt-0.5 relative z-10">
                     <button onclick="openSellModal()" class="bg-slate-900 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md hover:bg-slate-800 hover:scale-105 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
@@ -223,7 +201,7 @@
                 <div class="relative z-10 space-y-1">
                     <span class="bg-amber-500/30 text-amber-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">قسم المشترين</span>
                     <h2 class="text-lg sm:text-xl font-black tracking-tight">ماذا تريد أن تشتري اليوم؟</h2>
-                    <p class="text-[11px] text-slate-300 font-medium">تصفح آلاف العروض والسلع في كل تونس[cite: 1].</p>
+                    <p class="text-[11px] text-slate-300 font-medium">تصفح آلاف العروض والسلع في كل تونس[span_3](start_span)[span_3](end_span).</p>
                 </div>
                 <div class="pt-0.5 relative z-10">
                     <button onclick="openBuyCategoriesModal()" class="bg-amber-600 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md hover:bg-amber-700 hover:scale-105 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
@@ -258,22 +236,6 @@
             </div>
         </div>
 
-        <div class="bg-gradient-to-r from-amber-600 to-amber-700 text-white py-2 rounded-2xl shadow-xs overflow-hidden flex items-center">
-            <div class="bg-slate-900 text-amber-300 px-3 py-1 text-[11px] font-black tracking-wider uppercase shrink-0 z-10 ml-2 rounded-xl">⚡ تونس العريقة</div>
-            <div class="marquee-container text-xs font-bold tracking-wide">
-                <div class="animate-marquee space-x-8 space-x-reverse px-4">
-                    <span>🔥 جديد السوق التونسي</span> &bull; 
-                    <span>🏺 أثاث وتحف تقليدية</span> &bull; 
-                    <span>📱 إلكترونيات وهواتف</span> &bull; 
-                    <span>🚗 سيارات ووسائل نقل</span> &bull; 
-                    <span>⭐ أفضل الأسعار في كافة الولايات</span> &bull; 
-                    <span>🔥 جديد السوق التونسي</span> &bull; 
-                    <span>🏺 أثاث وتحف تقليدية</span> &bull; 
-                    <span>📱 إلكترونيات وهواتف</span>
-                </div>
-            </div>
-        </div>
-
         <div>
             <h2 id="quickCatTitle" class="text-xs font-black text-amber-800 mb-2.5 uppercase tracking-wider px-1">التصنيفات السريعة المتاحة</h2>
             <div id="quickCategories" class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
@@ -294,7 +256,7 @@
         </section>
     </main>
 
-    <!-- لوحة التحكم الإدارية للأدمن (بألوان باهتة ومريحة جداً Soft Blue/Slate) -->
+    <!-- لوحة تحكم الأدمن (بألوان باهتة نظيفة Soft Slate) -->
     <main id="adminView" class="max-w-5xl w-full mx-auto px-4 py-6 flex-grow hidden space-y-6">
         <div class="bg-slate-100 p-6 sm:p-8 rounded-3xl shadow-md border border-slate-300 space-y-6">
             <div class="flex justify-between items-center border-b border-slate-300 pb-4">
@@ -303,7 +265,7 @@
                     <p class="text-xs text-amber-700 font-semibold">مرحباً بك يا مراد. تحكم كاملاً في المنصة من هنا.</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="forceRegenerateAds()" class="bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-amber-700 transition shadow-sm">✨ ضخ 10+ إعلانات جديدة</button>
+                    <button onclick="forceRegenerateAds()" class="bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-amber-700 transition shadow-sm">✨ ضخ إعلانات جديدة</button>
                     <button onclick="handleLogout()" class="bg-rose-50 text-rose-600 px-4 py-2 rounded-xl text-xs font-bold hover:bg-rose-100 transition">تسجيل الخروج</button>
                 </div>
             </div>
@@ -335,7 +297,6 @@
                 <div id="adminCategoriesList" class="flex flex-wrap gap-2 pt-2"></div>
             </div>
 
-            <!-- قسم إدارة المستخدمين المسجلين ومعاينة إعلاناتهم -->
             <div class="pt-4 border-t border-slate-300 space-y-3">
                 <h3 class="font-bold text-slate-800 text-xs sm:text-sm">قائمة المستخدمين المسجلين (Liste des Utilisateurs)</h3>
                 <div id="adminUsersListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -375,8 +336,8 @@
 
     <!-- التذييل -->
     <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200/60 py-4 text-center text-xs text-slate-400 space-y-1">
-        <p class="font-bold text-slate-600">Esouk Tunisie &copy; 2026[cite: 1]</p>
-        <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية[cite: 1]</p>
+        <p class="font-bold text-slate-600">Esouk Tunisie &copy; 2026[span_4](start_span)[span_4](end_span)</p>
+        <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية[span_5](start_span)[span_5](end_span)</p>
     </footer>
 
     <!-- نافذة نشر إعلان (بيع) -->
@@ -386,13 +347,11 @@
                 <h3 class="font-bold text-slate-900 text-sm sm:text-base">نشر إعلان جديد (بيع / Vendre)</h3>
                 <button onclick="closeSellModal()" class="w-8 h-8 rounded-full bg-slate-200/60 text-slate-500 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
             </div>
-            
             <form id="sellForm" onsubmit="handlePublishItem(event)" class="p-5 overflow-y-auto space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">عنوان الإعلان أو الغرض</label>
                     <input type="text" id="itemTitle" required placeholder="مثال: طاولة خشبية تقليدية" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
                 </div>
-
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1.5">الفئة (Catégorie)</label>
@@ -403,7 +362,6 @@
                         <select id="itemState" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition"></select>
                     </div>
                 </div>
-
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1.5">الحالة (État)</label>
@@ -419,24 +377,18 @@
                         <input type="number" id="itemPrice" required placeholder="مثال: 150" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
                     </div>
                 </div>
-
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">رقم الهاتف للاتصال بك (Téléphone)</label>
                     <input type="tel" id="itemPhone" required placeholder="مثال: 98123456" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition" dir="ltr">
                 </div>
-
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">وصف تفصيلي</label>
                     <textarea id="itemDescription" rows="3" placeholder="أكتب تفاصيل الغرض..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition"></textarea>
                 </div>
-
-                <!-- أزرار الكاميرا والمعرض المنفصلة -->
                 <div class="space-y-2">
                     <label class="block text-xs font-bold text-slate-700">صور الغرض (حتى 5 صور)</label>
-                    
                     <input type="file" id="cameraInput" accept="image/*" capture="environment" onchange="previewImages(event)" class="hidden">
                     <input type="file" id="galleryInput" accept="image/*" multiple onchange="previewImages(event)" class="hidden">
-
                     <div class="grid grid-cols-2 gap-2">
                         <button type="button" onclick="document.getElementById('cameraInput').click()" class="bg-slate-900 text-white py-3 px-4 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm flex items-center justify-center gap-2">
                             <span>📸 التقاط بالكاميرا</span>
@@ -445,7 +397,6 @@
                             <span>🖼️ اختيار من المعرض</span>
                         </button>
                     </div>
-                    
                     <div id="imagePreviewContainer" class="grid grid-cols-5 gap-2 pt-1">
                         <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">1</div>
                         <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">2</div>
@@ -454,7 +405,6 @@
                         <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">5</div>
                     </div>
                 </div>
-
                 <button type="submit" id="submitPublishBtn" class="w-full bg-gradient-to-r from-amber-600 to-amber-500 text-white font-bold py-3.5 rounded-2xl hover:from-amber-700 hover:to-amber-600 transition shadow-md text-sm">نشر الإعلان الآن</button>
             </form>
         </div>
@@ -467,25 +417,20 @@
                 <h3 id="modalAuthTitle" class="font-bold text-slate-900 text-sm">إنشاء حساب جديد</h3>
                 <button onclick="closeAuthModal()" class="w-8 h-8 rounded-full bg-slate-200/60 text-slate-500 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
             </div>
-            
             <form id="authForm" onsubmit="handleAuthSubmit(event)" class="p-5 space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">البريد الإلكتروني (E-mail)</label>
                     <input type="email" id="authEmail" required placeholder="nom@exemple.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition" dir="ltr">
                 </div>
-
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">كلمة المرور (الرقم السري)</label>
                     <input type="password" id="authPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition" dir="ltr">
                 </div>
-
                 <div id="confirmPassContainer">
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">إعادة كلمة المرور (تأكيد)</label>
                     <input type="password" id="authPasswordConfirm" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition" dir="ltr">
                 </div>
-
                 <button type="submit" id="btnSubmitAuth" class="w-full bg-slate-900 text-white font-bold py-3.5 rounded-2xl hover:bg-slate-800 transition shadow-md text-sm">تسجيل حساب جديد</button>
-                
                 <div class="text-center pt-1">
                     <button type="button" id="switchAuthModeBtn" onclick="toggleAuthMode()" class="text-xs text-slate-500 hover:text-amber-600 transition underline font-medium">لديك حساب بالفعل؟ سجل دخولك هنا</button>
                 </div>
@@ -493,7 +438,7 @@
         </div>
     </div>
 
-    <!-- الكود البرمجى والمنطق الشامل -->
+    <!-- الكود البرمجى والمنطق الشامل (متضمنة دالة loadAdminDashboard كاملة وصحيحة) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
@@ -543,7 +488,6 @@
             document.getElementById('adsSectionTarget').scrollIntoView({ behavior: 'smooth' });
         };
 
-        // دالة جلب وإضافة الفئات الـ 30 الشاملة باللغتين
         async function fetchCategories() {
             try {
                 const snapshot = await getDocs(collection(db, "categories"));
@@ -598,7 +542,6 @@
             }
         }
 
-        // زر ضخ الإعلانات الجديدة المتنوعة من لوحة الأدمن
         window.forceRegenerateAds = async function() {
             try {
                 const extraAds = [
@@ -844,6 +787,33 @@
                 modal.classList.remove('hidden');
             }
         };
+
+        function applyTranslations() {
+            const isAr = window.currentLang === 'ar';
+            const html = document.getElementById('htmlRoot');
+            
+            if (isAr) {
+                html.setAttribute('dir', 'rtl');
+                html.setAttribute('lang', 'ar');
+                document.getElementById('pageTitle').innerText = "Esouk Tunisie - السوق التونسي للبيع والشراء";
+                document.getElementById('btnSignupTop').innerText = "إنشاء حساب";
+                document.getElementById('btnLoginTop').innerText = "دخول";
+                document.getElementById('welcomeTitle').innerText = "Esouk Tunisie - السوق التونسي[span_6](start_span)[span_6](end_span)";
+                document.getElementById('welcomeDesc').innerText = "بيع وشراء في كامل تراب الجمهورية[span_7](start_span)[span_7](end_span)";
+                document.getElementById('quickCatTitle').innerText = "التصنيفات السريعة المتاحة";
+                document.getElementById('recentAdsTitle').innerText = "الإعلانات الحديثة";
+            } else {
+                html.setAttribute('dir', 'ltr');
+                html.setAttribute('lang', 'fr');
+                document.getElementById('pageTitle').innerText = "Esouk Tunisie - Vente et Achat en Tunisie";
+                document.getElementById('btnSignupTop').innerText = "S'inscrire";
+                document.getElementById('btnLoginTop').innerText = "Connexion";
+                document.getElementById('welcomeTitle').innerText = "Esouk Tunisie - Marché en Tunisie";
+                document.getElementById('welcomeDesc').innerText = "Vente et Achat dans toute la Tunisie";
+                document.getElementById('quickCatTitle').innerText = "Catégories Rapides Disponibles";
+                document.getElementById('recentAdsTitle').innerText = "Annonces Récentes";
+            }
+        }
 
         window.addEventListener('DOMContentLoaded', async () => {
             const modal = document.getElementById('langModal');
@@ -1291,8 +1261,8 @@
             loadItems(category, keyword, state);
         };
 
-        // لوحة تحكم الأدمن الشاملة (الفئات، الإعلانات، والبائعين)
-        async function loadAdminDashboard() {
+        // تم ربط وتضمين دالة loadAdminDashboard وكل ملحقاتها بشكل صحيح نهائياً لضمان عدم ظهور خطأ is not defined
+        window.loadAdminDashboard = async function() {
             document.getElementById('adminTotalCats').innerText = categoriesList.length;
             document.getElementById('adminTotalUsers').innerText = explicitUsersCount;
             
@@ -1387,7 +1357,7 @@
             } catch(e) {
                 adminItemsContainer.innerHTML = `<p class="text-xs text-red-500">خطأ في تحميل الإعلانات.</p>`;
             }
-        }
+        };
 
         window.showUserItems = function(email, itemsList) {
             const section = document.getElementById('adminUserItemsSection');
