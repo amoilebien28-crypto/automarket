@@ -49,26 +49,33 @@
 </head>
 <body class="custom-bg text-slate-900 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-white">
 
-    <!-- رسالة التنبيه الصغيرة -->
+    <!-- رسالة التنبيه الصغيرة المصغرة -->
     <div id="toastNotification" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white px-5 py-2.5 rounded-2xl shadow-xl text-xs font-bold border border-slate-700 flex items-center gap-2">
         <span id="toastIcon">✨</span>
         <span id="toastText">تم بنجاح</span>
     </div>
 
-    <!-- نافذة تفاصيل الإعلان -->
+    <!-- نافذة تفاصيل الإعلان المحسنة مع زر اتصال ثابت وقسم تعليقات -->
     <div id="itemDetailsModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
         <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col border border-slate-100">
+            
+            <!-- رأس النافذة -->
             <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50 shrink-0">
                 <h3 id="modalItemTitleHeader" class="font-bold text-slate-900 text-sm sm:text-base truncate">تفاصيل الإعلان</h3>
                 <button onclick="closeDetailsModal()" class="w-8 h-8 rounded-full bg-slate-200/60 text-slate-500 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
             </div>
+
+            <!-- المحتوى القابل للتمرير (Scrollable Content) -->
             <div class="p-4 sm:p-6 overflow-y-auto space-y-5 flex-grow">
+                <!-- معرض الصور -->
                 <div>
                     <div id="modalMainImageContainer" class="w-full h-60 sm:h-72 bg-slate-100 rounded-2xl overflow-hidden shadow-sm border border-slate-200">
                         <img id="modalMainImage" src="" class="w-full h-full object-cover">
                     </div>
                     <div id="modalThumbnails" class="flex gap-2 mt-3 overflow-x-auto pb-1"></div>
                 </div>
+
+                <!-- معلومات الإعلان الأساسية -->
                 <div class="space-y-3">
                     <div class="flex flex-wrap justify-between items-start gap-2">
                         <h2 id="modalItemTitle" class="text-lg sm:text-xl font-black text-slate-900"></h2>
@@ -80,31 +87,46 @@
                         <span id="modalItemCondition" class="bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl"></span>
                     </div>
                 </div>
+
+                <!-- الوصف التفصيلي -->
                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 space-y-1">
                     <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">وصف الغرض</h4>
                     <p id="modalItemDescription" class="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line"></p>
                 </div>
+
+                <!-- معلومات البائع -->
                 <div class="bg-amber-50/60 border border-amber-100 p-3.5 rounded-2xl flex items-center justify-between text-xs font-bold text-slate-700">
                     <span>👤 الناشر: <span id="modalItemSellerEmail" class="text-amber-800"></span></span>
-                    <span id="modalItemPhoneDisplay" class="text-slate-600 font-semibold"></span>
                 </div>
+
+                <!-- قسم التعليقات (Commentaires) -->
                 <div class="pt-2 border-t border-slate-100 space-y-3">
                     <h4 class="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
-                        <span>💬 إرسال رسالة خاصة للبائع أو مناقشة السعر</span>
+                        <span>💬 التعليقات والأسئلة</span>
                     </h4>
+                    
                     <div id="commentsListContainer" class="space-y-2 max-h-40 overflow-y-auto pr-1">
-                        <p class="text-xs text-slate-400 italic">لا توجد رسائل حتى الآن. كن أول من يراسل البائع!</p>
+                        <p class="text-xs text-slate-400 italic">لا توجد تعليقات حتى الآن. كن أول من يسأل البائع!</p>
                     </div>
+
                     <form onsubmit="handlePostComment(event)" class="flex gap-2 pt-1">
-                        <input type="text" id="commentInputText" required placeholder="اكتب رسالة حول السعر، التوصيل..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-amber-500 focus:bg-white transition">
-                        <button type="submit" class="bg-amber-600 text-white px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-amber-700 transition shrink-0 shadow-sm">💬 إرسال رسالة</button>
+                        <input type="text" id="commentInputText" required placeholder="اكتب تعليقاً أو استفساراً للبائع..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs focus:outline-none focus:border-amber-500 focus:bg-white transition">
+                        <button type="submit" class="bg-slate-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-slate-800 transition shrink-0">إرسال</button>
                     </form>
                 </div>
             </div>
+
+            <!-- شريط الاتصال الثابت في الأسفل -->
+            <div class="p-3.5 sm:p-4 bg-white border-t border-slate-100 shrink-0 shadow-lg">
+                <a id="modalCallBtn" href="#" class="w-full bg-amber-600 text-white font-bold py-3.5 rounded-2xl hover:bg-amber-700 transition shadow-md flex items-center justify-center gap-2 text-xs sm:text-sm">
+                    <span>📞 الاتصال بالبائع مباشرة</span>
+                </a>
+            </div>
+
         </div>
     </div>
 
-    <!-- نافذة اختيار الفئات -->
+    <!-- نافذة اختيار الفئات عند الضغط على "ماذا تريد أن تشتري اليوم؟" -->
     <div id="buyCategoriesModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -115,7 +137,7 @@
         </div>
     </div>
 
-    <!-- نافذة إعلاناتي الشخصية -->
+    <!-- نافذة فضاء إعلاناتي للمستخدم -->
     <div id="myAdsModal" class="hidden fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
@@ -128,7 +150,7 @@
         </div>
     </div>
 
-    <!-- نافذة اختيار اللغة -->
+    <!-- نافذة اختيار اللغة عند البداية -->
     <div id="langModal" class="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden p-6 text-center space-y-6 border border-slate-100">
             <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-inner">🛍️</div>
@@ -138,7 +160,7 @@
             </div>
             <div class="grid grid-cols-2 gap-3">
                 <button type="button" onclick="setLanguage('fr')" class="bg-slate-100 text-slate-800 font-bold py-3.5 rounded-2xl hover:bg-amber-600 hover:text-white transition shadow-sm text-sm cursor-pointer">Français</button>
-                <button type="button" onclick="setLanguage('ar')" class="bg-slate-900 text-white font-black py-3.5 rounded-2xl hover:bg-amber-600 transition shadow-sm text-sm cursor-pointer">العربية</button>
+                <button type="button" onclick="setLanguage('ar')" class="bg-slate-900 text-white font-bold py-3.5 rounded-2xl hover:bg-amber-600 transition shadow-sm text-sm cursor-pointer">العربية</button>
             </div>
         </div>
     </div>
@@ -146,10 +168,12 @@
     <!-- الرأس (Header) -->
     <header class="bg-slate-100/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-40 shadow-xs">
         <div class="max-w-5xl mx-auto px-4 py-2.5 flex flex-col sm:flex-row items-center justify-between gap-3">
+            
             <div id="auth-nav-container" class="flex items-center space-x-2 space-x-reverse order-2 sm:order-1">
                 <button onclick="openAuthModal('signup')" id="btnSignupTop" class="bg-amber-50 text-amber-800 border border-amber-200/80 px-3.5 py-1.5 rounded-xl text-xs font-bold hover:bg-amber-100 transition whitespace-nowrap shadow-xs">إنشاء حساب</button>
                 <button onclick="openAuthModal('login')" id="btnLoginTop" class="bg-slate-900 text-white px-4 py-1.5 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm whitespace-nowrap">دخول</button>
             </div>
+
             <div class="flex items-center justify-end w-full sm:w-auto order-1 sm:order-2">
                 <div class="flex items-center space-x-4 space-x-reverse cursor-pointer group" onclick="switchView('home')">
                     <div class="text-right pl-3">
@@ -159,15 +183,17 @@
                     <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-amber-600 text-white rounded-2xl flex items-center justify-center text-xl shadow-md shadow-amber-500/25 group-hover:scale-105 transition shrink-0">🛍️</div>
                 </div>
             </div>
+
         </div>
     </header>
 
-    <!-- المحتوى الرئيسي (الصفحة العامة مع فلاتر البحث الواضحة) -->
+    <!-- المحتوى الرئيسي -->
     <main id="homeView" class="max-w-5xl w-full mx-auto px-4 py-4 flex-grow space-y-4">
+        
         <div class="bg-white/90 backdrop-blur-sm px-5 py-3.5 rounded-2xl shadow-xs border border-slate-200/60 flex items-center justify-between gap-4">
             <div>
-                <h1 id="welcomeTitle" class="text-base sm:text-lg font-black text-slate-900 tracking-tight">Esouk Tunisie - السوق التونسي[cite: 1]</h1>
-                <p id="welcomeDesc" class="text-[11px] font-bold text-amber-700">بيع وشراء في كامل تراب الجمهورية[cite: 1]</p>
+                <h1 id="welcomeTitle" class="text-base sm:text-lg font-black text-slate-900 tracking-tight">Esouk Tunisie - السوق التونسي[span_0](start_span)[span_0](end_span)</h1>
+                <p id="welcomeDesc" class="text-[11px] font-bold text-amber-700">بيع وشراء في كامل تراب الجمهورية[span_1](start_span)[span_1](end_span)</p>
             </div>
             <div>
                 <button onclick="changeLanguagePrompt()" class="text-[11px] text-slate-400 font-semibold hover:text-amber-600 transition inline-flex items-center gap-1 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
@@ -182,7 +208,7 @@
                 <div class="relative z-10 space-y-1">
                     <span class="bg-white/25 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">قسم البائعين</span>
                     <h2 class="text-lg sm:text-xl font-black tracking-tight">ماذا تريد أن تبيع اليوم؟</h2>
-                    <p class="text-[11px] text-amber-100 font-medium">انشر بضاعتك وصِل إلى آلاف المشترين[cite: 1].</p>
+                    <p class="text-[11px] text-amber-100 font-medium">انشر بضاعتك وصِل إلى آلاف المشترين[span_2](start_span)[span_2](end_span).</p>
                 </div>
                 <div class="pt-0.5 relative z-10">
                     <button onclick="openSellModal()" class="bg-slate-900 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md hover:bg-slate-800 hover:scale-105 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
@@ -197,7 +223,7 @@
                 <div class="relative z-10 space-y-1">
                     <span class="bg-amber-500/30 text-amber-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">قسم المشترين</span>
                     <h2 class="text-lg sm:text-xl font-black tracking-tight">ماذا تريد أن تشتري اليوم؟</h2>
-                    <p class="text-[11px] text-slate-300 font-medium">تصفح آلاف العروض والسلع في كل تونس[cite: 1].</p>
+                    <p class="text-[11px] text-slate-300 font-medium">تصفح آلاف العروض والسلع في كل تونس[span_3](start_span)[span_3](end_span).</p>
                 </div>
                 <div class="pt-0.5 relative z-10">
                     <button onclick="openBuyCategoriesModal()" class="bg-amber-600 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md hover:bg-amber-700 hover:scale-105 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
@@ -207,7 +233,14 @@
             </div>
         </div>
 
-        <!-- شريط البحث المباشر والفلاتر الظاهرة دائماً -->
+        <div class="text-center py-1">
+            <div onclick="scrollToAds()" class="inline-flex flex-col items-center cursor-pointer text-amber-700 hover:text-amber-800 transition animate-bounce-slow">
+                <span class="text-[11px] font-bold mb-0.5">انظر إلى الأسفل لمشاهدة أحدث الإعلانات 👇</span>
+                <span class="text-base">⌄</span>
+            </div>
+        </div>
+
+        <!-- شريط البحث وثلاث خانات الفلترة المتكاملة -->
         <div id="adsSectionTarget" class="bg-white/90 backdrop-blur-sm p-4 rounded-3xl shadow-sm border border-slate-200/60 space-y-3">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
@@ -234,8 +267,18 @@
                     <span>🏺 أثاث وتحف تقليدية</span> &bull; 
                     <span>📱 إلكترونيات وهواتف</span> &bull; 
                     <span>🚗 سيارات ووسائل نقل</span> &bull; 
-                    <span>⭐ أفضل الأسعار في كافة الولايات</span>
+                    <span>⭐ أفضل الأسعار في كافة الولايات</span> &bull; 
+                    <span>🔥 جديد السوق التونسي</span> &bull; 
+                    <span>🏺 أثاث وتحف تقليدية</span> &bull; 
+                    <span>📱 إلكترونيات وهواتف</span>
                 </div>
+            </div>
+        </div>
+
+        <div>
+            <h2 id="quickCatTitle" class="text-xs font-black text-amber-800 mb-2.5 uppercase tracking-wider px-1">التصنيفات السريعة المتاحة</h2>
+            <div id="quickCategories" class="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
+                <button onclick="filterByCategory('')" class="bg-amber-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap shadow-sm">الكل / Tout</button>
             </div>
         </div>
 
@@ -252,99 +295,77 @@
         </section>
     </main>
 
-    <!-- لوحة تحكم الأدمن (بأزرار كبيرة ومنظمة) -->
+    <!-- لوحة التحكم الإدارية للأدمن الأصلية التي كنت تعمل بها -->
     <main id="adminView" class="max-w-5xl w-full mx-auto px-4 py-6 flex-grow hidden space-y-6">
-        <div class="bg-slate-100 p-6 sm:p-8 rounded-3xl shadow-md border border-slate-300 space-y-6">
-            <div class="flex justify-between items-center border-b border-slate-300 pb-4">
+        <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/60 space-y-6">
+            <div class="flex justify-between items-center border-b border-slate-100 pb-4">
                 <div>
                     <h1 class="text-lg sm:text-xl font-black text-slate-900">لوحة تحكم الأدمن (Admin Dashboard)</h1>
-                    <p class="text-xs text-amber-700 font-semibold">مرحباً بك يا مراد. تحكم كاملاً في المنصة من هنا.</p>
+                    <p class="text-xs text-slate-500">مرحباً بك يا مراد. تحكم كاملاً في المنصة من هنا.</p>
                 </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="forceRegenerateAds()" class="bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-amber-700 transition shadow-sm">✨ ضخ إعلانات جديدة</button>
-                    <button onclick="handleLogout()" class="bg-rose-50 text-rose-600 px-4 py-2 rounded-xl text-xs font-bold hover:bg-rose-100 transition">تسجيل الخروج</button>
-                </div>
+                <button onclick="handleLogout()" class="bg-red-50 text-red-600 px-4 py-2 rounded-xl text-xs font-bold hover:bg-red-100 transition">تسجيل الخروج</button>
             </div>
 
-            <!-- إحصائيات المنصة -->
             <div class="space-y-3">
                 <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إحصائيات المنصة</h3>
                 <div class="grid grid-cols-3 gap-3">
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 text-center shadow-xs">
-                        <p class="text-[11px] text-slate-500 font-medium">إجمالي الإعلانات</p>
-                        <p id="adminTotalItems" class="text-xl sm:text-2xl font-black text-amber-600 mt-1">0</p>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-center">
+                        <p class="text-[11px] text-slate-400 font-medium">إجمالي الإعلانات[span_4](start_span)[span_4](end_span)</p>
+                        <p id="adminTotalItems" class="text-xl sm:text-2xl font-black text-slate-900 mt-1">0</p>
                     </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 text-center shadow-xs">
-                        <p class="text-[11px] text-slate-500 font-medium">الفئات المتاحة</p>
-                        <p id="adminTotalCats" class="text-xl sm:text-2xl font-black text-sky-600 mt-1">0</p>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-center">
+                        <p class="text-[11px] text-slate-400 font-medium">الفئات المتاحة[span_5](start_span)[span_5](end_span)</p>
+                        <p id="adminTotalCats" class="text-xl sm:text-2xl font-black text-slate-900 mt-1">0</p>
                     </div>
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 text-center shadow-xs">
-                        <p class="text-[11px] text-slate-500 font-medium">المستخدمون</p>
-                        <p id="adminTotalUsers" class="text-xl sm:text-2xl font-black text-purple-600 mt-1">1</p>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-center">
+                        <p class="text-[11px] text-slate-400 font-medium">المستخدمون</p>
+                        <p id="adminTotalUsers" class="text-xl sm:text-2xl font-black text-slate-900 mt-1">1</p>
                     </div>
                 </div>
             </div>
 
-            <!-- أزرار التنقل الكبيرة للأدمن -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-                <button onclick="document.getElementById('sectionCategories').scrollIntoView({behavior: 'smooth'})" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-amber-500 transition text-right group">
-                    <span class="text-2xl block mb-1">🏷️</span>
-                    <h4 class="font-black text-slate-900 text-sm group-hover:text-amber-600">إدارة الفئات</h4>
-                    <p class="text-[11px] text-slate-500">إضافة أو حذف فئات الموقع</p>
-                </button>
-                <button onclick="document.getElementById('sectionUsers').scrollIntoView({behavior: 'smooth'})" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-amber-500 transition text-right group">
-                    <span class="text-2xl block mb-1">👥</span>
-                    <h4 class="font-black text-slate-900 text-sm group-hover:text-amber-600">المستخدمون والبائعون</h4>
-                    <p class="text-[11px] text-slate-500">متابعة الحسابات والسلع</p>
-                </button>
-                <button onclick="document.getElementById('sectionAds').scrollIntoView({behavior: 'smooth'})" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-amber-500 transition text-right group">
-                    <span class="text-2xl block mb-1">📢</span>
-                    <h4 class="font-black text-slate-900 text-sm group-hover:text-amber-600">إدارة الإعلانات</h4>
-                    <p class="text-[11px] text-slate-500">مراجعة وحذف الإعلانات</p>
-                </button>
-            </div>
-
-            <!-- إدارة الفئات -->
-            <div id="sectionCategories" class="pt-4 border-t border-slate-300 space-y-3">
-                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إدارة فئات الموقع الشاملة (قاعدة البيانات)</h3>
+            <div class="pt-4 border-t border-slate-100 space-y-3">
+                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إدارة فئات الموقع (محفوظة بقاعدة البيانات)</h3>
                 <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
-                    <input type="text" id="newCategoryName" required placeholder="أضف فئة جديدة..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500">
+                    <input type="text" id="newCategoryName" required placeholder="أضف فئة جديدة..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500">
                     <button type="submit" class="bg-amber-600 text-white px-6 py-3 rounded-xl text-xs sm:text-sm font-bold hover:bg-amber-700 transition whitespace-nowrap shadow-sm">إضافة</button>
                 </form>
                 <div id="adminCategoriesList" class="flex flex-wrap gap-2 pt-2"></div>
             </div>
 
-            <!-- المستخدمون والبائعون -->
-            <div id="sectionUsers" class="pt-4 border-t border-slate-300 space-y-3">
-                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">قائمة المستخدمين المسجلين والبائعين</h3>
+            <!-- قسم إدارة المستخدمين المسجلين ومعاينة إعلاناتهم -->
+            <div class="pt-4 border-t border-slate-100 space-y-3">
+                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">قائمة المستخدمين المسجلين (Liste des Utilisateurs)</h3>
                 <div id="adminUsersListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <p class="text-xs text-slate-500">جاري تحميل المستخدمين...</p>
+                    <p class="text-xs text-slate-400">جاري تحميل المستخدمين...</p>
                 </div>
-                <div id="adminUserItemsSection" class="hidden pt-3 border-t border-slate-300 space-y-2">
+                <div id="adminUserItemsSection" class="hidden pt-3 border-t border-slate-100 space-y-2">
                     <div class="flex justify-between items-center">
-                        <h4 id="adminUserTitleHeader" class="font-bold text-xs text-amber-700">إعلانات المستخدم: </h4>
-                        <button onclick="hideAdminUserItems()" class="text-xs text-slate-600 hover:text-slate-900 underline">إغلاق العرض</button>
+                        <h4 id="adminUserTitleHeader" class="font-bold text-xs text-amber-800">إعلانات المستخدم: </h4>
+                        <button onclick="hideAdminUserItems()" class="text-xs text-slate-500 hover:text-slate-800 underline">إغلاق العرض</button>
                     </div>
                     <div id="adminUserItemsContainer" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
                 </div>
+            </div>
 
-                <div id="adminVendorsListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                    <p class="text-xs text-slate-500">جاري تحميل البائعين...</p>
+            <div class="pt-4 border-t border-slate-100 space-y-3">
+                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">قائمة البائعين وسلعهم (Liste des Vendeurs)</h3>
+                <div id="adminVendorsListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <p class="text-xs text-slate-400">جاري تحميل البائعين...</p>
                 </div>
-                <div id="adminVendorItemsSection" class="hidden pt-3 border-t border-slate-300 space-y-2">
+                <div id="adminVendorItemsSection" class="hidden pt-3 border-t border-slate-100 space-y-2">
                     <div class="flex justify-between items-center">
-                        <h4 id="adminVendorTitleHeader" class="font-bold text-xs text-amber-700">إعلانات البائع: </h4>
-                        <button onclick="hideAdminVendorItems()" class="text-xs text-slate-600 hover:text-slate-900 underline">إغلاق عرض البائع</button>
+                        <h4 id="adminVendorTitleHeader" class="font-bold text-xs text-amber-800">إعلانات البائع: </h4>
+                        <button onclick="hideAdminVendorItems()" class="text-xs text-slate-500 hover:text-slate-800 underline">إغلاق عرض البائع</button>
                     </div>
                     <div id="adminVendorItemsContainer" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
                 </div>
             </div>
 
-            <!-- إدارة جميع الإعلانات -->
-            <div id="sectionAds" class="pt-4 border-t border-slate-300 space-y-3">
+            <div class="pt-4 border-t border-slate-100 space-y-3">
                 <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إدارة ومتابعة جميع الإعلانات</h3>
                 <div id="adminItemsListContainer" class="space-y-2 max-h-96 overflow-y-auto pr-1">
-                    <p class="text-xs text-slate-500">جاري تحميل الإعلانات...</p>
+                    <p class="text-xs text-slate-400">جاري تحميل الإعلانات...</p>
                 </div>
             </div>
         </div>
@@ -352,22 +373,24 @@
 
     <!-- التذييل -->
     <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200/60 py-4 text-center text-xs text-slate-400 space-y-1">
-        <p class="font-bold text-slate-600">Esouk Tunisie &copy; 2026[cite: 1]</p>
-        <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية[cite: 1]</p>
+        <p class="font-bold text-slate-600">Esouk Tunisie &copy; 2026[span_6](start_span)[span_6](end_span)</p>
+        <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية[span_7](start_span)[span_7](end_span)</p>
     </footer>
 
-    <!-- نافذة نشر إعلان -->
+    <!-- نافذة نشر إعلان (بيع) -->
     <div id="sellModal" class="hidden fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-slate-100">
             <div class="p-4 sm:p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                 <h3 class="font-bold text-slate-900 text-sm sm:text-base">نشر إعلان جديد (بيع / Vendre)</h3>
                 <button onclick="closeSellModal()" class="w-8 h-8 rounded-full bg-slate-200/60 text-slate-500 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
             </div>
+            
             <form id="sellForm" onsubmit="handlePublishItem(event)" class="p-5 overflow-y-auto space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">عنوان الإعلان أو الغرض</label>
                     <input type="text" id="itemTitle" required placeholder="مثال: طاولة خشبية تقليدية" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
                 </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1.5">الفئة (Catégorie)</label>
@@ -378,6 +401,7 @@
                         <select id="itemState" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition"></select>
                     </div>
                 </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1.5">الحالة (État)</label>
@@ -393,18 +417,24 @@
                         <input type="number" id="itemPrice" required placeholder="مثال: 150" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition">
                     </div>
                 </div>
+
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1.5">رقم الهاتف للاتصال (اختياري / Optionnel)</label>
-                    <input type="tel" id="itemPhone" placeholder="مثال: 98123456" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition" dir="ltr">
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">رقم الهاتف للاتصال بك (Téléphone)</label>
+                    <input type="tel" id="itemPhone" required placeholder="مثال: 98123456" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition" dir="ltr">
                 </div>
+
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">وصف تفصيلي</label>
                     <textarea id="itemDescription" rows="3" placeholder="أكتب تفاصيل الغرض..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition"></textarea>
                 </div>
+
+                <!-- أزرار الكاميرا والمعرض المنفصلة -->
                 <div class="space-y-2">
                     <label class="block text-xs font-bold text-slate-700">صور الغرض (حتى 5 صور)</label>
+                    
                     <input type="file" id="cameraInput" accept="image/*" capture="environment" onchange="previewImages(event)" class="hidden">
                     <input type="file" id="galleryInput" accept="image/*" multiple onchange="previewImages(event)" class="hidden">
+
                     <div class="grid grid-cols-2 gap-2">
                         <button type="button" onclick="document.getElementById('cameraInput').click()" class="bg-slate-900 text-white py-3 px-4 rounded-xl text-xs font-bold hover:bg-slate-800 transition shadow-sm flex items-center justify-center gap-2">
                             <span>📸 التقاط بالكاميرا</span>
@@ -413,6 +443,7 @@
                             <span>🖼️ اختيار من المعرض</span>
                         </button>
                     </div>
+                    
                     <div id="imagePreviewContainer" class="grid grid-cols-5 gap-2 pt-1">
                         <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">1</div>
                         <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">2</div>
@@ -421,6 +452,7 @@
                         <div class="h-14 bg-slate-100 rounded-xl border border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-[10px]">5</div>
                     </div>
                 </div>
+
                 <button type="submit" id="submitPublishBtn" class="w-full bg-gradient-to-r from-amber-600 to-amber-500 text-white font-bold py-3.5 rounded-2xl hover:from-amber-700 hover:to-amber-600 transition shadow-md text-sm">نشر الإعلان الآن</button>
             </form>
         </div>
@@ -433,20 +465,25 @@
                 <h3 id="modalAuthTitle" class="font-bold text-slate-900 text-sm">إنشاء حساب جديد</h3>
                 <button onclick="closeAuthModal()" class="w-8 h-8 rounded-full bg-slate-200/60 text-slate-500 hover:bg-slate-300 flex items-center justify-center text-lg font-bold transition">&times;</button>
             </div>
+            
             <form id="authForm" onsubmit="handleAuthSubmit(event)" class="p-5 space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">البريد الإلكتروني (E-mail)</label>
                     <input type="email" id="authEmail" required placeholder="nom@exemple.com" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition" dir="ltr">
                 </div>
+
                 <div>
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">كلمة المرور (الرقم السري)</label>
                     <input type="password" id="authPassword" required placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition" dir="ltr">
                 </div>
+
                 <div id="confirmPassContainer">
                     <label class="block text-xs font-bold text-slate-700 mb-1.5">إعادة كلمة المرور (تأكيد)</label>
                     <input type="password" id="authPasswordConfirm" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500 focus:bg-white transition" dir="ltr">
                 </div>
+
                 <button type="submit" id="btnSubmitAuth" class="w-full bg-slate-900 text-white font-bold py-3.5 rounded-2xl hover:bg-slate-800 transition shadow-md text-sm">تسجيل حساب جديد</button>
+                
                 <div class="text-center pt-1">
                     <button type="button" id="switchAuthModeBtn" onclick="toggleAuthMode()" class="text-xs text-slate-500 hover:text-amber-600 transition underline font-medium">لديك حساب بالفعل؟ سجل دخولك هنا</button>
                 </div>
@@ -504,79 +541,25 @@
             document.getElementById('adsSectionTarget').scrollIntoView({ behavior: 'smooth' });
         };
 
-        // دالة جلب الفئات وقراءة حقل name بدقة من قاعدة البيانات
         async function fetchCategories() {
             try {
                 const snapshot = await getDocs(collection(db, "categories"));
-                categoriesList = [];
-                
-                snapshot.forEach(docSnap => {
-                    const data = docSnap.data();
-                    if (data && data.name) {
-                        categoriesList.push(data.name);
-                    }
-                });
-
-                if (categoriesList.length === 0) {
-                    const defaultCats = [
-                        "سيارات ووسائل نقل (Voitures & Véhicules)",
-                        "عقارات ومنازل (Immobilier)",
-                        "هواتف ذكية ولوازمها (Téléphones)",
-                        "أثاث وديكور المنزل (Meubles & Déco)",
-                        "أخرى / متنوعة (Divers)"
-                    ];
+                if (snapshot.empty) {
+                    const defaultCats = ["أثاث وتحف (Meubles)", "إلكترونيات وهواتف (Électronique)", "أجهزة منزلية (Électroménager)", "ملابس وأزياء (Vêtements)", "سيارات ووسائل نقل", "أخرى / Divers"];
                     categoriesList = defaultCats;
                     for (let cat of defaultCats) {
                         await addDoc(collection(db, "categories"), { name: cat });
                     }
+                } else {
+                    categoriesList = [];
+                    snapshot.forEach(docSnap => {
+                        categoriesList.push(docSnap.data().name);
+                    });
                 }
                 populateDropdowns();
             } catch (e) {
-                categoriesList = ["سيارات ووسائل نقل (Voitures)", "عقارات ومنازل (Immobilier)", "هواتف ولوازمها (Téléphones)", "أخرى / Divers"];
+                categoriesList = ["أثاث وتحف (Meubles)", "إلكترونيات وهواتف (Électronique)", "سيارات ووسائل نقل", "أخرى / Divers"];
                 populateDropdowns();
-            }
-        }
-
-        window.forceRegenerateAds = async function() {
-            try {
-                const extraAds = [
-                    { title: "سيارة مرسيدس سي 200 بحالة ممتازة", category: "سيارات ووسائل نقل (Voitures & Véhicules)", state: "تونس", condition: "بحالة ممتازة (Très bon état)", price: 42000, phone: "98223344", description: "سيارة فاخرة، صيانة كاملة بالوكالة.", image: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=600", userEmail: "vendeur.tunis@esouk.tn" },
-                    { title: "شقة مفروشة للكراء أو للبيع في سوسة", category: "عقارات ومنازل (Immobilier)", state: "سوسة", condition: "جديد تماماً (Neuf)", price: 150000, phone: "22445566", description: "شقة مطلة على البحر مباشرة، تحتوي على تجهيزات عصرية.", image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600", userEmail: "immobilier.sousse@esouk.tn" },
-                    { title: "آيفون 14 برو ماكس مستعمل كالجديد", category: "هواتف ذكية ولوازمها (Téléphones)", state: "صفاقس", condition: "بحالة ممتازة (Très bon état)", price: 2900, phone: "55889900", description: "الذاكرة 512 جيجا، صحة البطارية 90%.", image: "https://images.unsplash.com/photo-1678685888221-cda773a3dcdb?w=600", userEmail: "phone.sfax@esouk.tn" }
-                ];
-
-                for (let ad of extraAds) {
-                    await addDoc(collection(db, "items"), {
-                        ...ad,
-                        createdAt: serverTimestamp()
-                    });
-                }
-                showToast("تم ضخ إعلانات جديدة بنجاح!", "🚀");
-                loadAdminDashboard();
-                loadItems();
-            } catch(e) {
-                showToast("خطأ أثناء توليد الإعلانات.", "❌");
-            }
-        };
-
-        async function seedInitialTunisianAds() {
-            try {
-                const snapshot = await getDocs(collection(db, "items"));
-                if (snapshot.empty) {
-                    const sampleAds = [
-                        { title: "سيارة فولكسفاغن بولو بحالة ممتازة", category: "سيارات ووسائل نقل (Voitures & Véhicules)", state: "تونس", condition: "بحالة ممتازة (Très bon état)", price: 28000, phone: "98112233", description: "سيارة اقتصادية، صيانة دورية منتظمة، وثائق خالصة.", image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600", userEmail: "auto.tunis@esouk.tn" },
-                        { title: "منزل أرضي للبيع في نابل قرب البحر", category: "عقارات ومنازل (Immobilier)", state: "نابل", condition: "بحالة جيدة (Bon état)", price: 185000, phone: "97445566", description: "منزل مساحة 180 متر مربع، يتكون من غرفتين وصالة وحديقة صغيرة.", image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600", userEmail: "immobilier.nabeul@esouk.tn" }
-                    ];
-                    
-                    for (let ad of sampleAds) {
-                        await addDoc(collection(db, "items"), {
-                            ...ad,
-                            createdAt: serverTimestamp()
-                        });
-                    }
-                }
-            } catch (err) {
-                console.log("Seeding error:", err);
             }
         }
 
@@ -622,13 +605,7 @@
             document.getElementById('modalItemCondition').innerText = "✨ " + (item.condition || '');
             document.getElementById('modalItemDescription').innerText = item.description || 'لا يوجد وصف تفصيلي لهذا الغرض.';
             document.getElementById('modalItemSellerEmail').innerText = item.userEmail || 'بائع محترف';
-            
-            const phoneDisplay = document.getElementById('modalItemPhoneDisplay');
-            if (item.phone) {
-                phoneDisplay.innerText = "📞 " + item.phone;
-            } else {
-                phoneDisplay.innerText = "";
-            }
+            document.getElementById('modalCallBtn').href = `tel:${item.phone || ''}`;
 
             const images = (item.images && item.images.length > 0) ? item.images : [item.image];
             document.getElementById('modalMainImage').src = images[0];
@@ -654,7 +631,7 @@
 
         async function loadItemComments(itemId) {
             const container = document.getElementById('commentsListContainer');
-            container.innerHTML = `<p class="text-xs text-slate-400">جاري تحميل الرسائل...</p>`;
+            container.innerHTML = `<p class="text-xs text-slate-400">جاري تحميل التعليقات...</p>`;
 
             try {
                 const q = query(collection(db, "comments"), where("itemId", "==", itemId));
@@ -662,7 +639,7 @@
                 container.innerHTML = "";
 
                 if (snapshot.empty) {
-                    container.innerHTML = `<p class="text-xs text-slate-400 italic">لا توجد رسائل حتى الآن. كن أول من يراسل البائع!</p>`;
+                    container.innerHTML = `<p class="text-xs text-slate-400 italic">لا توجد تعليقات حتى الآن. كن أول من يسأل البائع!</p>`;
                     return;
                 }
 
@@ -679,14 +656,14 @@
                     container.appendChild(commentDiv);
                 });
             } catch (e) {
-                container.innerHTML = `<p class="text-xs text-red-400">تعسّر تحميل الرسائل.</p>`;
+                container.innerHTML = `<p class="text-xs text-red-400">تعسّر تحميل التعليقات.</p>`;
             }
         }
 
         window.handlePostComment = async function(e) {
             e.preventDefault();
             if (!auth.currentUser) {
-                showToast("يرجى تسجيل الدخول لإرسال رسالة.", "🔒");
+                showToast("يرجى تسجيل الدخول لكتابة تعليق.", "🔒");
                 openAuthModal('login');
                 return;
             }
@@ -704,10 +681,10 @@
                     createdAt: serverTimestamp()
                 });
                 textInput.value = "";
-                showToast("تم إرسال رسالتك بنجاح!", "💬");
+                showToast("تم إرسال تعليقك بنجاح!", "💬");
                 loadItemComments(currentOpenItemId);
             } catch (err) {
-                showToast("حدث خطأ أثناء إرسال الرسالة.", "❌");
+                showToast("حدث خطأ أثناء إرسال التعليق.", "❌");
             }
         };
 
@@ -799,6 +776,7 @@
                 document.getElementById('btnLoginTop').innerText = "دخول";
                 document.getElementById('welcomeTitle').innerText = "Esouk Tunisie - السوق التونسي";
                 document.getElementById('welcomeDesc').innerText = "بيع وشراء في كامل تراب الجمهورية";
+                document.getElementById('quickCatTitle').innerText = "التصنيفات السريعة المتاحة";
                 document.getElementById('recentAdsTitle').innerText = "الإعلانات الحديثة";
             } else {
                 html.setAttribute('dir', 'ltr');
@@ -808,6 +786,7 @@
                 document.getElementById('btnLoginTop').innerText = "Connexion";
                 document.getElementById('welcomeTitle').innerText = "Esouk Tunisie - Marché en Tunisie";
                 document.getElementById('welcomeDesc').innerText = "Vente et Achat dans toute la Tunisie";
+                document.getElementById('quickCatTitle').innerText = "Catégories Rapides Disponibles";
                 document.getElementById('recentAdsTitle').innerText = "Annonces Récentes";
             }
         }
@@ -824,8 +803,7 @@
                 applyTranslations();
             }
             await fetchCategories();
-            await seedInitialTunisianAds();
-            loadItems(); // عرض جميع الإعلانات تلقائياً فوراً
+            loadItems();
         });
 
         window.switchView = function(viewName) {
@@ -844,7 +822,7 @@
         window.openAuthModal = function(mode) {
             isLoginMode = (mode === 'login');
             updateAuthModalTexts();
-            document.getElementById('authModal').classList.remove('hidden');
+            document.getElementById('authModal').classList.add('hidden');
         };
 
         window.closeAuthModal = function() {
@@ -1041,18 +1019,20 @@
             }
         });
 
-        // تعبئة الفئات بدقة في القوائم المنسدلة بدون الحاجة لأزرار خارجية زائدة
         function populateDropdowns() {
             const selectSearch = document.getElementById('categorySelect');
             const selectSell = document.getElementById('itemCategory');
             const selectState = document.getElementById('stateSelectFilter');
+            const quickCats = document.getElementById('quickCategories');
 
-            let searchOpts = `<option value="">${window.currentLang === 'ar' ? 'جميع الفئات (Toutes les catégories)' : 'Toutes les catégories'}</option>`;
+            let searchOpts = `<option value="">${window.currentLang === 'ar' ? 'جميع الفئات' : 'Toutes les catégories'}</option>`;
             let sellOpts = '';
+            let quickHTML = `<button onclick="filterByCategory('')" class="bg-amber-600 text-white px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap shadow-sm">الكل / Tout</button>`;
 
             categoriesList.forEach(cat => {
                 searchOpts += `<option value="${cat}">${cat}</option>`;
                 sellOpts += `<option value="${cat}">${cat}</option>`;
+                quickHTML += `<button onclick="filterByCategory('${cat}')" class="bg-white text-slate-700 border border-slate-200/80 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap hover:bg-slate-50 transition shadow-xs">${cat}</button>`;
             });
 
             let stateOpts = `<option value="">اختر الولاية...</option>`;
@@ -1067,7 +1047,13 @@
             if(selectSell) selectSell.innerHTML = sellOpts;
             if(selectState) selectState.innerHTML = stateOpts;
             if(selectFilterState) selectFilterState.innerHTML = filterStateOpts;
+            if(quickCats) quickCats.innerHTML = quickHTML;
         }
+
+        window.filterByCategory = function(cat) {
+            document.getElementById('categorySelect').value = cat;
+            performSearch();
+        };
 
         window.handleAddCategory = async function(e) {
             e.preventDefault();
@@ -1129,7 +1115,7 @@
             const state = document.getElementById('itemState').value;
             const condition = document.getElementById('itemCondition').value;
             const price = document.getElementById('itemPrice').value;
-            const phone = document.getElementById('itemPhone').value || "";
+            const phone = document.getElementById('itemPhone').value;
             const description = document.getElementById('itemDescription').value;
 
             try {
@@ -1171,8 +1157,7 @@
             }
         };
 
-        // دالة جلب وعرض الإعلانات (تعرض الكل تلقائياً بالافتراضي)
-        window.loadItems = async function(categoryFilter = "", keyword = "", stateFilter = "") {
+        async function loadItems(categoryFilter = "", keyword = "", stateFilter = "") {
             const grid = document.getElementById('items-grid');
             const countBadge = document.getElementById('itemsCountBadge');
             if(!grid) return;
@@ -1224,9 +1209,9 @@
                         </div>
                         <div class="p-4.5 pt-0 border-t border-slate-100 mt-2 flex justify-between items-center bg-slate-50/50" onclick="event.stopPropagation()">
                             <span class="text-[11px] text-slate-400 truncate max-w-[120px]">👤 ${item.userEmail ? item.userEmail.split('@')[0] : 'بائع'}</span>
-                            <button onclick="openItemDetails(${currentIndex})" class="bg-amber-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-700 transition shadow-sm flex items-center gap-1.5">
-                                <span>💬 مراسلة</span>
-                            </button>
+                            <a href="tel:${item.phone || ''}" class="bg-amber-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold hover:bg-amber-700 transition shadow-sm flex items-center gap-1.5">
+                                <span>📞 اتصل</span>
+                            </a>
                         </div>
                     `;
                     grid.appendChild(card);
@@ -1250,7 +1235,8 @@
             loadItems(category, keyword, state);
         };
 
-        window.loadAdminDashboard = async function() {
+        // لوحة تحكم الأدمن الشاملة كما طلبتها تماماً بدون أي نقصان
+        async function loadAdminDashboard() {
             document.getElementById('adminTotalCats').innerText = categoriesList.length;
             document.getElementById('adminTotalUsers').innerText = explicitUsersCount;
             
