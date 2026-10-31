@@ -138,7 +138,7 @@
             </div>
             <div class="grid grid-cols-2 gap-3">
                 <button type="button" onclick="setLanguage('fr')" class="bg-slate-100 text-slate-800 font-bold py-3.5 rounded-2xl hover:bg-amber-600 hover:text-white transition shadow-sm text-sm cursor-pointer">Français</button>
-                <button type="button" onclick="setLanguage('ar')" class="bg-slate-900 text-white font-bold py-3.5 rounded-2xl hover:bg-amber-600 transition shadow-sm text-sm cursor-pointer">العربية</button>
+                <button type="button" onclick="setLanguage('ar')" class="bg-slate-900 text-white font-black py-3.5 rounded-2xl hover:bg-amber-600 transition shadow-sm text-sm cursor-pointer">العربية</button>
             </div>
         </div>
     </div>
@@ -166,8 +166,8 @@
     <main id="homeView" class="max-w-5xl w-full mx-auto px-4 py-4 flex-grow space-y-4">
         <div class="bg-white/90 backdrop-blur-sm px-5 py-3.5 rounded-2xl shadow-xs border border-slate-200/60 flex items-center justify-between gap-4">
             <div>
-                <h1 id="welcomeTitle" class="text-base sm:text-lg font-black text-slate-900 tracking-tight">Esouk Tunisie - السوق التونسي</h1>
-                <p id="welcomeDesc" class="text-[11px] font-bold text-amber-700">بيع وشراء في كامل تراب الجمهورية</p>
+                <h1 id="welcomeTitle" class="text-base sm:text-lg font-black text-slate-900 tracking-tight">Esouk Tunisie - السوق التونسي[cite: 1]</h1>
+                <p id="welcomeDesc" class="text-[11px] font-bold text-amber-700">بيع وشراء في كامل تراب الجمهورية[cite: 1]</p>
             </div>
             <div>
                 <button onclick="changeLanguagePrompt()" class="text-[11px] text-slate-400 font-semibold hover:text-amber-600 transition inline-flex items-center gap-1 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
@@ -182,7 +182,7 @@
                 <div class="relative z-10 space-y-1">
                     <span class="bg-white/25 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">قسم البائعين</span>
                     <h2 class="text-lg sm:text-xl font-black tracking-tight">ماذا تريد أن تبيع اليوم؟</h2>
-                    <p class="text-[11px] text-amber-100 font-medium">انشر بضاعتك وصِل إلى آلاف المشترين.</p>
+                    <p class="text-[11px] text-amber-100 font-medium">انشر بضاعتك وصِل إلى آلاف المشترين[cite: 1].</p>
                 </div>
                 <div class="pt-0.5 relative z-10">
                     <button onclick="openSellModal()" class="bg-slate-900 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md hover:bg-slate-800 hover:scale-105 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
@@ -197,7 +197,7 @@
                 <div class="relative z-10 space-y-1">
                     <span class="bg-amber-500/30 text-amber-300 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">قسم المشترين</span>
                     <h2 class="text-lg sm:text-xl font-black tracking-tight">ماذا تريد أن تشتري اليوم؟</h2>
-                    <p class="text-[11px] text-slate-300 font-medium">تصفح آلاف العروض والسلع في كل تونس.</p>
+                    <p class="text-[11px] text-slate-300 font-medium">تصفح آلاف العروض والسلع في كل تونس[cite: 1].</p>
                 </div>
                 <div class="pt-0.5 relative z-10">
                     <button onclick="openBuyCategoriesModal()" class="bg-amber-600 text-white font-black px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-md hover:bg-amber-700 hover:scale-105 transition flex items-center justify-center space-x-2 space-x-reverse mx-auto">
@@ -265,7 +265,7 @@
         </section>
     </main>
 
-    <!-- لوحة تحكم الأدمن -->
+    <!-- لوحة تحكم الأدمن بأزرار تنقل نظيفة وكبيرة -->
     <main id="adminView" class="max-w-5xl w-full mx-auto px-4 py-6 flex-grow hidden space-y-6">
         <div class="bg-slate-100 p-6 sm:p-8 rounded-3xl shadow-md border border-slate-300 space-y-6">
             <div class="flex justify-between items-center border-b border-slate-300 pb-4">
@@ -279,6 +279,7 @@
                 </div>
             </div>
 
+            <!-- إحصائيات المنصة -->
             <div class="space-y-3">
                 <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إحصائيات المنصة</h3>
                 <div class="grid grid-cols-3 gap-3">
@@ -297,8 +298,28 @@
                 </div>
             </div>
 
-            <div class="pt-4 border-t border-slate-300 space-y-3">
-                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إدارة فئات الموقع الشاملة (30 فئة)</h3>
+            <!-- التنقل السريع عبر أزرار كبيرة -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                <button onclick="document.getElementById('sectionCategories').scrollIntoView({behavior: 'smooth'})" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-amber-500 transition text-right group">
+                    <span class="text-2xl block mb-1">🏷️</span>
+                    <h4 class="font-black text-slate-900 text-sm group-hover:text-amber-600">إدارة الفئات</h4>
+                    <p class="text-[11px] text-slate-500">إضافة أو حذف فئات الموقع</p>
+                </button>
+                <button onclick="document.getElementById('sectionUsers').scrollIntoView({behavior: 'smooth'})" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-amber-500 transition text-right group">
+                    <span class="text-2xl block mb-1">👥</span>
+                    <h4 class="font-black text-slate-900 text-sm group-hover:text-amber-600">المستخدمون والبائعون</h4>
+                    <p class="text-[11px] text-slate-500">متابعة الحسابات والسلع</p>
+                </button>
+                <button onclick="document.getElementById('sectionAds').scrollIntoView({behavior: 'smooth'})" class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-amber-500 transition text-right group">
+                    <span class="text-2xl block mb-1">📢</span>
+                    <h4 class="font-black text-slate-900 text-sm group-hover:text-amber-600">إدارة الإعلانات</h4>
+                    <p class="text-[11px] text-slate-500">مراجعة وحذف الإعلانات</p>
+                </button>
+            </div>
+
+            <!-- إدارة الفئات -->
+            <div id="sectionCategories" class="pt-4 border-t border-slate-300 space-y-3">
+                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إدارة فئات الموقع الشاملة (قاعدة البيانات)</h3>
                 <form id="addCategoryForm" onsubmit="handleAddCategory(event)" class="flex gap-2">
                     <input type="text" id="newCategoryName" required placeholder="أضف فئة جديدة..." class="w-full bg-white border border-slate-300 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-amber-500">
                     <button type="submit" class="bg-amber-600 text-white px-6 py-3 rounded-xl text-xs sm:text-sm font-bold hover:bg-amber-700 transition whitespace-nowrap shadow-sm">إضافة</button>
@@ -306,8 +327,9 @@
                 <div id="adminCategoriesList" class="flex flex-wrap gap-2 pt-2"></div>
             </div>
 
-            <div class="pt-4 border-t border-slate-300 space-y-3">
-                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">قائمة المستخدمين المسجلين (Liste des Utilisateurs)</h3>
+            <!-- المستخدمون والبائعون -->
+            <div id="sectionUsers" class="pt-4 border-t border-slate-300 space-y-3">
+                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">قائمة المستخدمين المسجلين والبائعين</h3>
                 <div id="adminUsersListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <p class="text-xs text-slate-500">جاري تحميل المستخدمين...</p>
                 </div>
@@ -318,11 +340,8 @@
                     </div>
                     <div id="adminUserItemsContainer" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
                 </div>
-            </div>
 
-            <div class="pt-4 border-t border-slate-300 space-y-3">
-                <h3 class="font-bold text-slate-800 text-xs sm:text-sm">قائمة البائعين وسلعهم (Liste des Vendeurs)</h3>
-                <div id="adminVendorsListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div id="adminVendorsListContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                     <p class="text-xs text-slate-500">جاري تحميل البائعين...</p>
                 </div>
                 <div id="adminVendorItemsSection" class="hidden pt-3 border-t border-slate-300 space-y-2">
@@ -334,7 +353,8 @@
                 </div>
             </div>
 
-            <div class="pt-4 border-t border-slate-300 space-y-3">
+            <!-- إدارة جميع الإعلانات -->
+            <div id="sectionAds" class="pt-4 border-t border-slate-300 space-y-3">
                 <h3 class="font-bold text-slate-800 text-xs sm:text-sm">إدارة ومتابعة جميع الإعلانات</h3>
                 <div id="adminItemsListContainer" class="space-y-2 max-h-96 overflow-y-auto pr-1">
                     <p class="text-xs text-slate-500">جاري تحميل الإعلانات...</p>
@@ -345,8 +365,8 @@
 
     <!-- التذييل -->
     <footer class="bg-white/80 backdrop-blur-md border-t border-slate-200/60 py-4 text-center text-xs text-slate-400 space-y-1">
-        <p class="font-bold text-slate-600">Esouk Tunisie &copy; 2026</p>
-        <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية</p>
+        <p class="font-bold text-slate-600">Esouk Tunisie &copy; 2026[cite: 1]</p>
+        <p class="text-[11px]">منصة البيع والشراء الأولى في كامل تراب الجمهورية التونسية[cite: 1]</p>
     </footer>
 
     <!-- نافذة نشر إعلان -->
@@ -497,52 +517,31 @@
             document.getElementById('adsSectionTarget').scrollIntoView({ behavior: 'smooth' });
         };
 
+        // دالة جلب الفئات قراءة حقل name بدقة من قاعدة البيانات
         async function fetchCategories() {
             try {
                 const snapshot = await getDocs(collection(db, "categories"));
-                const comprehensiveCats = [
-                    "سيارات ووسائل نقل (Voitures & Véhicules)",
-                    "قطع غيار وإكسسوارات السيارات (Pièces auto)",
-                    "عقارات ومنازل (Immobilier)",
-                    "أراضي ومحلات تجارية (Terrains & Locaux)",
-                    "هواتف ذكية ولوازمها (Téléphones)",
-                    "لوحات رقمية وأجهزة لوحية (Tablettes)",
-                    "حواسيب وإعلامية (Informatique)",
-                    "شاشات وتلفزيونات وأجهزة صوتية (TV & Son)",
-                    "أجهزة منزلية كبرى (Électroménager)",
-                    "أجهزة منزلية صغرى ومطابخ (Petit électro)",
-                    "أثاث وديكور المنزل (Meubles & Déco)",
-                    "أسرّة وغرف نوم (Chambres à coucher)",
-                    "تحف، فخار وعقود تقليدية (Artisanat)",
-                    "زرابي وتجهيز مفروشات (Tapis & Linge)",
-                    "ملابس وأزياء رجالية (Vêtements Homme)",
-                    "ملابس وأزياء نسائية (Vêtements Femme)",
-                    "ملابس وأحذية أطفال (Vêtements Enfants)",
-                    "أحذية وحقائب يد (Chaussures & Sacs)",
-                    "مستحضرات تجميل وعطور (Beauté & Parfums)",
-                    "ساعات ومجوهرات وإكسسوارات (Montres & Bijoux)",
-                    "معدات وأدوات حرفية وبناء (Outillage)",
-                    "معدات فلاحية وحدائق (Agriculture)",
-                    "ألعاب وأجهزة ترفيهية (Jeux & Jouets)",
-                    "معدات رياضية ولياقة بدنية (Sports)",
-                    "كتب، روايات وأدوات مدرسية (Livres)",
-                    "حيوانات وطيور ومستلزماتها (Animaux)",
-                    "خدمات ومهن حرة (Services)",
-                    "عروض شغل ووظائف (Emplois)",
-                    "مستلزمات الحفلات والأفراح (Événements)",
-                    "أخرى / متنوعة (Divers)"
-                ];
+                categoriesList = [];
+                
+                snapshot.forEach(docSnap => {
+                    const data = docSnap.data();
+                    if (data && data.name) {
+                        categoriesList.push(data.name);
+                    }
+                });
 
-                if (snapshot.empty) {
-                    categoriesList = comprehensiveCats;
-                    for (let cat of comprehensiveCats) {
+                if (categoriesList.length === 0) {
+                    const defaultCats = [
+                        "سيارات ووسائل نقل (Voitures & Véhicules)",
+                        "عقارات ومنازل (Immobilier)",
+                        "هواتف ذكية ولوازمها (Téléphones)",
+                        "أثاث وديكور المنزل (Meubles & Déco)",
+                        "أخرى / متنوعة (Divers)"
+                    ];
+                    categoriesList = defaultCats;
+                    for (let cat of defaultCats) {
                         await addDoc(collection(db, "categories"), { name: cat });
                     }
-                } else {
-                    categoriesList = [];
-                    snapshot.forEach(docSnap => {
-                        categoriesList.push(docSnap.data().name);
-                    });
                 }
                 populateDropdowns();
             } catch (e) {
@@ -579,8 +578,7 @@
                 if (snapshot.empty) {
                     const sampleAds = [
                         { title: "سيارة فولكسفاغن بولو بحالة ممتازة", category: "سيارات ووسائل نقل (Voitures & Véhicules)", state: "تونس", condition: "بحالة ممتازة (Très bon état)", price: 28000, phone: "98112233", description: "سيارة اقتصادية، صيانة دورية منتظمة، وثائق خالصة.", image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600", userEmail: "auto.tunis@esouk.tn" },
-                        { title: "منزل أرضي للبيع في نابل قرب البحر", category: "عقارات ومنازل (Immobilier)", state: "نابل", condition: "بحالة جيدة (Bon état)", price: 185000, phone: "97445566", description: "منزل مساحة 180 متر مربع، يتكون من غرفتين وصالة وحديقة صغيرة.", image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600", userEmail: "immobilier.nabeul@esouk.tn" },
-                        { title: "هاتف سامسونج جالاكسي إس 22 ألترا", category: "هواتف ذكية ولوازمها (Téléphones)", state: "صفاقس", condition: "بحالة ممتازة (Très bon état)", price: 1650, phone: "55667788", description: "الذاكرة 256 جيجا مع العلبة والشاحن الأصلي، بدون أي خدش.", image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600", userEmail: "phone.sfax@esouk.tn" }
+                        { title: "منزل أرضي للبيع في نابل قرب البحر", category: "عقارات ومنازل (Immobilier)", state: "نابل", condition: "بحالة جيدة (Bon état)", price: 185000, phone: "97445566", description: "منزل مساحة 180 متر مربع، يتكون من غرفتين وصالة وحديقة صغيرة.", image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600", userEmail: "immobilier.nabeul@esouk.tn" }
                     ];
                     
                     for (let ad of sampleAds) {
@@ -812,8 +810,8 @@
                 document.getElementById('pageTitle').innerText = "Esouk Tunisie - السوق التونسي للبيع والشراء";
                 document.getElementById('btnSignupTop').innerText = "إنشاء حساب";
                 document.getElementById('btnLoginTop').innerText = "دخول";
-                document.getElementById('welcomeTitle').innerText = "Esouk Tunisie - السوق التونسي";
-                document.getElementById('welcomeDesc').innerText = "بيع وشراء في كامل تراب الجمهورية";
+                document.getElementById('welcomeTitle').innerText = "Esouk Tunisie - السوق التونسي[cite: 1]";
+                document.getElementById('welcomeDesc').innerText = "بيع وشراء في كامل تراب الجمهورية[cite: 1]";
                 document.getElementById('quickCatTitle').innerText = "التصنيفات السريعة المتاحة";
                 document.getElementById('recentAdsTitle').innerText = "الإعلانات الحديثة";
             } else {
